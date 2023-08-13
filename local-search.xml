@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Cobalt Strike</title>
+    <link href="/2023/08/13/tools-CobaltStrike/"/>
+    <url>/2023/08/13/tools-CobaltStrike/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Cobalt-Strike"><a href="#Cobalt-Strike" class="headerlink" title="Cobalt Strike"></a>Cobalt Strike</h1><h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>CS 分为服务端和客户端，服务端需要在 Linux 环境下执行，然后使用客户端连接服务端。</p><p>首先需要安装 Java 环境：<a href="https://www.runoob.com/java/java-environment-setup.html">https://www.runoob.com/java/java-environment-setup.html</a></p><p>然后在 Linux 平台启动服务端：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">./teamserver <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span><br></code></pre></td></tr></table></figure><p>启动客户端，填写相应的主机、端口、密码即可：</p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813174358115.png" alt="image-20230813174358115" style="zoom:67%;" /><h2 id="创建监听器"><a href="#创建监听器" class="headerlink" title="创建监听器"></a>创建监听器</h2><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813174650590.png" alt="image-20230813174650590" style="zoom:67%;" /><p>选择合适的 Payload，填写对应的信息即可：</p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813174855177.png" alt="image-20230813174855177" style="zoom:67%;" /><h2 id="添加插件"><a href="#添加插件" class="headerlink" title="添加插件"></a>添加插件</h2><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813174930102.png" alt="image-20230813174930102" style="zoom:67%;" /><p>选择 <code>.cna</code> 后缀的插件加载即可使用：</p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813174955784.png" alt="image-20230813174955784" style="zoom:67%;" /><h2 id="控制台命令"><a href="#控制台命令" class="headerlink" title="控制台命令"></a>控制台命令</h2><p>CS 中大部分的操作都可以通过鼠标来完成，这里简单记录一下有些无法通过鼠标来完成的操作：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">执行系统命令</span><br>shell &lt;命令&gt;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">修改会连间隔 - linux 无法通过鼠标完成</span><br>sleep 0<br></code></pre></td></tr></table></figure><h2 id="跨平台后门"><a href="#跨平台后门" class="headerlink" title="跨平台后门"></a>跨平台后门</h2><p>CrossC2：<a href="https://github.com/gloxec/CrossC2">https://github.com/gloxec/CrossC2</a></p><p>CrossC2 用于生成 CS 的跨平台后门（ Linux 、MacOS ），其监听方式只有正向的 TCP 和 反向的 HTTPS。</p><p>这里演示生成 Linux 反向后门：</p><ol><li>创建 HTTPS 监听器</li><li>将 <code>genCrossC2</code>  放到 CS 服务端同目录并赋予可执行权限</li><li>将  <code>CrossC2.cna</code>  放到客户端本地，先修改 <code>genCrossC2</code> 的路径，然后加载该插件</li><li>客户端重新连接服务端</li><li>生成 Linux 后门，进行上线</li></ol><p>创建 https 的监听器：</p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813172033162.png" alt="image-20230813172033162" style="zoom:67%;" /><p>下载 <code>genCrossC2、CrossC2.cna</code>，后门的生成依赖的是 <code>genCrossC2</code> ，而 <code>CrossC2.cna</code> 插件的作用是生成使用  <code>genCrossC2</code>  的命令。</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813171546115.png" alt="image-20230813171546115"></p><p><code>genCrossC2</code> 放到 CS 服务端目录下，因为其需要使用 <code>.cobaltstrike.beacon_keys</code> 文件，和监听器相关。</p><blockquote><p>注：<code>genCrossC2</code> 依赖  <code>.cobaltstrike.beacon_keys</code>  进行后门生成，所以只要有  <code>.cobaltstrike.beacon_keys</code>  即可，不是必须要在服务端的。比如可以下载 windows 版本的 <code>genCrossC2</code> ，然后将  <code>.cobaltstrike.beacon_keys</code>  放到相同目录下，以及可以正常使用。</p></blockquote><p><code>CrossC2.cna</code> 放到客户端，先修改一下其内容，主要就是填写 <code>genCrossC2</code>  文件位置，修改完成后加载该插件：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$</span><span class="language-bash">CC2_PATH = <span class="hljs-string">&quot;/root/tools/Cobalt_Strike_4.5/&quot;</span>; <span class="hljs-comment"># &lt;-------- fix</span></span><br><span class="hljs-meta prompt_">$</span><span class="language-bash">CC2_BIN = <span class="hljs-string">&quot;genCrossC2.Linux&quot;</span>;</span><br></code></pre></td></tr></table></figure><p>之后生成后门：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813172543301.png" alt="image-20230813172543301"></p><p>选择创建的 HTTPS 监听器：</p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813173057687.png" alt="image-20230813173057687" style="zoom:67%;" /><p>之后在服务端执行该命令即可：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813173150069.png" alt="image-20230813173150069"></p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813173306068.png" alt="image-20230813173306068"></p><p>成功上线：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230813173422294.png" alt="image-20230813173422294"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>渗透测试</category>
+      
+      <category>安全工具</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>安全工具</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>linux 提权</title>
     <link href="/2023/07/22/linux-privilege-escalation/"/>
     <url>/2023/07/22/linux-privilege-escalation/</url>
