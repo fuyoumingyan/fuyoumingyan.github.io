@@ -406,6 +406,33 @@
   
   
   <entry>
+    <title>基础知识</title>
+    <link href="/2023/05/30/penetration-Testing-Basics/"/>
+    <url>/2023/05/30/penetration-Testing-Basics/</url>
+    
+    <content type="html"><![CDATA[<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>这里总结了一下之前学习的基础知识：</p><ol><li>域名</li><li><em>http</em> </li><li><em>https</em></li><li><em>web</em></li><li><em>cdn</em></li><li>编码</li></ol><h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><em>IP</em> 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信；</p><p>域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用；</p><p><em>DNS</em>：它就是连接在域名和 <em>IP</em> 之间的系统，可以将域名解析成 <em>IP</em> 地址；</p><p>子域名：一个根域名可以有很多子域名，而在进行渗透测试的时候，一些目标网站的规模比较大，主站会进行重点防御，安全性强，下手难度高。通过子域名探测，可以对目标网站下发现更多的域或子域，大大提高漏洞发现的概率，再通过这些子域，接近真正的目标；</p><p>域名解析过程：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png" alt="image-20230830221117344"></p><p><em>host</em> 文件：这里的 “检查本机系统是否缓存” 就是检测 <em>host</em> 文件；</p><p><em>host</em> 文件位置：</p><table><thead><tr><th>系统</th><th>路径</th><th>刷新</th></tr></thead><tbody><tr><td><code>windows</code></td><td><code>C:\Windows\System32\drivers\etc\hosts</code></td><td><code>ipconfig /flushdns</code></td></tr><tr><td><code>linux</code></td><td><code>/etc/hosts</code></td><td><code>systemctl restart nscd</code></td></tr></tbody></table><p><em>host</em> 文件内容：IP 域名 的形式</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302214764.png" alt="image-20230830221430743"></p><h2 id="http"><a href="#http" class="headerlink" title="http"></a><em>http</em></h2><p>HTTP：超文本传输协议，基于TCP&#x2F;IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）</p><p>HTTP 遵循请求（Request）&#x2F;应答（Respose）模型，Web浏览器向Web服务器发送请求时，Web服务器处理请求并返回适当的响应。此请求只能由客户端发起，服务器不能主动向客户端发送数据；</p><p>统一资源标识符（URL）：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302218616.png" alt="image-20230830221802566"></p><p>请求：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217983.png" alt="image-20230830221714963"></p><p>响应：</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217987.png" alt="image-20230830221726955"></p><p>请求方法：</p><ul><li>get</li><li>post</li><li>header</li><li>put</li><li>delete</li><li>connect</li><li>options</li></ul><p>状态码：</p><ul><li>1xx：请求成功，继续处理</li><li>2xx：请求成功，处理成功</li><li>3xx：重定向</li><li>4xx：客户端错误</li><li>5xx：服务端错误</li></ul><p>常见状态码：</p><ul><li>200 : 客户端请求成功</li><li>302： 重定向</li><li>404 : 请求资源不存在</li><li>400 : 客户端请求有语法错误,不能被服务器所理解</li><li>401 : 请求未经授权</li><li>403 : 服务器收到请求,但拒绝提供服务</li><li>500 : 服务器内部错误</li><li>503 : 服务器当前不能处理客户端的请求,一段时间后可能恢复正常</li></ul><p>请求头：</p><ul><li>Host：请求的服务器的域名和端口号</li><li>User-Agent：客户端标识（ 操作系统、浏览器 ）</li><li>Origin：谁发起的请求</li><li>Referer：先前的 URL</li><li>Cookie：身份验证信息</li><li>x-forward-for：请求端 IP （ 可伪造 ）</li><li>Accept：指定客户端接收那些MIME类型的信息</li><li>Accept-Charset：指定客户端接收的字符集</li><li>Accept-Encoding：指定浏览器可以支持的 web 服务器返回内容压缩编码类型</li><li>Accept-Language：指定浏览器可接受的语言 </li><li>Connection：表示是否需要持久连接</li><li>Authorization：授权的授权证书</li></ul><p>响应头：</p><ul><li>Server：web 服务器软件名称</li><li>Set-Cookie：向客户端设置 cookie，服务器向客户端发送的Cookie信息</li><li>Location：重定向</li><li>Refresh：应用于重定向或一个新的资源被创造，在 5 秒之后重定向</li><li>Content-Type：返回内容的 MIME 类型</li></ul><h2 id="https"><a href="#https" class="headerlink" title="https"></a><em>https</em></h2><p>超文本传输<strong>安全</strong>协议，比HTTP（超文本传输协议）多了个安全，其实就是HTTP的升级版本，只是它比HTTP更加安全。</p><p>HTTPS 安全的基础是 SSL，即在 HTTP 下加入 SSL层，也就是 HTTPS 通过安全传输机制进行传送数据，这种机制可包含网络传送的所有数据的隐秘性与完整性，可以降低非入侵型拦截攻击的可能性。</p><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302231264.png" alt="image-20230830223135226"></p><p>SSL 证书部署：<a href="https://cloud.tencent.com/document/product/400/4143">https://cloud.tencent.com/document/product/400/4143</a></p><h2 id="web"><a href="#web" class="headerlink" title="web"></a><em>web</em></h2><p><em>web</em> 环境组成：</p><ul><li>操作系统：linux，windows</li><li>中间件（ web 服务器）：nginx，apache，iis….</li><li>数据库：MySQL，SQL Server，Access，Oracle，DB2，PostgreSQL</li><li>后端程序：由脚本语言编写程序实现功能，web服务器实现解析，从而使网站实现功能，如：PHP，ASP，Java，</li><li>前端页面：由浏览器解析（就是我们平常看见的网站界面），如：HTML，CSS，JavaScript…</li></ul><p>工作流程：</p><ul><li>浏览器向服务器发送请求，服务器接收请求后进行判断，如果是静态文本，服务器直接做出相应响应返回给浏览器；否则让脚本语言进行解析，不涉及数据库的话就返回相应内容；涉及数据库，就执行相应操作再返回。</li></ul><p>具体流程：</p><ol><li>浏览器解析 URL</li><li>生成 HTTP 请求</li><li>解析 IP 地址</li><li>TCP 三次握手建立连接</li><li>发送 HTTP 请求</li><li>服务端处理请求</li><li>服务端返回响应</li><li>TCP 四次挥手关闭连接</li></ol><h2 id="cdn"><a href="#cdn" class="headerlink" title="cdn"></a><em>cdn</em></h2><p>CDN：内容分发网络，为了提高访问速度而产生。</p><p>原理：</p><ul><li>访问域名时，通过DNS分查找离用户最近的CDN节点（边缘服务器）的IP，访问离自己近的IP肯定要比远的要快，以此提供访问速度（那个地区的就访问自己地区或离自己近的IP，这样就快了，如下图）</li></ul><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302238754.png" alt="image-20230830223833711"></p><h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><ul><li>存储加密：md5、sha</li><li>传输加密：base</li><li>代码加密：js 加密、后端加密</li><li>数据显示：utf8、gbk</li></ul><p>识别编码：<a href="https://gitee.com/link?target=https://www.dcode.fr/identification-chiffrement">https://www.dcode.fr/identification-chiffrement</a> </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>渗透测试</category>
+      
+      <category>基础知识</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>渗透测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>git 版本控制</title>
     <link href="/2023/05/29/git-study/"/>
     <url>/2023/05/29/git-study/</url>
