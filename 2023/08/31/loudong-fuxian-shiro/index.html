@@ -16,30 +16,38 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透基础这里总结了一下之前学习的基础知识：  域名 http  https web cdn 编码  域名IP 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信； 域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用； DNS：它就是连接在域名和 IP 之间的系统，可以将域名解析成 IP 地址； 子域名：一个根域名可以">
+    <meta name="description" content="Shiro 漏洞复现Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550https:&#x2F;&#x2F;goodapple.top&#x2F;archives&#x2F;139 漏洞编号：CVE-2016-4437 漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透基础">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/05/30/penetration-Testing-Basics/index.html">
+<meta property="og:title" content="Shiro 漏洞复现">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/08/31/loudong-fuxian-shiro/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="渗透基础这里总结了一下之前学习的基础知识：  域名 http  https web cdn 编码  域名IP 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信； 域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用； DNS：它就是连接在域名和 IP 之间的系统，可以将域名解析成 IP 地址； 子域名：一个根域名可以">
+<meta property="og:description" content="Shiro 漏洞复现Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550https:&#x2F;&#x2F;goodapple.top&#x2F;archives&#x2F;139 漏洞编号：CVE-2016-4437 漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302214764.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302218616.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217983.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217987.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302231264.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302238754.png">
-<meta property="article:published_time" content="2023-05-30T14:02:21.000Z">
-<meta property="article:modified_time" content="2023-08-31T12:05:02.625Z">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311716846.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718643.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718992.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311721564.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311726651.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311731307.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733324.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733672.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311736330.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311737581.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738320.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738638.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311742286.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311745237.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311744389.png">
+<meta property="article:published_time" content="2023-08-31T06:59:51.000Z">
+<meta property="article:modified_time" content="2023-08-31T11:15:13.295Z">
 <meta property="article:author" content="fuming">
-<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311716846.png">
   
   
   
-  <title>渗透基础 - fuyoumingyan&#39;s blog</title>
+  <title>Shiro 漏洞复现 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="渗透基础"></span>
+            <span id="subtitle" data-typed-text="Shiro 漏洞复现"></span>
           
         </div>
 
@@ -216,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-30 22:02" pubdate>
-          2023年5月30日 晚上
+        <time datetime="2023-08-31 14:59" pubdate>
+          2023年8月31日 下午
         </time>
       </span>
     
@@ -228,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          1.1k 字
         
       </span>
     
@@ -239,7 +247,7 @@
         
         
         
-          12 分钟
+          7 分钟
         
       </span>
     
@@ -277,151 +285,53 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">渗透基础</h1>
+            <h1 style="display: none">Shiro 漏洞复现</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="渗透基础"><a href="#渗透基础" class="headerlink" title="渗透基础"></a>渗透基础</h1><p>这里总结了一下之前学习的基础知识：</p>
-<ol>
-<li>域名</li>
-<li><em>http</em> </li>
-<li><em>https</em></li>
-<li><em>web</em></li>
-<li><em>cdn</em></li>
-<li>编码</li>
-</ol>
-<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><em>IP</em> 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信；</p>
-<p>域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用；</p>
-<p><em>DNS</em>：它就是连接在域名和 <em>IP</em> 之间的系统，可以将域名解析成 <em>IP</em> 地址；</p>
-<p>子域名：一个根域名可以有很多子域名，而在进行渗透测试的时候，一些目标网站的规模比较大，主站会进行重点防御，安全性强，下手难度高。通过子域名探测，可以对目标网站下发现更多的域或子域，大大提高漏洞发现的概率，再通过这些子域，接近真正的目标；</p>
-<p>域名解析过程：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png" srcset="/img/loading.gif" lazyload alt="image-20230830221117344"></p>
-<p><em>host</em> 文件：这里的 “检查本机系统是否缓存” 就是检测 <em>host</em> 文件；</p>
-<p><em>host</em> 文件位置：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>路径</th>
-<th>刷新</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>windows</code></td>
-<td><code>C:\Windows\System32\drivers\etc\hosts</code></td>
-<td><code>ipconfig /flushdns</code></td>
-</tr>
-<tr>
-<td><code>linux</code></td>
-<td><code>/etc/hosts</code></td>
-<td><code>systemctl restart nscd</code></td>
-</tr>
-</tbody></table>
-<p><em>host</em> 文件内容：IP 域名 的形式</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302214764.png" srcset="/img/loading.gif" lazyload alt="image-20230830221430743"></p>
-<h2 id="http"><a href="#http" class="headerlink" title="http"></a><em>http</em></h2><p>HTTP：超文本传输协议，基于TCP&#x2F;IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）</p>
-<p>HTTP 遵循请求（Request）&#x2F;应答（Respose）模型，Web浏览器向Web服务器发送请求时，Web服务器处理请求并返回适当的响应。此请求只能由客户端发起，服务器不能主动向客户端发送数据；</p>
-<p>统一资源标识符（URL）：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302218616.png" srcset="/img/loading.gif" lazyload alt="image-20230830221802566"></p>
-<p>请求：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217983.png" srcset="/img/loading.gif" lazyload alt="image-20230830221714963"></p>
-<p>响应：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217987.png" srcset="/img/loading.gif" lazyload alt="image-20230830221726955"></p>
-<p>请求方法：</p>
-<ul>
-<li>get</li>
-<li>post</li>
-<li>header</li>
-<li>put</li>
-<li>delete</li>
-<li>connect</li>
-<li>options</li>
-</ul>
-<p>状态码：</p>
-<ul>
-<li>1xx：请求成功，继续处理</li>
-<li>2xx：请求成功，处理成功</li>
-<li>3xx：重定向</li>
-<li>4xx：客户端错误</li>
-<li>5xx：服务端错误</li>
-</ul>
-<p>常见状态码：</p>
-<ul>
-<li>200 : 客户端请求成功</li>
-<li>302： 重定向</li>
-<li>404 : 请求资源不存在</li>
-<li>400 : 客户端请求有语法错误,不能被服务器所理解</li>
-<li>401 : 请求未经授权</li>
-<li>403 : 服务器收到请求,但拒绝提供服务</li>
-<li>500 : 服务器内部错误</li>
-<li>503 : 服务器当前不能处理客户端的请求,一段时间后可能恢复正常</li>
-</ul>
-<p>请求头：</p>
-<ul>
-<li>Host：请求的服务器的域名和端口号</li>
-<li>User-Agent：客户端标识（ 操作系统、浏览器 ）</li>
-<li>Origin：谁发起的请求</li>
-<li>Referer：先前的 URL</li>
-<li>Cookie：身份验证信息</li>
-<li>x-forward-for：请求端 IP （ 可伪造 ）</li>
-<li>Accept：指定客户端接收那些MIME类型的信息</li>
-<li>Accept-Charset：指定客户端接收的字符集</li>
-<li>Accept-Encoding：指定浏览器可以支持的 web 服务器返回内容压缩编码类型</li>
-<li>Accept-Language：指定浏览器可接受的语言 </li>
-<li>Connection：表示是否需要持久连接</li>
-<li>Authorization：授权的授权证书</li>
-</ul>
-<p>响应头：</p>
-<ul>
-<li>Server：web 服务器软件名称</li>
-<li>Set-Cookie：向客户端设置 cookie，服务器向客户端发送的Cookie信息</li>
-<li>Location：重定向</li>
-<li>Refresh：应用于重定向或一个新的资源被创造，在 5 秒之后重定向</li>
-<li>Content-Type：返回内容的 MIME 类型</li>
-</ul>
-<h2 id="https"><a href="#https" class="headerlink" title="https"></a><em>https</em></h2><p>超文本传输<strong>安全</strong>协议，比HTTP（超文本传输协议）多了个安全，其实就是HTTP的升级版本，只是它比HTTP更加安全。</p>
-<p>HTTPS 安全的基础是 SSL，即在 HTTP 下加入 SSL层，也就是 HTTPS 通过安全传输机制进行传送数据，这种机制可包含网络传送的所有数据的隐秘性与完整性，可以降低非入侵型拦截攻击的可能性。</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302231264.png" srcset="/img/loading.gif" lazyload alt="image-20230830223135226"></p>
-<p>SSL 证书部署：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/400/4143">https://cloud.tencent.com/document/product/400/4143</a></p>
-<h2 id="web"><a href="#web" class="headerlink" title="web"></a><em>web</em></h2><p><em>web</em> 环境组成：</p>
-<ul>
-<li>操作系统：linux，windows</li>
-<li>中间件（ web 服务器）：nginx，apache，iis….</li>
-<li>数据库：MySQL，SQL Server，Access，Oracle，DB2，PostgreSQL</li>
-<li>后端程序：由脚本语言编写程序实现功能，web服务器实现解析，从而使网站实现功能，如：PHP，ASP，Java，</li>
-<li>前端页面：由浏览器解析（就是我们平常看见的网站界面），如：HTML，CSS，JavaScript…</li>
-</ul>
-<p>工作流程：</p>
-<ul>
-<li>浏览器向服务器发送请求，服务器接收请求后进行判断，如果是静态文本，服务器直接做出相应响应返回给浏览器；否则让脚本语言进行解析，不涉及数据库的话就返回相应内容；涉及数据库，就执行相应操作再返回。</li>
-</ul>
-<p>具体流程：</p>
-<ol>
-<li>浏览器解析 URL</li>
-<li>生成 HTTP 请求</li>
-<li>解析 IP 地址</li>
-<li>TCP 三次握手建立连接</li>
-<li>发送 HTTP 请求</li>
-<li>服务端处理请求</li>
-<li>服务端返回响应</li>
-<li>TCP 四次挥手关闭连接</li>
-</ol>
-<h2 id="cdn"><a href="#cdn" class="headerlink" title="cdn"></a><em>cdn</em></h2><p>CDN：内容分发网络，为了提高访问速度而产生。</p>
-<p>原理：</p>
-<ul>
-<li>访问域名时，通过DNS分查找离用户最近的CDN节点（边缘服务器）的IP，访问离自己近的IP肯定要比远的要快，以此提供访问速度（那个地区的就访问自己地区或离自己近的IP，这样就快了，如下图）</li>
-</ul>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302238754.png" srcset="/img/loading.gif" lazyload alt="image-20230830223833711"></p>
-<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><ul>
-<li>存储加密：md5、sha、aes</li>
-<li>传输加密：base</li>
-<li>代码加密：js 加密、后端加密</li>
-<li>数据显示：utf8、gbk</li>
-<li>其他：jwt（ cookie 中的 3 段形式，使用 . 分割，可爆破 Key ）</li>
-</ul>
-<p>识别编码：<a href="https://gitee.com/link?target=https://www.dcode.fr/identification-chiffrement">https://www.dcode.fr/identification-chiffrement</a> </p>
+                <h1 id="Shiro-漏洞复现"><a href="#Shiro-漏洞复现" class="headerlink" title="Shiro 漏洞复现"></a><em>Shiro</em> 漏洞复现</h1><p>Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。</p>
+<h2 id="Shiro550"><a href="#Shiro550" class="headerlink" title="Shiro550"></a><em>Shiro550</em></h2><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/139">https://goodapple.top/archives/139</a></p>
+<p>漏洞编号：CVE-2016-4437</p>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的 Cookie 中。攻击者可以使用Shiro 的默认密钥伪造用户 Cookie，触发 Java 反序列化漏洞，进而在目标机器上执行任意命令。</p>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>环境搭建：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">git</span> clone git@github.com:apache/shiro.git<br><span class="hljs-attribute">cd</span> shiro<br><span class="hljs-attribute">git</span> checkout shiro-root-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
+<p>修改 <code>shiro/samples/web</code>，为 <code>jstl</code> 添加 <code>version</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jstl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>runtime<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h4><p>全局搜索 <code>Cookie</code>，找到 <code>CookieRememberMeManager.java</code> ，里面就那几个方法，看 <code>rememberSerializedIdentity</code>：</p>
+<p>接受一个序列化后的字节流并将其 Base64 编码，然后设置为 Cookie ：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311716846.png" srcset="/img/loading.gif" lazyload alt="image-20230831171659766"></p>
+<p>寻找哪里调用了该方法：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718643.png" srcset="/img/loading.gif" lazyload alt="image-20230831171816606"></p>
+<p>这里的 <code>convertPrincipalsToBytes</code> 先序列化，然后再使用 <code>encrypt</code> 方法加密：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718992.png" srcset="/img/loading.gif" lazyload alt="image-20230831171837956"></p>
+<p>跟  <code>encrypt</code> 方法：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311721564.png" srcset="/img/loading.gif" lazyload alt="image-20230831172107526"></p>
+<p>注释表示该方法是通过指定的 key 加密数据：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311726651.png" srcset="/img/loading.gif" lazyload alt="image-20230831172619606"></p>
+<p>然后跟到了这里，发现它用的是  Java 加密库中的 <code>javax.crypto.Cipher</code> 类来进行加密和解密操作：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311731307.png" srcset="/img/loading.gif" lazyload alt="image-20230831173155221"></p>
+<p>而具体的加解密类型是在 <code>Cipher</code> 初始化时就被确定的了。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733324.png" srcset="/img/loading.gif" lazyload alt="image-20230831173331284"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733672.png" srcset="/img/loading.gif" lazyload alt="image-20230831173348651"></p>
+<p>最后跟到这里：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311736330.png" srcset="/img/loading.gif" lazyload alt="image-20230831173626301"></p>
+<p>AES 加密，且 key 是一个常量：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311737581.png" srcset="/img/loading.gif" lazyload alt="image-20230831173707556"></p>
+<p>这时加密过程已经晚了，后再退回来整理一下：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738320.png" srcset="/img/loading.gif" lazyload alt="image-20230831173846292"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738638.png" srcset="/img/loading.gif" lazyload alt="image-20230831173820612"></p>
+<p><code>rememberIdentity</code>：序列化 &#x3D;&gt; AES 加密 &#x3D;&gt; Base64 加密</p>
+<p>之后就是就是往上跟，到了这里，差不多也完了：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311742286.png" srcset="/img/loading.gif" lazyload alt="image-20230831174225234"></p>
+<h4 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h4><p>再跟一下解密：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311745237.png" srcset="/img/loading.gif" lazyload alt="image-20230831174516182"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311744389.png" srcset="/img/loading.gif" lazyload alt="image-20230831174433356"></p>
+<p>具体的解密就不跟了，AES 是对称加密，加解密的 key 是相同的。</p>
+<p>这个漏洞的成因就在这里，Cookie 值可控，AES 加密 Key 可控，那么反序列化的数据就可控，导致了反序列化漏洞的产生。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="URLDNS"><a href="#URLDNS" class="headerlink" title="URLDNS"></a>URLDNS</h4>
                 
               </div>
             
@@ -444,7 +354,7 @@
   
     <span>></span>
     
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="category-chain-item">基础知识</a>
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
   
   
 
@@ -461,7 +371,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">#渗透测试</a>
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
       
     </div>
   
@@ -473,8 +383,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>渗透基础</div>
-      <div>https://fuyoumingyan.github.io/2023/05/30/penetration-Testing-Basics/</div>
+      <div>Shiro 漏洞复现</div>
+      <div>https://fuyoumingyan.github.io/2023/08/31/loudong-fuxian-shiro/</div>
     </div>
     <div class="license-meta">
       
@@ -486,7 +396,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月30日</div>
+          <div>2023年8月31日</div>
         </div>
       
       
@@ -518,18 +428,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/05/ctf-php-characteristics/" title="CTF 中的 PHP 特性问题">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CTF 中的 PHP 特性问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/29/git-study/" title="git 版本控制">
-                        <span class="hidden-mobile">git 版本控制</span>
+                      <a href="/2023/08/31/javaCodeAudit-inxedu/" title="因酷时代在线教育系统-代码审计">
+                        <span class="hidden-mobile">因酷时代在线教育系统-代码审计</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
