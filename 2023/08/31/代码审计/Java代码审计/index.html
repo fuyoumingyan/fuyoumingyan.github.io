@@ -16,15 +16,15 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java 代码审计filter 过滤器Filter 是 JavaWeb 中的过滤器，用于过滤 URL 请求。 通过 Filter 我们可以实现 URL 请求资源权限验证、用户登录检测等功能。 Filter 是一个接口，实现一个 Filter 只需要重写 init、doFilter、destroy 方法即可，其中过滤逻辑都在 doFilter 方法中实现。 可以在 web.xml 中查看，格式如下：">
+    <meta name="description" content="Java代码审计filter过滤器Filter 是 JavaWeb 中的过滤器，用于过滤 URL 请求。 通过 Filter 我们可以实现 URL 请求资源权限验证、用户登录检测等功能。 Filter 是一个接口，实现一个 Filter 只需要重写 init、doFilter、destroy 方法即可，其中过滤逻辑都在 doFilter 方法中实现。 可以在 web.xml 中查看，格式如下： 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 代码审计">
 <meta property="og:url" content="https://fuyoumingyan.github.io/2023/08/31/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="Java 代码审计filter 过滤器Filter 是 JavaWeb 中的过滤器，用于过滤 URL 请求。 通过 Filter 我们可以实现 URL 请求资源权限验证、用户登录检测等功能。 Filter 是一个接口，实现一个 Filter 只需要重写 init、doFilter、destroy 方法即可，其中过滤逻辑都在 doFilter 方法中实现。 可以在 web.xml 中查看，格式如下：">
+<meta property="og:description" content="Java代码审计filter过滤器Filter 是 JavaWeb 中的过滤器，用于过滤 URL 请求。 通过 Filter 我们可以实现 URL 请求资源权限验证、用户登录检测等功能。 Filter 是一个接口，实现一个 Filter 只需要重写 init、doFilter、destroy 方法即可，其中过滤逻辑都在 doFilter 方法中实现。 可以在 web.xml 中查看，格式如下： 1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-31T05:31:53.000Z">
-<meta property="article:modified_time" content="2023-08-31T15:03:39.716Z">
+<meta property="article:modified_time" content="2023-09-01T15:26:14.250Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="代码审计">
 <meta name="twitter:card" content="summary_large_image">
@@ -274,74 +274,74 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Java-代码审计"><a href="#Java-代码审计" class="headerlink" title="Java 代码审计"></a><em>Java</em> 代码审计</h1><h2 id="filter-过滤器"><a href="#filter-过滤器" class="headerlink" title="filter 过滤器"></a><em>filter</em> 过滤器</h2><p><em>Filter</em> 是 <em>JavaWeb</em> 中的过滤器，用于过滤 <em>URL</em> 请求。</p>
-<p>通过 <em>Filter</em> 我们可以实现 <em>URL</em> 请求资源权限验证、用户登录检测等功能。</p>
-<p><em>Filter</em> 是一个接口，实现一个 Filter 只需要重写 <em>init、doFilter、destroy</em> 方法即可，其中过滤逻辑都在 <em>doFilter</em> 方法中实现。</p>
-<p>可以在 <em>web.xml</em> 中查看，格式如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 名字 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 位置 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 规则 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/*<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+                <h1 id="Java代码审计"><a href="#Java代码审计" class="headerlink" title="Java代码审计"></a>Java代码审计</h1><h2 id="filter过滤器"><a href="#filter过滤器" class="headerlink" title="filter过滤器"></a>filter过滤器</h2><p>Filter 是 JavaWeb 中的过滤器，用于过滤 URL 请求。</p>
+<p>通过 Filter 我们可以实现 URL 请求资源权限验证、用户登录检测等功能。</p>
+<p>Filter 是一个接口，实现一个 Filter 只需要重写 init、doFilter、destroy 方法即可，其中过滤逻辑都在 doFilter 方法中实现。</p>
+<p>可以在 web.xml 中查看，格式如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 名字 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 位置 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 规则 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>发现存在漏洞过滤器后，看一下具体的实现方法，是否有绕过的方法。</p>
-<h2 id="第三方组件"><a href="#第三方组件" class="headerlink" title="第三方组件"></a>第三方组件</h2><p>审计一套系统，可以先看看 <em>pom.xml</em> 中加载了那些组件 ，如果这些组件中本身存在漏洞，就可以直接利用这些漏洞。</p>
+<h2 id="第三方组件"><a href="#第三方组件" class="headerlink" title="第三方组件"></a>第三方组件</h2><p>审计一套系统，可以先看看 pom.xml 中加载了那些组件 ，如果这些组件中本身存在漏洞，就可以直接利用这些漏洞。</p>
 <p>第三方组件漏洞利用：</p>
 <ol>
 <li>查找组件漏洞资料，看版本是否符合</li>
 <li>查看该漏洞的出现原因，在该程序中是否存在</li>
 <li>查找程序中调用该组件的位置，进行漏洞测试</li>
 </ol>
-<h2 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a><em>SQL</em> 注入</h2><p><em>SQL</em> 注入的产生原因：</p>
+<h2 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h2><p>SQL 注入的产生原因：</p>
 <ul>
-<li>后端未对用户输入的参数进行过滤就直接拼接到 <em>SQL</em> 语句中执行</li>
+<li>后端未对用户输入的参数进行过滤就直接拼接到 SQL 语句中执行</li>
 </ul>
-<p>这里有 <em>2</em> 个点，及 <em>Java</em> 中的应对方案：</p>
+<p>这里有 2 个点，及 Java 中的应对方案：</p>
 <ol>
 <li>对用户输入的参数进行过滤：类型转换、过滤特殊符号</li>
-<li>直接拼接到 <em>SQL</em> 语句中执行：预编译拼接 <em>SQL</em> 语句</li>
+<li>直接拼接到 SQL 语句中执行：预编译拼接 SQL 语句</li>
 </ol>
-<p>在 <em>Java</em> 中，是否产生 <em>SQL</em> 注入，就与能否正确使用 “预编译” 有关。</p>
+<p>在 Java 中，是否产生 SQL 注入，就与能否正确使用 “预编译” 有关。</p>
 <p>当然，在没有使用 “预编译”，但对输入参数的处理很严谨也是不存在注入的。</p>
-<h3 id="jdbc"><a href="#jdbc" class="headerlink" title="jdbc"></a><em>jdbc</em></h3><p><em>jdbc</em> 执行 <em>sql</em> 语句相关的有 <em>2</em> 个接口：</p>
+<h3 id="jdbc"><a href="#jdbc" class="headerlink" title="jdbc"></a>jdbc</h3><p>jdbc 执行 sql 语句相关的有 2 个接口：</p>
 <ol>
-<li><em>Statement</em></li>
-<li><em>PreparedStatement</em></li>
+<li>Statement</li>
+<li>PreparedStatement</li>
 </ol>
-<p><em>PreparedStatement</em> 继承 <em>Statement</em>，且比 <em>Statement</em> 多了一个 “预编译” 功能。</p>
-<p>存在 <em>SQL</em> 注入的场景：</p>
+<p>PreparedStatement 继承 Statement，且比 Statement 多了一个 “预编译” 功能。</p>
+<p>存在 SQL 注入的场景：</p>
 <ol>
-<li>使用 <em>Statement</em> 直接执行 <em>SQL</em> 语句，造成 <em>SQL</em> 注入（ 没有对参数进行过滤 ）</li>
-<li>使用 <em>PreparedStatement</em> 却没有使用 <em>“?”</em> 标明参数位置，导致没能对进行预编译造成 <em>SQL</em> 注入（ 没有对参数进行过滤 ）</li>
+<li>使用 Statement 直接执行 SQL 语句，造成 SQL 注入（ 没有对参数进行过滤 ）</li>
+<li>使用 PreparedStatement 却没有使用 “?” 标明参数位置，导致没能对进行预编译造成 SQL 注入（ 没有对参数进行过滤 ）</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用 Statement 直接执行 SQL 语句</span><br><span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> con.createStatement();<br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from users where username = &#x27;&quot;</span> + username + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> statement.executeQuery(sql);<br><span class="hljs-comment">// 使用了 PreparedStatement 却没有使用 ? 占位符而是直接拼接</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from user where id =&quot;</span>+req.getParameter(<span class="hljs-string">&quot;id&quot;</span>);<br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">pst</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> pst.executeQuery();<br><span class="hljs-comment">// 安全的写法</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select * from user where id = ?&quot;</span>;				<span class="hljs-comment">// 参数占位符</span><br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">pstt</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br>pstt.setInt(<span class="hljs-number">1</span>, Integer.parseInt(req.getParameter(<span class="hljs-string">&quot;id&quot;</span>)));	<span class="hljs-comment">// 强制转换为 int , 添加到模板参数位置</span><br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> pstt.executeQuery();<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用 Statement 直接执行 SQL 语句</span><br><span class="hljs-type">Statement</span> <span class="hljs-variable">statement</span> <span class="hljs-operator">=</span> con.createStatement();<br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select  from users where username = &#x27;&quot;</span> + username + <span class="hljs-string">&quot;&#x27;&quot;</span>;<br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> statement.executeQuery(sql);<br><span class="hljs-comment">// 使用了 PreparedStatement 却没有使用 ? 占位符而是直接拼接</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select  from user where id =&quot;</span>+req.getParameter(<span class="hljs-string">&quot;id&quot;</span>);<br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">pst</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> pst.executeQuery();<br><span class="hljs-comment">// 安全的写法</span><br><span class="hljs-type">String</span> <span class="hljs-variable">sql</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;select  from user where id = ?&quot;</span>;				<span class="hljs-comment">// 参数占位符</span><br><span class="hljs-type">PreparedStatement</span> <span class="hljs-variable">pstt</span> <span class="hljs-operator">=</span> conn.prepareStatement(sql);<br>pstt.setInt(<span class="hljs-number">1</span>, Integer.parseInt(req.getParameter(<span class="hljs-string">&quot;id&quot;</span>)));	<span class="hljs-comment">// 强制转换为 int , 添加到模板参数位置</span><br><span class="hljs-type">ResultSet</span> <span class="hljs-variable">rs</span> <span class="hljs-operator">=</span> pstt.executeQuery();<br></code></pre></td></tr></table></figure>
 
-<h3 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a><em>Mybatis</em></h3><p> <em>Mybatis</em> 使用 <em>parameterType</em> 向 <em>sql</em> 语句传参，在 <em>sql</em> 引用传参可以使用 <code>#&#123;Parameter&#125;</code> 和 <code>$&#123;Parameter&#125;</code> 两种方式。</p>
+<h3 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h3><p> Mybatis 使用 parameterType 向 sql 语句传参，在 sql 引用传参可以使用 <code>#&#123;Parameter&#125;</code> 和 <code>$&#123;Parameter&#125;</code> 两种方式。</p>
 <ul>
 <li><code>#&#123;Parameter&#125;</code> ：预编译构造SQL语句</li>
 <li><code>$&#123;Parameter&#125;</code> ：直接拼接构造SQL语句</li>
 </ul>
-<p> <em>Mybatis</em> 的 <em>sql</em> 语句是放在 <em>xml</em> 文件中的，而其标签中的 <em>id</em> 就是方法名，所以可以直接搜索 <em>id</em> 获取方法位置。</p>
-<p>存在 <em>SQL</em> 注入的场景：</p>
+<p> Mybatis 的 sql 语句是放在 xml 文件中的，而其标签中的 id 就是方法名，所以可以直接搜索 id 获取方法位置。</p>
+<p>存在 SQL 注入的场景：</p>
 <ul>
-<li>参数在 <em>like</em>、<em>in</em>、<em>order by</em> 位置时，使用  <code>#&#123;Parameter&#125;</code>  会导致程序报错或语句失效，所以只能使用  <code>$&#123;Parameter&#125;</code> ，那么当过滤不严谨时就会导致 <em>SQL</em> 注入</li>
+<li>参数在 like、in、order by 位置时，使用  <code>#&#123;Parameter&#125;</code>  会导致程序报错或语句失效，所以只能使用  <code>$&#123;Parameter&#125;</code> ，那么当过滤不严谨时就会导致 SQL 注入</li>
 </ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- like 使用 $&#123;Parameter&#125; 导致 SQL 注入  --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;findByUserNameVuln02&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;String&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    select * from users where username like &#x27;%$&#123;_parameter&#125;%&#x27;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- like 的正确写法 --&gt;</span><br>mysql:<br>    select * from users where username like concat(&#x27;%&#x27;,#&#123;username&#125;,&#x27;%&#x27;)<br>oracle:<br>    select * from users where username like &#x27;%&#x27;||#&#123;username&#125;||&#x27;%&#x27;<br>sqlserver:<br>    select * from users where username like &#x27;%&#x27;+#&#123;username&#125;+&#x27;%&#x27;<br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- like 使用 $&#123;Parameter&#125; 导致 SQL 注入  --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;findByUserNameVuln02&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;String&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    select  from users where username like &#x27;%$&#123;_parameter&#125;%&#x27;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- like 的正确写法 --&gt;</span><br>mysql:<br>    select  from users where username like concat(&#x27;%&#x27;,#&#123;username&#125;,&#x27;%&#x27;)<br>oracle:<br>    select  from users where username like &#x27;%&#x27;||#&#123;username&#125;||&#x27;%&#x27;<br>sqlserver:<br>    select  from users where username like &#x27;%&#x27;+#&#123;username&#125;+&#x27;%&#x27;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a><em>Hibernate</em></h3><p><em>Hibernate</em> 可以使用 <em>hql</em> 来执行 <em>SQL</em> 语句，也可以直接执行 <em>SQL</em> 语句，无论是哪种方式都有可能导致 <em>SQL</em> 注入。</p>
-<p><em>hql</em> 语句：</p>
+<h3 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h3><p>Hibernate 可以使用 hql 来执行 SQL 语句，也可以直接执行 SQL 语句，无论是哪种方式都有可能导致 SQL 注入。</p>
+<p>hql 语句：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">String hql <span class="hljs-operator">=</span> &quot;from People where username = &#x27;&quot; <span class="hljs-operator">+</span> username <span class="hljs-operator">+</span> &quot;&#x27;&quot;<br></code></pre></td></tr></table></figure>
 
-<p><em>hql</em> 可以通过 “参数绑定” 的方式来预防 <em>SQL</em> 注入，其实也就是预编译了：</p>
+<p>hql 可以通过 “参数绑定” 的方式来预防 SQL 注入，其实也就是预编译了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 命名参数绑定</span><br><span class="hljs-type">String</span> <span class="hljs-variable">parameter</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;g1ts&quot;</span>;<br>Query&lt;User&gt; query = session.createQuery(<span class="hljs-string">&quot;from users name = :name&quot;</span>, User.class);<br>query.setParameter(<span class="hljs-string">&quot;name&quot;</span>, parameter);<br><span class="hljs-comment">// 位置参数绑定</span><br><span class="hljs-type">String</span> <span class="hljs-variable">parameter</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;g1ts&quot;</span>;<br>Query&lt;User&gt; query = session.createQuery(<span class="hljs-string">&quot;from users name = ?1&quot;</span>, User.class);<br>query.setParameter(<span class="hljs-number">1</span>, parameter);<br></code></pre></td></tr></table></figure>
 
-<p><em>Hibernate</em> 存在 <em>SQL</em> 注入的场景就是不使用 “参数绑定” ，而直接拼接参数，且不过滤了。</p>
+<p>Hibernate 存在 SQL 注入的场景就是不使用 “参数绑定” ，而直接拼接参数，且不过滤了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 直接拼接, 导致 SQL 注入</span><br>session.createQuery(<span class="hljs-string">&quot;FROM User where name=&#x27;&quot;</span> + parameter + <span class="hljs-string">&quot;&#x27;&quot;</span>)<br></code></pre></td></tr></table></figure>
 
-<h2 id="XSS-跨站"><a href="#XSS-跨站" class="headerlink" title="XSS 跨站"></a><em>XSS</em> 跨站</h2><p><em>XSS</em> 产生原因：</p>
+<h2 id="XSS-跨站"><a href="#XSS-跨站" class="headerlink" title="XSS 跨站"></a>XSS 跨站</h2><p>XSS 产生原因：</p>
 <ul>
 <li>后端对用户输入未过滤|过滤不完全就被输出到页面</li>
 </ul>
-<p><em>Java</em> 中的 <em>XSS</em> 审计和 <em>PHP</em> 的也是一个思路，通过 “功能点” 找到对应源码，然后审计看是否存在过滤、或过滤是否可以绕过。</p>
-<p>这里的 “功能点” 是指 “用户输入的参数会回显到页面”，过滤有 <em>2</em> 点，一是 <em>Filter</em> 中的过滤器，二是是否看功能位置是否对用户输入的参数过滤、转义等。</p>
-<p><em>Java</em> 中的 “输出到页面” 是通过 <em>ModelAndView</em> 来完成，模型设置好模板路径，然后由视图层渲染为页面。</p>
-<h2 id="失效的身份验证"><a href="#失效的身份验证" class="headerlink" title="失效的身份验证"></a>失效的身份验证</h2><p><em>Java</em> 实现身份验证的几种情况：</p>
+<p>Java 中的 XSS 审计和 PHP 的也是一个思路，通过 “功能点” 找到对应源码，然后审计看是否存在过滤、或过滤是否可以绕过。</p>
+<p>这里的 “功能点” 是指 “用户输入的参数会回显到页面”，过滤有 2 点，一是 Filter 中的过滤器，二是是否看功能位置是否对用户输入的参数过滤、转义等。</p>
+<p>Java 中的 “输出到页面” 是通过 ModelAndView 来完成，模型设置好模板路径，然后由视图层渲染为页面。</p>
+<h2 id="失效的身份验证"><a href="#失效的身份验证" class="headerlink" title="失效的身份验证"></a>失效的身份验证</h2><p>Java 实现身份验证的几种情况：</p>
 <ul>
 <li>单纯代码实现</li>
 <li>引入第三方组件（ 看组件配置信息，看允许匿名访问目录是否存在危险函数 ）</li>
