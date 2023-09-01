@@ -16,22 +16,23 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Shiro 漏洞复现Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550https:&#x2F;&#x2F;goodapple.top&#x2F;archives&#x2F;139 漏洞编号：CVE-2016-4437 漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的">
+    <meta name="description" content="Shiro反序列化Apache Shiro 是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550 漏洞编号：CVE-2016-4437 影响版本：Apache Shiro &lt;&#x3D; 1.4.1 利用条件：符合版本 + 使用的是默认密钥  漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shiro 漏洞复现">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/08/31/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Shiro%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:title" content="Shiro反序列化">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/08/31/Java%E5%AE%89%E5%85%A8/Shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="Shiro 漏洞复现Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550https:&#x2F;&#x2F;goodapple.top&#x2F;archives&#x2F;139 漏洞编号：CVE-2016-4437 漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的">
+<meta property="og:description" content="Shiro反序列化Apache Shiro 是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。 Shiro550 漏洞编号：CVE-2016-4437 影响版本：Apache Shiro &lt;&#x3D; 1.4.1 利用条件：符合版本 + 使用的是默认密钥  漏洞原理Apache Shiro 1.2.4 及以前版本中，加密的用户信息">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311716846.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718643.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718992.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309011544767.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311721564.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311726651.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311731307.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733324.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733672.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311736330.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309011651861.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311737581.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738320.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311738638.png">
@@ -39,15 +40,15 @@
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311745237.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311744389.png">
 <meta property="article:published_time" content="2023-08-31T06:59:51.000Z">
-<meta property="article:modified_time" content="2023-08-31T11:15:13.295Z">
+<meta property="article:modified_time" content="2023-09-01T08:51:27.972Z">
 <meta property="article:author" content="fuming">
-<meta property="article:tag" content="漏洞复现">
+<meta property="article:tag" content="Java安全">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311716846.png">
   
   
   
-  <title>Shiro 漏洞复现 - fuyoumingyan&#39;s blog</title>
+  <title>Shiro反序列化 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Shiro 漏洞复现"></span>
+            <span id="subtitle" data-typed-text="Shiro反序列化"></span>
           
         </div>
 
@@ -236,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.6k 字
         
       </span>
     
@@ -247,7 +248,7 @@
         
         
         
-          7 分钟
+          9 分钟
         
       </span>
     
@@ -285,15 +286,18 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Shiro 漏洞复现</h1>
+            <h1 style="display: none">Shiro反序列化</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Shiro-漏洞复现"><a href="#Shiro-漏洞复现" class="headerlink" title="Shiro 漏洞复现"></a><em>Shiro</em> 漏洞复现</h1><p>Apache Shiro是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。</p>
-<h2 id="Shiro550"><a href="#Shiro550" class="headerlink" title="Shiro550"></a><em>Shiro550</em></h2><p><a target="_blank" rel="noopener" href="https://goodapple.top/archives/139">https://goodapple.top/archives/139</a></p>
-<p>漏洞编号：CVE-2016-4437</p>
-<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的 Cookie 中。攻击者可以使用Shiro 的默认密钥伪造用户 Cookie，触发 Java 反序列化漏洞，进而在目标机器上执行任意命令。</p>
+                <h1 id="Shiro反序列化"><a href="#Shiro反序列化" class="headerlink" title="Shiro反序列化"></a>Shiro反序列化</h1><p>Apache Shiro 是一款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、易用，同时也能提供健壮的安全性。</p>
+<h2 id="Shiro550"><a href="#Shiro550" class="headerlink" title="Shiro550"></a>Shiro550</h2><ul>
+<li>漏洞编号：CVE-2016-4437</li>
+<li>影响版本：Apache Shiro &lt;&#x3D; 1.4.1</li>
+<li>利用条件：符合版本 + 使用的是默认密钥</li>
+</ul>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Apache Shiro 1.2.4 及以前版本中，加密的用户信息序列化后存储在名为 remember-me 的 Cookie 中。而 Cookie 字段会在解码解密后被反序列化，其加密（ AES 默认密钥 ）和编码方式（ Base64 ）可控，Cookie 可控，导致反序列化漏洞。</p>
 <h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>环境搭建：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">git</span> clone git@github.com:apache/shiro.git<br><span class="hljs-attribute">cd</span> shiro<br><span class="hljs-attribute">git</span> checkout shiro-root-<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
@@ -307,6 +311,8 @@
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718643.png" srcset="/img/loading.gif" lazyload alt="image-20230831171816606"></p>
 <p>这里的 <code>convertPrincipalsToBytes</code> 先序列化，然后再使用 <code>encrypt</code> 方法加密：</p>
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311718992.png" srcset="/img/loading.gif" lazyload alt="image-20230831171837956"></p>
+<p>跟序列化，使用 <code>writeObject</code> 的：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309011544767.png" srcset="/img/loading.gif" lazyload alt="image-20230901154437629"></p>
 <p>跟  <code>encrypt</code> 方法：</p>
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311721564.png" srcset="/img/loading.gif" lazyload alt="image-20230831172107526"></p>
 <p>注释表示该方法是通过指定的 key 加密数据：</p>
@@ -317,7 +323,7 @@
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733324.png" srcset="/img/loading.gif" lazyload alt="image-20230831173331284"></p>
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311733672.png" srcset="/img/loading.gif" lazyload alt="image-20230831173348651"></p>
 <p>最后跟到这里：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311736330.png" srcset="/img/loading.gif" lazyload alt="image-20230831173626301"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309011651861.png" srcset="/img/loading.gif" lazyload alt="image-20230901165103799"></p>
 <p>AES 加密，且 key 是一个常量：</p>
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311737581.png" srcset="/img/loading.gif" lazyload alt="image-20230831173707556"></p>
 <p>这时加密过程已经晚了，后再退回来整理一下：</p>
@@ -331,7 +337,24 @@
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308311744389.png" srcset="/img/loading.gif" lazyload alt="image-20230831174433356"></p>
 <p>具体的解密就不跟了，AES 是对称加密，加解密的 key 是相同的。</p>
 <p>这个漏洞的成因就在这里，Cookie 值可控，AES 加密 Key 可控，那么反序列化的数据就可控，导致了反序列化漏洞的产生。</p>
-<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><h4 id="URLDNS"><a href="#URLDNS" class="headerlink" title="URLDNS"></a>URLDNS</h4>
+<h2 id="Shiro721"><a href="#Shiro721" class="headerlink" title="Shiro721"></a>Shiro721</h2><ul>
+<li>漏洞编码：CVE-2019-12422</li>
+<li>影响版本：Apache Shiro &lt;&#x3D; 1.4.1</li>
+<li>利用条件：合法 Cookie + 爆破</li>
+</ul>
+<h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Shiro721 和 Shrio550 的不同之处在于 Shiro550 中 AES 加密密钥是固定值，而在 Shiro721 中的密钥是随机生成的。</p>
+<p>不过由于 Shiro721 中使用 AES-128-CBC 来进行加密，加密方式属于 CBC 模式，可利用 Padding Oracle Attack（ 填充提升攻击 ）来绕过密钥直接构造攻击密文。</p>
+<p>可以直接构造密文，也就等同于反序列化数据可控，造成反序列化漏洞。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://goodapple.top/archives/217">CBC字节翻转攻击&amp;Padding Oracle Attack原理解析</a></li>
+</ul>
+<h3 id="漏洞流程"><a href="#漏洞流程" class="headerlink" title="漏洞流程"></a>漏洞流程</h3><ul>
+<li>登录网站获取合法 Cookie</li>
+<li>使用 rememberMe 字段进行Padding Oracle Attack，获取 intermediary</li>
+<li>利用 intermediary 构造出恶意的反序列化密文作为 Cookie</li>
+<li>使用新的 Cookie 请求网站执行攻击</li>
+</ul>
+
                 
               </div>
             
@@ -354,7 +377,7 @@
   
     <span>></span>
     
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/Java%E5%AE%89%E5%85%A8/" class="category-chain-item">Java安全</a>
   
   
 
@@ -371,7 +394,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
+        <a href="/tags/Java%E5%AE%89%E5%85%A8/">#Java安全</a>
       
     </div>
   
@@ -383,8 +406,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Shiro 漏洞复现</div>
-      <div>https://fuyoumingyan.github.io/2023/08/31/漏洞复现/Shiro漏洞复现/</div>
+      <div>Shiro反序列化</div>
+      <div>https://fuyoumingyan.github.io/2023/08/31/Java安全/Shiro反序列化/</div>
     </div>
     <div class="license-meta">
       
