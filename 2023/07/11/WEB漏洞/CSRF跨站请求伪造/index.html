@@ -16,24 +16,24 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="任意文件上传漏洞原理服务端对文件上传的类型未做限制或者不严谨导致攻击者可以上传其他类型的文件。 通常是尝试上传服务端可解析的脚本文件，也就是 webShell，来拿到网站权限。 不过也可以根据情况来有一些其他的利用：  上传 svg、html 等造成 XSS 跨站 上传一个超大的文件，造成拒绝服务漏洞  该漏洞需要考虑的是如何去绕过上传限制，从而上传 webshell，所以是从文件上传过滤来入手。">
+    <meta name="description" content="CSRF跨站请求伪造漏洞原理：伪装成受信任用户请求受信任的网站，其实就是攻击者利用目标用户的身份，以目标用户的名义执行某些非法操作。其也被称为 One Click Attack。 漏洞成因：网站的身份验证机制有一定问题，它无法判断该操作是否由该用户执行。  漏洞利用：BurpSuite 中右键生成 CSRF POC 即可 CSRF 可以和 XSS 形成组合拳，如 XSS 自动调用 CSRF POC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="任意文件上传">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/07/11/WEB%E6%BC%8F%E6%B4%9E/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:title" content="CSRF跨站请求伪造">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/07/11/WEB%E6%BC%8F%E6%B4%9E/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="任意文件上传漏洞原理服务端对文件上传的类型未做限制或者不严谨导致攻击者可以上传其他类型的文件。 通常是尝试上传服务端可解析的脚本文件，也就是 webShell，来拿到网站权限。 不过也可以根据情况来有一些其他的利用：  上传 svg、html 等造成 XSS 跨站 上传一个超大的文件，造成拒绝服务漏洞  该漏洞需要考虑的是如何去绕过上传限制，从而上传 webshell，所以是从文件上传过滤来入手。">
+<meta property="og:description" content="CSRF跨站请求伪造漏洞原理：伪装成受信任用户请求受信任的网站，其实就是攻击者利用目标用户的身份，以目标用户的名义执行某些非法操作。其也被称为 One Click Attack。 漏洞成因：网站的身份验证机制有一定问题，它无法判断该操作是否由该用户执行。  漏洞利用：BurpSuite 中右键生成 CSRF POC 即可 CSRF 可以和 XSS 形成组合拳，如 XSS 自动调用 CSRF POC">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051157073.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309081042333.png">
 <meta property="article:published_time" content="2023-07-11T06:59:51.000Z">
-<meta property="article:modified_time" content="2023-09-05T03:57:47.394Z">
+<meta property="article:modified_time" content="2023-09-08T02:51:59.002Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="WEB漏洞">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051157073.png">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309081042333.png">
   
   
   
-  <title>任意文件上传 - fuyoumingyan&#39;s blog</title>
+  <title>CSRF跨站请求伪造 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="任意文件上传"></span>
+            <span id="subtitle" data-typed-text="CSRF跨站请求伪造"></span>
           
         </div>
 
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          566 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          9 分钟
+          4 分钟
         
       </span>
     
@@ -271,94 +271,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">任意文件上传</h1>
+            <h1 style="display: none">CSRF跨站请求伪造</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="任意文件上传"><a href="#任意文件上传" class="headerlink" title="任意文件上传"></a>任意文件上传</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>服务端对文件上传的类型未做限制或者不严谨导致攻击者可以上传其他类型的文件。</p>
-<p>通常是尝试上传服务端可解析的脚本文件，也就是 webShell，来拿到网站权限。</p>
-<p>不过也可以根据情况来有一些其他的利用：</p>
-<ul>
-<li>上传 <code>svg、html</code> 等造成 XSS 跨站</li>
-<li>上传一个超大的文件，造成拒绝服务漏洞</li>
-</ul>
-<p>该漏洞需要考虑的是如何去绕过上传限制，从而上传 <code>webshell</code>，所以是从文件上传过滤来入手。</p>
-<h2 id="上传过滤"><a href="#上传过滤" class="headerlink" title="上传过滤"></a>上传过滤</h2><ul>
-<li>后缀名过滤<ul>
-<li>前端</li>
-<li>白名单</li>
-<li>黑名单</li>
-</ul>
+                <h1 id="CSRF跨站请求伪造"><a href="#CSRF跨站请求伪造" class="headerlink" title="CSRF跨站请求伪造"></a>CSRF跨站请求伪造</h1><p>漏洞原理：伪装成受信任用户请求受信任的网站，其实就是攻击者利用目标用户的身份，以目标用户的名义执行某些非法操作。其也被称为 <code>One Click Attack</code>。</p>
+<p>漏洞成因：网站的身份验证机制有一定问题，它无法判断该操作是否由该用户执行。</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309081042333.png" srcset="/img/loading.gif" lazyload alt="image-20230908104245281"></p>
+<p>漏洞利用：BurpSuite 中右键生成 CSRF POC 即可</p>
+<p>CSRF 可以和 XSS 形成组合拳，如 XSS 自动调用 CSRF POC，或者 CSRF 自动构造存储 XSS 等等。</p>
+<p>漏洞修复：</p>
+<ol>
+<li><p>增加 Token 验证（常用做法），对关键操作增加 Token 参数，token 必须随机，每次都不一样</p>
 </li>
-<li>文件内容过滤<ul>
-<li>MIME</li>
-<li>文件头</li>
-<li>关键字</li>
-</ul>
+<li><p>关于安全的会话管理（避免会话被利用）</p>
+<ol>
+<li>不要在客户端保存敏感信息（比如身份验证信息）</li>
+<li>退出、关闭浏览器时的会话过期机制</li>
+<li>设置会话过机制，比如 15 分钟无操作，则自动登录超时</li>
+</ol>
 </li>
-</ul>
-<h2 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h2><h3 id="后缀名过滤"><a href="#后缀名过滤" class="headerlink" title="后缀名过滤"></a>后缀名过滤</h3><h4 id="前端过滤"><a href="#前端过滤" class="headerlink" title="前端过滤"></a>前端过滤</h4><ul>
-<li>禁用 、修改 JS</li>
-<li>合法后缀上传，抓包修改文件名</li>
-</ul>
-<h4 id="黑名单"><a href="#黑名单" class="headerlink" title="黑名单"></a>黑名单</h4><p>黑名单就是应用程序定义一个不允许上传的后缀名列表，然后获取上传文件的后缀，与之进行匹配，在黑名单中就禁止上传。</p>
+<li><p>访问控制安全管理</p>
+<ol>
+<li>敏感信息的修改时需要身份进行二次认证，比如修改账号密码，需要判断旧 密码</li>
+<li>敏感信息的修改使用 POST，而不是 GET</li>
+<li>通过 HTTP 头部中的 REFERER 来限制原页面</li>
+</ol>
+</li>
+<li><p>增加验证码，一般在登录（防暴力破解），也可以用在其他重要信息操作的表单中（需要考虑可用性）</p>
+</li>
+</ol>
+<p>修复介绍：</p>
 <ul>
-<li>特殊可解析后缀</li>
-<li>点绕过</li>
-<li>大小写绕过</li>
-<li>双写绕过</li>
-<li>空格绕过</li>
-<li>文件名可控绕过</li>
-<li><code>::$DATA</code> </li>
-<li><code>.user.ini</code> </li>
-<li><code>.htaccess</code></li>
-</ul>
-<h5 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a><code>::$DATA</code></h5><p>在 windows 环境中会把 <code>::$DATA</code> 之后的数据当文件流处理，而不是属于文件名。</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">shell.php::<span class="hljs-variable">$DATA</span>.png<br></code></pre></td></tr></table></figure>
-
-<h5 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a><code>.htaccess</code></h5><p>前提条件：<code>Apache</code> 开启了 <code>rewrite</code> 模块</p>
-<p>原理：在访问文件时，重写指定文件的扩展名</p>
-<p>比如该 <code>.htaccess</code> 作用为在访问 <code>evil.gif</code> 时，让 <code>apache</code> 将其解析为 PHP 文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">IfModule</span> <span class="hljs-attr">mime_module</span>&gt;</span><br>AddHandler php5-script .gif         <br>SetHandler application/x-httpd-php    <br><span class="hljs-tag">&lt;/<span class="hljs-name">IfModule</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">FilesMatch</span> &quot;<span class="hljs-attr">evil.gif</span>&quot;&gt;</span><br>SetHandler application/x-httpd-php  <br>AddHandler php5-script .gif         <br><span class="hljs-tag">&lt;/<span class="hljs-name">FilesMatch</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">IfModule</span> <span class="hljs-attr">mime_module</span>&gt;</span><br>AddType application/x-httpd-php .gif<br><span class="hljs-tag">&lt;/<span class="hljs-name">IfModule</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h5 id="user-ini"><a href="#user-ini" class="headerlink" title=".user.ini"></a><code>.user.ini</code></h5><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/php-user-ini-backdoor.html">user.ini 文件构成的 PHP 后门</a></p>
-<p>其原理是可以通过 <code>.user.ini</code> 指定一个文件，让与 <code>.user.ini</code> 同目录下的 PHP 文件都自动包含该文件。</p>
-<p>利用的话，上传 <code>.user.ini</code> 然后访问同目录下的一个 PHP 文件即可。</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">auto_prepend_file</span>=<span class="hljs-number">1</span>.gif<br></code></pre></td></tr></table></figure>
-
-<h4 id="白名单"><a href="#白名单" class="headerlink" title="白名单"></a>白名单</h4><ul>
-<li>00 截断</li>
-<li>解析漏洞</li>
-</ul>
-<h5 id="00-截断"><a href="#00-截断" class="headerlink" title="00 截断"></a>00 截断</h5><p>原理：<code>00</code> 其实最后都被解析为 <code>chr(0)</code>，其代表一个空字符，当一个字符串中存在空字符时，在被解析的时候空字符后面的字符会被丢弃，导致绕过后面的合法后缀被丢弃。</p>
-<p>利用：在要截断的地方加一个空格，如 <code>shell.php .png</code>，然后查看 Hex 编码，修改空格对应的 <code>20</code> 为 <code>00</code>。</p>
-<h5 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h5><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309051157073.png" srcset="/img/loading.gif" lazyload alt="image-20230905115733008"></p>
-<h3 id="内容过滤"><a href="#内容过滤" class="headerlink" title="内容过滤"></a>内容过滤</h3><ul>
-<li>伪造 MIME</li>
-<li>伪造文件头</li>
-<li>绕过滤</li>
-</ul>
-<h5 id="伪造-MIME"><a href="#伪造-MIME" class="headerlink" title="伪造 MIME"></a>伪造 MIME</h5><p>这个 MIME 就是请求头的 <code>Content-Type</code> 字段，这里直接伪造即可：</p>
-<ul>
-<li><code>image/jpeg</code></li>
-<li><code>image/png</code></li>
-<li><code>image/apng</code></li>
-<li><code>image/avif</code></li>
-<li><code>image/gif</code></li>
-<li><code>image/svg+xml</code></li>
-<li><code>image/webp</code></li>
-</ul>
-<h5 id="伪造文件头"><a href="#伪造文件头" class="headerlink" title="伪造文件头"></a>伪造文件头</h5><p>文件头是 POST 数据的开头那里，<code>gif</code> 文件头都是可打印字符 <code>GIF89a</code>，其他的可以直接获取一个图片。</p>
-<h5 id="绕过滤"><a href="#绕过滤" class="headerlink" title="绕过滤"></a>绕过滤</h5><p>这里的过滤其实就是后端有一个正则匹配，比如匹配 <code>php、eval</code> 字段，这个绕过其实就上传免杀马就行。 </p>
-<h2 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h2><p>黑盒测试：</p>
-<ul>
-<li>找到文件上传处，手动测试绕过</li>
-<li>看是否有 Nday，如第三方编辑器漏洞</li>
-</ul>
-<p>白盒测试：</p>
-<ul>
-<li>通过文件上传功能点，找代码看是否存在过滤</li>
+<li>网站要执行某操作，先请求服务器获取 Token，然后携带该 Token 去执行操作，执行后 Token 失效</li>
+<li>REFERER 表示网站来源，CSRF 构造的请求来源自然是一个恶意的网站，则 REFERER 不符合</li>
 </ul>
 
                 
@@ -412,8 +359,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>任意文件上传</div>
-      <div>https://fuyoumingyan.github.io/2023/07/11/WEB漏洞/任意文件上传/</div>
+      <div>CSRF跨站请求伪造</div>
+      <div>https://fuyoumingyan.github.io/2023/07/11/WEB漏洞/CSRF跨站请求伪造/</div>
     </div>
     <div class="license-meta">
       
@@ -457,9 +404,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/07/11/WEB%E6%BC%8F%E6%B4%9E/CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" title="CSRF跨站请求伪造">
+                      <a href="/2023/07/22/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/windows%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" title="windows 提权">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CSRF跨站请求伪造</span>
+                        <span class="hidden-mobile">windows 提权</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -467,8 +414,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/07/11/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/BurpSuite/" title="BurpSuite">
-                        <span class="hidden-mobile">BurpSuite</span>
+                      <a href="/2023/07/11/WEB%E6%BC%8F%E6%B4%9E/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="任意文件上传">
+                        <span class="hidden-mobile">任意文件上传</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

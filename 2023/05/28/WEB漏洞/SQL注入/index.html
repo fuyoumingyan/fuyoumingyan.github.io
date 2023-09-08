@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/%25E4%25BA%258C%25E6%25AC%25A1%25E6%25B3%25A8%25E5%2585%25A5.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20230522232214082.png">
 <meta property="article:published_time" content="2023-05-28T09:41:56.000Z">
-<meta property="article:modified_time" content="2023-09-01T07:35:38.285Z">
+<meta property="article:modified_time" content="2023-09-08T08:11:10.054Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="WEB漏洞">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.7k 字
+          9.5k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          54 分钟
+          53 分钟
         
       </span>
     
@@ -651,7 +651,6 @@
 <h2 id="DNS-查询注入"><a href="#DNS-查询注入" class="headerlink" title="DNS 查询注入"></a>DNS 查询注入</h2><p>除了直接回显、错误回显、无回显之外，还有一种思路与它们不同，也就是”外带法”，既然页面无法回显，那么就想办法将要查询的数据外带出来。</p>
 <p>这里的”外带”使用的是 DNS 协议，将数据外带到 DNSlog ( 域名解析的日志 ) 这里。</p>
 <p>比如：域名是 <code>34880287.ipv6.1433.eu.org</code> ，我这里请求一个 <code>fuyoumingyan.34880287.ipv6.1433.eu.org</code> 这个域名，请求之后，域名服务器就会记录下这个解析。一般外带的数据是放在域名前缀这里的，也就是 <code>fuyoumingyan</code>。</p>
-<p>![image-20230522223321839](C:&#x2F;Users&#x2F;Administrator&#x2F;Desktop&#x2F;SQL 注入笔记.assets&#x2F;image-20230522223321839.png)</p>
 <p>MySql 中实现 DNS 外带注入的方法：</p>
 <ul>
 <li><code>load_file</code> + <code>windows UNC</code> 读取其他域名下的文件</li>
@@ -792,9 +791,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="PHP 反序列化">
+                      <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/XSS%20%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB/" title="XSS 跨站脚本攻击">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">PHP 反序列化</span>
+                        <span class="hidden-mobile">XSS 跨站脚本攻击</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -802,8 +801,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/XSS%20%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB/" title="XSS 跨站脚本攻击">
-                        <span class="hidden-mobile">XSS 跨站脚本攻击</span>
+                      <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/XXE/" title="XXE 漏洞">
+                        <span class="hidden-mobile">XXE 漏洞</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
