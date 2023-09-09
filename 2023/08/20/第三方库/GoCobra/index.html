@@ -16,22 +16,26 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Go 环境配置https:&#x2F;&#x2F;studygolang.com&#x2F;dl Linux 安装 Go12345678910# 下载 go 源码wget https:&#x2F;&#x2F;studygolang.com&#x2F;dl&#x2F;golang&#x2F;go1.20.4.linux-amd64.tar.gz# 解压到 &#x2F;usr&#x2F;localtar -C &#x2F;usr&#x2F;local -xzf go1.20.4.linux-amd64.tar.gz#">
+    <meta name="description" content="Go CobraCobra 是一个库，其提供简单的接口来创建强大现代的 CLI 接口，类似于 git 或者 go 工具。同时，它也是一个应用，用来生成个人应用框架，从而开发以 Cobra 为基础的应用。Docker 源码中使用了 Cobra。 安装 Cobra： 1go get github.com&#x2F;spf13&#x2F;cobra&#x2F;cobra  安装成功后可在终端执行 cobra-cli  命令查看是否安">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go 环境配置">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/06/09/Golang/Go%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:title" content="Go Cobra">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/08/20/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/GoCobra/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="Go 环境配置https:&#x2F;&#x2F;studygolang.com&#x2F;dl Linux 安装 Go12345678910# 下载 go 源码wget https:&#x2F;&#x2F;studygolang.com&#x2F;dl&#x2F;golang&#x2F;go1.20.4.linux-amd64.tar.gz# 解压到 &#x2F;usr&#x2F;localtar -C &#x2F;usr&#x2F;local -xzf go1.20.4.linux-amd64.tar.gz#">
+<meta property="og:description" content="Go CobraCobra 是一个库，其提供简单的接口来创建强大现代的 CLI 接口，类似于 git 或者 go 工具。同时，它也是一个应用，用来生成个人应用框架，从而开发以 Cobra 为基础的应用。Docker 源码中使用了 Cobra。 安装 Cobra： 1go get github.com&#x2F;spf13&#x2F;cobra&#x2F;cobra  安装成功后可在终端执行 cobra-cli  命令查看是否安">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-06-09T14:55:36.000Z">
-<meta property="article:modified_time" content="2023-09-03T06:10:07.948Z">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308200937949.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308200948231.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308201005199.png">
+<meta property="article:published_time" content="2023-08-20T01:30:46.000Z">
+<meta property="article:modified_time" content="2023-09-03T06:11:01.798Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308200937949.png">
   
   
   
-  <title>Go 环境配置 - fuyoumingyan&#39;s blog</title>
+  <title>Go Cobra - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go 环境配置"></span>
+            <span id="subtitle" data-typed-text="Go Cobra"></span>
           
         </div>
 
@@ -208,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-06-09 22:55" pubdate>
-          2023年6月9日 晚上
+        <time datetime="2023-08-20 09:30" pubdate>
+          2023年8月20日 上午
         </time>
       </span>
     
@@ -220,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          598 字
+          1.3k 字
         
       </span>
     
@@ -231,7 +235,7 @@
         
         
         
-          4 分钟
+          8 分钟
         
       </span>
     
@@ -269,18 +273,64 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go 环境配置</h1>
+            <h1 style="display: none">Go Cobra</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Go-环境配置"><a href="#Go-环境配置" class="headerlink" title="Go 环境配置"></a>Go 环境配置</h1><p><a target="_blank" rel="noopener" href="https://studygolang.com/dl">https://studygolang.com/dl</a></p>
-<h2 id="Linux-安装-Go"><a href="#Linux-安装-Go" class="headerlink" title="Linux 安装 Go"></a>Linux 安装 Go</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 下载 go 源码</span><br>wget https:<span class="hljs-regexp">//</span>studygolang.com<span class="hljs-regexp">/dl/g</span>olang/go1.<span class="hljs-number">20.4</span>.linux-amd64.tar.gz<br><span class="hljs-comment"># 解压到 /usr/local</span><br>tar -C <span class="hljs-regexp">/usr/</span>local -xzf go1.<span class="hljs-number">20.4</span>.linux-amd64.tar.gz<br><span class="hljs-comment"># 添加环境变量</span><br>echo <span class="hljs-string">&quot;export PATH=$PATH:/usr/local/go/bin&quot;</span> &gt;&gt;  <span class="hljs-regexp">/etc/</span>profile<br><span class="hljs-comment"># 添加 $GOPATH/bin 到环境变量, 用于 go install 工具的运行, go env 查看 $GOPATH</span><br>echo <span class="hljs-string">&quot;export PATH=$PATH:/root/go/bin&quot;</span>  &gt;&gt;  <span class="hljs-regexp">/etc/</span>profile<br><span class="hljs-comment"># 刷新配置</span><br>source <span class="hljs-regexp">/etc/</span>profile<br></code></pre></td></tr></table></figure>
+                <h1 id="Go-Cobra"><a href="#Go-Cobra" class="headerlink" title="Go Cobra"></a>Go Cobra</h1><p>Cobra 是一个库，其提供简单的接口来创建强大现代的 CLI 接口，类似于 git 或者 go 工具。同时，它也是一个应用，用来生成个人应用框架，从而开发以 Cobra 为基础的应用。Docker 源码中使用了 Cobra。</p>
+<p>安装 Cobra：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> github.<span class="hljs-keyword">com</span>/spf13/cobra/cobra<br></code></pre></td></tr></table></figure>
 
-<h2 id="国内代理"><a href="#国内代理" class="headerlink" title="国内代理"></a>国内代理</h2><p><a target="_blank" rel="noopener" href="https://github.com/goproxy/goproxy.cn/blob/master/README.zh-CN.md">https://github.com/goproxy/goproxy.cn/blob/master/README.zh-CN.md</a></p>
-<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">go env -w <span class="hljs-attribute">GO111MODULE</span>=on<br>go env -w <span class="hljs-attribute">GOPROXY</span>=https://goproxy.cn,direct<br></code></pre></td></tr></table></figure>
+<p>安装成功后可在终端执行 cobra-cli  命令查看是否安装成功：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308200937949.png" srcset="/img/loading.gif" lazyload alt="image-20230820093731804"></p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">初始化</span><br>cobra-cli init<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用 viper</span><br>cobra-cli init --viper<br></code></pre></td></tr></table></figure>
 
-<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">GO111MODULE</span>=on<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">GOPROXY</span>=https://goproxy.cn<br></code></pre></td></tr></table></figure>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308200948231.png" srcset="/img/loading.gif" lazyload alt="image-20230820094820139"></p>
+<p>初始化成功后，会自动生成一个 main.go 和 cmd 包，cmd 包下面就是命令行管理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">├── LICENSE<br>├── cmd<br>│   └── root.go<br>├── go.mod<br>├── go.sum<br>└── main.go<br></code></pre></td></tr></table></figure>
+
+<p>root.go 是主命令函数，其下分这几个部分：</p>
+<ul>
+<li><p><code>rootCmd</code>.Command 实例</p>
+<ul>
+<li>Use：命令名称</li>
+</ul>
+<ul>
+<li><p>Short：简短描述</p>
+</li>
+<li><p>Long：详细描述 &#x3D;&gt; 会显示</p>
+</li>
+<li><p>Run()：该命令的执行函数</p>
+</li>
+</ul>
+</li>
+<li><p><code>Execute()</code>：执行 rootCmd.Execute()</p>
+</li>
+<li><p><code>init()</code>：初始化 initConfig() 、设置命令参数</p>
+</li>
+<li><p><code>initConfig()</code>：viper 读取配置文件</p>
+</li>
+</ul>
+<h2 id="添加子命令"><a href="#添加子命令" class="headerlink" title="添加子命令"></a>添加子命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">添加 subdomain 子命令</span><br>cobra-cli add subdomain<br><span class="hljs-meta prompt_"># </span><span class="language-bash">在 subdomain 添加 config 子命令</span><br>cobra-cli add config -p subdomainCmd<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202308201005199.png" srcset="/img/loading.gif" lazyload alt="image-20230820100505106"></p>
+<p>添加子命令后就会在 cmd 下生成对应的文件，例如 subdomain.go 和 config.go。</p>
+<p>这些子命令的内容和 root.go 差不多，不过只有 subdomainCmd 和 init()。</p>
+<h2 id="添加参数"><a href="#添加参数" class="headerlink" title="添加参数"></a>添加参数</h2><p>参数这里分为永久和本地：</p>
+<ul>
+<li>永久：定义它的命令和其子命令都可以使用</li>
+<li>本地：只能在定义它的命令中使用</li>
+</ul>
+<p>在 init() 中添加参数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 永久参数</span><br>rootCmd.PersistentFlags().StringVarP(&amp;target, <span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-string">&quot;u&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;单个URL&quot;</span>)<br><span class="hljs-comment">// 本地参数</span><br>rootCmd.Flags().StringVarP(&amp;targets, <span class="hljs-string">&quot;file&quot;</span>, <span class="hljs-string">&quot;f&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&quot;目标文件&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这里的 target、targets 是需要提前定义好的。不定义的话可以使用 StringP() 这种，没有 Var 的函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">rootCmd.Flags().StringP(<span class="hljs-string">&quot;file&quot;</span>,<span class="hljs-string">&quot;f&quot;</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;目标文件&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>之后可以通过 Get 获取到参数值：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go">Run: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd cobra.Command, args []<span class="hljs-type">string</span>)</span></span> &#123;<br>    file, err := cmd.Flags().GetString(<span class="hljs-string">&quot;file&quot;</span>)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        fmt.Println(err)<br>    &#125;<br>    fmt.Println(file)<br>&#125;,<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -304,7 +354,7 @@
   
     <span>></span>
     
-  <a href="/categories/Golang/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="category-chain-item">基础知识</a>
+  <a href="/categories/Golang/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/" class="category-chain-item">第三方库</a>
   
   
 
@@ -333,8 +383,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go 环境配置</div>
-      <div>https://fuyoumingyan.github.io/2023/06/09/Golang/Go环境配置/</div>
+      <div>Go Cobra</div>
+      <div>https://fuyoumingyan.github.io/2023/08/20/第三方库/GoCobra/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +396,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年6月9日</div>
+          <div>2023年8月20日</div>
         </div>
       
       
@@ -378,9 +428,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/06/11/WAF%E7%BB%95%E8%BF%87/%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87/" title="任意文件上传绕过">
+                      <a href="/2023/08/20/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/Ehole3.1%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="Ehole3.1源码学习">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">任意文件上传绕过</span>
+                        <span class="hidden-mobile">Ehole3.1源码学习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -388,8 +438,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/09/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/Go%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="Go 环境配置">
-                        <span class="hidden-mobile">Go 环境配置</span>
+                      <a href="/2023/08/19/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/TideFinger%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="TideFinger源码学习">
+                        <span class="hidden-mobile">TideFinger源码学习</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

