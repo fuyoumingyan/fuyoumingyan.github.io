@@ -16,12 +16,12 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ksbudomain源码学习项目地址：https:&#x2F;&#x2F;github.com&#x2F;boy-hack&#x2F;ksubdomain 基础知识无状态无状态连接是指无需关系 TCP、UDP 协议状态，不占用系统协议栈资源，忘记 SYN、ACK、FIN、TIMEWIT，不进行会话组包。在实现上也有可能把必要的信息存放在数据包本身。如 masscan、zmp 都使用了这种无状态技术。 pcapPcap是 计算机 网络管理">
+    <meta name="description" content="ksubdomain源码学习项目地址：https:&#x2F;&#x2F;github.com&#x2F;boy-hack&#x2F;ksubdomain 基础知识无状态无状态连接是指无需关系 TCP、UDP 协议状态，不占用系统协议栈资源，忘记 SYN、ACK、FIN、TIMEWIT，不进行会话组包。在实现上也有可能把必要的信息存放在数据包本身。如 masscan、zmp 都使用了这种无状态技术。 pcapPcap是 计算机 网络管理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ksbudomain源码分析">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/09/16/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/ksbudomain%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="ksubdomain源码分析">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/09/16/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/ksubdomain%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="ksbudomain源码学习项目地址：https:&#x2F;&#x2F;github.com&#x2F;boy-hack&#x2F;ksubdomain 基础知识无状态无状态连接是指无需关系 TCP、UDP 协议状态，不占用系统协议栈资源，忘记 SYN、ACK、FIN、TIMEWIT，不进行会话组包。在实现上也有可能把必要的信息存放在数据包本身。如 masscan、zmp 都使用了这种无状态技术。 pcapPcap是 计算机 网络管理">
+<meta property="og:description" content="ksubdomain源码学习项目地址：https:&#x2F;&#x2F;github.com&#x2F;boy-hack&#x2F;ksubdomain 基础知识无状态无状态连接是指无需关系 TCP、UDP 协议状态，不占用系统协议栈资源，忘记 SYN、ACK、FIN、TIMEWIT，不进行会话组包。在实现上也有可能把必要的信息存放在数据包本身。如 masscan、zmp 都使用了这种无状态技术。 pcapPcap是 计算机 网络管理">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309151713181.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309151737291.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309162227404.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309162246765.png">
 <meta property="article:published_time" content="2023-09-16T15:07:53.000Z">
-<meta property="article:modified_time" content="2023-09-17T08:43:08.659Z">
+<meta property="article:modified_time" content="2023-09-17T11:40:42.473Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="源码学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -39,7 +39,7 @@
   
   
   
-  <title>ksbudomain源码分析 - fuyoumingyan&#39;s blog</title>
+  <title>ksubdomain源码分析 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ksbudomain源码分析"></span>
+            <span id="subtitle" data-typed-text="ksubdomain源码分析"></span>
           
         </div>
 
@@ -277,12 +277,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ksbudomain源码分析</h1>
+            <h1 style="display: none">ksubdomain源码分析</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ksbudomain源码学习"><a href="#ksbudomain源码学习" class="headerlink" title="ksbudomain源码学习"></a>ksbudomain源码学习</h1><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/boy-hack/ksubdomain">https://github.com/boy-hack/ksubdomain</a></p>
+                <h1 id="ksubdomain源码学习"><a href="#ksubdomain源码学习" class="headerlink" title="ksubdomain源码学习"></a>ksubdomain源码学习</h1><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/boy-hack/ksubdomain">https://github.com/boy-hack/ksubdomain</a></p>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="无状态"><a href="#无状态" class="headerlink" title="无状态"></a>无状态</h3><p>无状态连接是指无需关系 TCP、UDP 协议状态，不占用系统协议栈资源，忘记 SYN、ACK、FIN、TIMEWIT，不进行会话组包。在实现上也有可能把必要的信息存放在数据包本身。如 masscan、zmp 都使用了这种无状态技术。</p>
 <h3 id="pcap"><a href="#pcap" class="headerlink" title="pcap"></a>pcap</h3><p>Pcap是 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA">计算机</a> <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86">网络管理</a>领域中一个用于 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B8%E6%93%9A%E5%8C%85%E5%88%86%E6%9E%90%E5%99%A8">捕获网络流量</a>的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3">应用程序接口</a>（API）。其名称来源于“抓包”（英语：packet capture）（并非它的正确名称）。Pcap是用 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/C%E8%AF%AD%E8%A8%80">C语言</a>编写的。在 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B1%BBUnix%E7%B3%BB%E7%BB%9F">类Unix系统</a>中libpcap <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%87%BD%E5%BC%8F%E5%BA%AB">库</a>实现了pcap；在 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Microsoft_Windows">Microsoft Windows</a>上，则由Npcap库移植了libpcap， <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Windows_7">Windows 7</a>中可以使用WinPcap库的移植，但现已不再维护。</p>
 <p>监控软件可以使用 pcap 来捕获在 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%85%A6%E7%B6%B2%E8%B7%AF">计算机网络</a>上传输的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B6%B2%E8%B7%AF%E5%B0%81%E5%8C%85">网络数据包</a>。</p>
@@ -502,8 +502,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ksbudomain源码分析</div>
-      <div>https://fuyoumingyan.github.io/2023/09/16/源码学习/ksbudomain源码学习/</div>
+      <div>ksubdomain源码分析</div>
+      <div>https://fuyoumingyan.github.io/2023/09/16/源码学习/ksubdomain源码学习/</div>
     </div>
     <div class="license-meta">
       
