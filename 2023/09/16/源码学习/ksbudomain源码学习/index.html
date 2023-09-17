@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309162227404.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309162246765.png">
 <meta property="article:published_time" content="2023-09-16T15:07:53.000Z">
-<meta property="article:modified_time" content="2023-09-16T15:13:19.083Z">
+<meta property="article:modified_time" content="2023-09-17T08:43:08.659Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="源码学习">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +239,7 @@
         
         
         
-          72 分钟
+          73 分钟
         
       </span>
     
@@ -391,7 +391,7 @@
 <p>根据 DNS 协议和 UDP 协议的一些特点，DNS 协议中 ID 字段，UDP 协议中 SrcPort 字段可以携带数据，在我们收到返回包时，这些字段的数据不会改变。所以利用这些字段的值来确认这个包是我们需要的，并且找到状态表中这个包的位置。</p>
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell">D:.<br>│  ksubdomain.yaml		# 网卡配置信息<br>├─cmd	# 命令参数相关<br>│  └─ksubdomain<br>│          cmd.go<br>│          enum.go		# 枚举模式<br>│          test.go		# 测试本地网卡的最大发送速度<br>│          verify.go	# 验证模式<br>├─core<br>│  │  banner.go			# Banner 信息<br>│  │  subdata.go		# 子域名相关(内嵌,获取切片)<br>│  │  util.go			# 工具类<br>│  │  wildcard.go		# 泛解析域名判断<br>│  ├─device		<br>│  │      device.go		# 获取网卡信息,初始化 pcap<br>│  │      struct.go<br>│  ├─dns<br>│  │      ns.go			# NS 记录<br>│  │      ns_test.go<br>│  ├─gologger<br>│  │      gologger.go	# 日志<br>│  └─options<br>│          options.go	# 配置信息及相关方法<br>└─runner<br>    │  recv.go			# 捕获数据包并获取其中的答案记录<br>    │  result.go		# 结果相关<br>    │  retry.go			# 超时重置机制<br>    │  runner.go		# 枚举主函数<br>    │  send.go			# 使用 gopacket 发送自定义的 DSN 数据包<br>    │  testspeed.go		# 测试本地网卡的最大发送速度<br>    │  wildcard.go		# 泛解析过滤<br>    ├─outputter			# 输出相关<br>    ├─processbar		# 过程(成功,失败...)<br>    ├─result			# 结果结构体<br>    └─statusdb			# 使用 sync.Map 实现一个内存简易读写数据库<br></code></pre></td></tr></table></figure>
 
-<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="枚举模块"><a href="#枚举模块" class="headerlink" title="枚举模块"></a>枚举模块</h3><p>枚举模块大致流程：</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>枚举模块大致流程：</p>
 <ol>
 <li>根据根域名及前缀拼接获取总子域名</li>
 <li>通过请求域名然后捕获数据包提取本机的网卡信息</li>
@@ -438,7 +438,16 @@
 <p>然后就是 <code>defer cancel()</code>，关闭各种管道啥的</p>
 <img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309162246765.png" srcset="/img/loading.gif" lazyload alt="image-20230916224651715" style="zoom:67%;" />
 
-<h3 id="验证模式"><a href="#验证模式" class="headerlink" title="验证模式"></a>验证模式</h3><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<h2 id="源码学习"><a href="#源码学习" class="headerlink" title="源码学习"></a>源码学习</h2><p>大概看了一遍代码后学习到了不少东西：</p>
+<ul>
+<li><code>strings.Builder </code> 构建字符串</li>
+<li><code>Printf</code> 中使用 <code>\r</code> 实现类动态更新</li>
+<li><code>//go:embed file</code> 内嵌文件到变量中</li>
+<li><code>sync.Map</code> 的使用</li>
+<li><code>atomic.AddUint64(&amp;r.recvIndex, 1)</code> 并发安全的计数器操作</li>
+<li>多个协程之间使用管道进行数据传递且通过 <code>死循环 + 多路复用 + 上下文 + time.NewTicker</code> 控制协程退出</li>
+</ul>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://paper.seebug.org/1325/">ksubdomain 无状态域名爆破工具</a></li>
 </ul>
 

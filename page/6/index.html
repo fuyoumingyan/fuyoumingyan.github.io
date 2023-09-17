@@ -292,15 +292,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Tomcat%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
-          Tomcat漏洞复现
+        <a href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Log4j%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
+          Log4j漏洞复现
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Tomcat%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/29/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Log4j%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_self">
         <div>
-          Tomcat漏洞复现 弱口令tomcat 8 后台弱口令：tomcat/tomcat  conf&#x2F;tomcat-users.xml 用户配置文件  123456789101112131415&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;tomcat-users xmlns=&quot;http://
+          Log4j漏洞复现 Log4j 反序列化漏洞介绍Apache Log4j 是一个用于 Java 的日志记录库，其支持启动远程日志服务器。 Apache Log4j 2.8.2 之前的 2.x 版本中存在反序列化漏洞。攻击者可利用该漏洞执行任意代码。 环境搭建 https://vulhub.org/#/environments/log4j/CVE-2017-5645/  漏洞复现使用 ysoseri
         </div>
       </a>
 
@@ -700,15 +700,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SQL%E6%B3%A8%E5%85%A5/" target="_self">
-          SQL 注入
+        <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">
+          SSRF 服务端请求伪造
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SQL%E6%B3%A8%E5%85%A5/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">
         <div>
-          SQL 注入 产生原理用户输入的参数打破了SQL语句的原有逻辑，导致 SQL 语句可控。 本质上就是使用 “闭合符号” 闭合掉原来的 SQL 语句，然后执行另外的 SQL 语句。( 打破原本传递数据区域的边界，插入逻辑代码。) 比如，后端的 SQL 语句如下： 1SELECT * FORM USER WHERE ID = &#x27;1&#x27;  ID 为可控参数，使用闭合符号闭合以执行另外的
+          SSRF 服务端请求伪造漏洞原理这个漏洞就是它名字所说的 “服务端请求伪造”，该漏洞的攻击方式就是借助服务端去请求其内网的其他服务器造成攻击。 漏洞原理：服务端实现了可以访问其他服务器资源的功能且没有对目标地址进行过滤控制，导致攻击者可以借助该功能去访问内网服务器。 漏洞危害 前端网、服务器所在内网、服务器本地进行端口查找，获取一些服务的 banner 信息等。 攻击运行重新访问或服务器本地的其他
         </div>
       </a>
 
@@ -768,15 +768,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">
-          SSRF 服务端请求伪造
+        <a href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SQL%E6%B3%A8%E5%85%A5/" target="_self">
+          SQL 注入
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SSRF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/05/28/WEB%E6%BC%8F%E6%B4%9E/SQL%E6%B3%A8%E5%85%A5/" target="_self">
         <div>
-          SSRF 服务端请求伪造漏洞原理这个漏洞就是它名字所说的 “服务端请求伪造”，该漏洞的攻击方式就是借助服务端去请求其内网的其他服务器造成攻击。 漏洞原理：服务端实现了可以访问其他服务器资源的功能且没有对目标地址进行过滤控制，导致攻击者可以借助该功能去访问内网服务器。 漏洞危害 前端网、服务器所在内网、服务器本地进行端口查找，获取一些服务的 banner 信息等。 攻击运行重新访问或服务器本地的其他
+          SQL 注入 产生原理用户输入的参数打破了SQL语句的原有逻辑，导致 SQL 语句可控。 本质上就是使用 “闭合符号” 闭合掉原来的 SQL 语句，然后执行另外的 SQL 语句。( 打破原本传递数据区域的边界，插入逻辑代码。) 比如，后端的 SQL 语句如下： 1SELECT * FORM USER WHERE ID = &#x27;1&#x27;  ID 为可控参数，使用闭合符号闭合以执行另外的
         </div>
       </a>
 
