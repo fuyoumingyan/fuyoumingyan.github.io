@@ -16,17 +16,17 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="gofinger指纹识别工具-v0.9项目地址：https:&#x2F;&#x2F;github.com&#x2F;fuyoumingyan&#x2F;gofinger 之前的内容不小心删了 … 2023-09-24更新-v0.9最近读了 Ksubdomain 和 Subfinder， 比较感兴趣的是它们的代码结构，之前写 Gofinger 的时候比较乱，就又抽时间重构了一下代码结构，参考的上面两款工具的结构去写。 更新内容：  优化代">
+    <meta name="description" content="gofinger指纹识别工具-v0.95项目地址：https:&#x2F;&#x2F;github.com&#x2F;fuyoumingyan&#x2F;gofinger 之前的内容不小心删了 … 2023-09-24更新-v0.9最近读了 Ksubdomain 和 Subfinder， 比较感兴趣的是它们的代码结构，之前写 Gofinger 的时候比较乱，就又抽时间重构了一下代码结构，参考的上面两款工具的结构去写。 更新内容：  优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gofinger指纹识别工具-v0.9">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2023/09/24/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/gofinger%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB%E5%B7%A5%E5%85%B7-v0-9/index.html">
+<meta property="og:title" content="gofinger指纹识别工具-v0.95">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2023/09/30/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/gofinger%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB%E5%B7%A5%E5%85%B7-v0-9/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="gofinger指纹识别工具-v0.9项目地址：https:&#x2F;&#x2F;github.com&#x2F;fuyoumingyan&#x2F;gofinger 之前的内容不小心删了 … 2023-09-24更新-v0.9最近读了 Ksubdomain 和 Subfinder， 比较感兴趣的是它们的代码结构，之前写 Gofinger 的时候比较乱，就又抽时间重构了一下代码结构，参考的上面两款工具的结构去写。 更新内容：  优化代">
+<meta property="og:description" content="gofinger指纹识别工具-v0.95项目地址：https:&#x2F;&#x2F;github.com&#x2F;fuyoumingyan&#x2F;gofinger 之前的内容不小心删了 … 2023-09-24更新-v0.9最近读了 Ksubdomain 和 Subfinder， 比较感兴趣的是它们的代码结构，之前写 Gofinger 的时候比较乱，就又抽时间重构了一下代码结构，参考的上面两款工具的结构去写。 更新内容：  优化">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309242028587.png">
 <meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/202309242031837.png">
-<meta property="article:published_time" content="2023-09-24T12:18:57.000Z">
-<meta property="article:modified_time" content="2023-09-24T13:20:38.548Z">
+<meta property="article:published_time" content="2023-09-30T12:18:57.000Z">
+<meta property="article:modified_time" content="2023-10-01T04:43:48.398Z">
 <meta property="article:author" content="fuming">
 <meta property="article:tag" content="渗透测试">
 <meta name="twitter:card" content="summary_large_image">
@@ -34,7 +34,7 @@
   
   
   
-  <title>gofinger指纹识别工具-v0.9 - fuyoumingyan&#39;s blog</title>
+  <title>gofinger指纹识别工具-v0.95 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="gofinger指纹识别工具-v0.9"></span>
+            <span id="subtitle" data-typed-text="gofinger指纹识别工具-v0.95"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-24 20:18" pubdate>
-          2023年9月24日 晚上
+        <time datetime="2023-09-30 20:18" pubdate>
+          2023年9月30日 晚上
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          833 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          20 分钟
+          5 分钟
         
       </span>
     
@@ -272,12 +272,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">gofinger指纹识别工具-v0.9</h1>
+            <h1 style="display: none">gofinger指纹识别工具-v0.95</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="gofinger指纹识别工具-v0-9"><a href="#gofinger指纹识别工具-v0-9" class="headerlink" title="gofinger指纹识别工具-v0.9"></a>gofinger指纹识别工具-v0.9</h1><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/fuyoumingyan/gofinger">https://github.com/fuyoumingyan/gofinger</a></p>
+                <h1 id="gofinger指纹识别工具-v0-95"><a href="#gofinger指纹识别工具-v0-95" class="headerlink" title="gofinger指纹识别工具-v0.95"></a>gofinger指纹识别工具-v0.95</h1><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/fuyoumingyan/gofinger">https://github.com/fuyoumingyan/gofinger</a></p>
 <p>之前的内容不小心删了 …</p>
 <h2 id="2023-09-24更新-v0-9"><a href="#2023-09-24更新-v0-9" class="headerlink" title="2023-09-24更新-v0.9"></a>2023-09-24更新-v0.9</h2><p>最近读了 <code>Ksubdomain</code> 和 <code>Subfinder</code>， 比较感兴趣的是它们的代码结构，之前写 <code>Gofinger</code> 的时候比较乱，就又抽时间重构了一下代码结构，参考的上面两款工具的结构去写。</p>
 <p>更新内容：</p>
@@ -320,9 +320,29 @@
 <td>Goby + chunsou 合并</td>
 </tr>
 </tbody></table>
-<p>记录一下处理指纹的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><br>goby_dict = &#123;&#125;<br>chunsou_dict = &#123;&#125;<br>result_dict = &#123;&#125;<br>result_list = []<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;file/goby.json&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>    goby = json.load(file)<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;file/chunsou.json&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>    chunsou = json.load(file)<br><br><span class="hljs-comment"># 处理 Goby 指纹</span><br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> goby:<br>    rule = item[<span class="hljs-string">&quot;rule&quot;</span>].lower()<br>    cms = item[<span class="hljs-string">&quot;product&quot;</span>].lower()<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;protocol=&#x27;</span> <span class="hljs-keyword">in</span> rule <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;port=&#x27;</span> <span class="hljs-keyword">in</span> rule <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;protocol!=&#x27;</span> <span class="hljs-keyword">in</span> rule <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;type&#x27;</span> <span class="hljs-keyword">in</span> rule:<br>        <span class="hljs-keyword">continue</span><br>    rule = rule.replace(<span class="hljs-string">&quot;banner=&quot;</span>, <span class="hljs-string">&quot;header=&quot;</span>)<br>    rule = rule.replace(<span class="hljs-string">&quot;banner!=&quot;</span>, <span class="hljs-string">&quot;header!=&quot;</span>)<br>    rule = rule.replace(<span class="hljs-string">&quot;server=&quot;</span>, <span class="hljs-string">&quot;header=&quot;</span>)<br>    rule = rule.replace(<span class="hljs-string">&quot;server!=&quot;</span>, <span class="hljs-string">&quot;header!=&quot;</span>)<br>    goby_dict[cms] = rule<br><br><span class="hljs-comment"># 处理 chunsou 指纹</span><br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> chunsou[<span class="hljs-string">&#x27;fingerprint&#x27;</span>]:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(chunsou[<span class="hljs-string">&#x27;fingerprint&#x27;</span>]))<br>    <span class="hljs-comment"># header body title</span><br>    location = item[<span class="hljs-string">&#x27;location&#x27;</span>]<br>    <span class="hljs-comment"># rules</span><br>    keyword = item[<span class="hljs-string">&#x27;keyword&#x27;</span>]<br>    <span class="hljs-comment"># cms name</span><br>    cms = item[<span class="hljs-string">&#x27;cms&#x27;</span>].lower()<br>    <span class="hljs-keyword">if</span> item[<span class="hljs-string">&#x27;method&#x27;</span>] == <span class="hljs-string">&#x27;keyword&#x27;</span>:<br>        key = []<br>        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> keyword:<br>            k = k.replace(<span class="hljs-string">&#x27;\&quot;&#x27;</span>, <span class="hljs-string">&#x27;\\\&quot;&#x27;</span>)<br>            key.append(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;location&#125;</span>=&quot;<span class="hljs-subst">&#123;k.lower()&#125;</span>&quot;&#x27;</span>)<br>        <span class="hljs-keyword">if</span> cms <span class="hljs-keyword">in</span> chunsou_dict:<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(key) &gt; <span class="hljs-number">1</span>:<br>                <span class="hljs-comment"># print(key)</span><br>                chunsou_dict[cms] = chunsou_dict[cms] + <span class="hljs-string">&#x27; || &#x27;</span> + <span class="hljs-string">f&quot;( <span class="hljs-subst">&#123;<span class="hljs-string">&#x27; &amp;&amp; &#x27;</span>.join(key)&#125;</span> )&quot;</span><br>                <span class="hljs-comment"># print(chunsou_dict[cms])</span><br>            <span class="hljs-keyword">else</span>:<br>                chunsou_dict[cms] = chunsou_dict[cms] + <span class="hljs-string">&#x27; || &#x27;</span> + <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;key[<span class="hljs-number">0</span>]&#125;</span>&quot;</span><br>        <span class="hljs-keyword">else</span>:<br>            chunsou_dict[cms] = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-string">&#x27; &amp;&amp; &#x27;</span>.join(key)&#125;</span>&quot;</span><br>    <span class="hljs-keyword">if</span> item[<span class="hljs-string">&#x27;method&#x27;</span>] == <span class="hljs-string">&#x27;icon_hash&#x27;</span>:<br>        key = [<span class="hljs-string">f&#x27;icon_hash=&quot;<span class="hljs-subst">&#123;k&#125;</span>&quot;&#x27;</span> <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> keyword]<br>        <span class="hljs-keyword">if</span> cms <span class="hljs-keyword">in</span> chunsou_dict:<br>            chunsou_dict[cms] = chunsou_dict[cms] + <span class="hljs-string">&#x27; || &#x27;</span> + <span class="hljs-string">&#x27; || &#x27;</span>.join(key)<br>        <span class="hljs-keyword">else</span>:<br>            chunsou_dict[cms] = <span class="hljs-string">&#x27; || &#x27;</span>.join(key)<br><br><span class="hljs-comment"># 删掉 chunsou 中, 非 icon_hash 的指纹中只有一条规则的东西, 暂时排除</span><br><span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>(chunsou_dict.keys()):<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;icon_hash&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> chunsou_dict[key]:<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;||&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> chunsou_dict[key] <span class="hljs-keyword">and</span> <span class="hljs-string">&#x27;&amp;&amp;&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> chunsou_dict[key]:<br>            <span class="hljs-comment"># print(chunsou_dict[key])</span><br>            chunsou_dict.pop(key)<br><br><br><br>result_dict = goby_dict<br><br><span class="hljs-keyword">for</span> cms <span class="hljs-keyword">in</span> chunsou_dict:<br>    <span class="hljs-keyword">if</span> cms <span class="hljs-keyword">in</span> result_dict:<br>        <span class="hljs-keyword">if</span> chunsou_dict[cms] <span class="hljs-keyword">in</span> result_dict[cms]:<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">else</span>:<br>            result_dict[cms] = result_dict[cms] + <span class="hljs-string">&#x27; || &#x27;</span> + chunsou_dict[cms]<br>    <span class="hljs-keyword">else</span>:<br>        result_dict[cms] = chunsou_dict[cms]<br><br><br><br><span class="hljs-keyword">for</span> cms <span class="hljs-keyword">in</span> chunsou_dict:<br>    <span class="hljs-keyword">if</span> cms <span class="hljs-keyword">in</span> result_dict:<br>        <span class="hljs-keyword">if</span> chunsou_dict[cms] <span class="hljs-keyword">in</span> result_dict[cms]:<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">else</span>:<br>            result_dict[cms] = result_dict[cms] + <span class="hljs-string">&#x27; || &#x27;</span> + chunsou_dict[cms]<br>    <span class="hljs-keyword">else</span>:<br>        result_dict[cms] = chunsou_dict[cms]<br><br><span class="hljs-keyword">for</span> cms <span class="hljs-keyword">in</span> result_dict:<br>    tmp = &#123;<br>        <span class="hljs-string">&quot;cms&quot;</span>: cms,<br>        <span class="hljs-string">&quot;rule&quot;</span>: result_dict[cms]<br>    &#125;<br>    result_list.append(tmp)<br><br>file_name = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(result_list)&#125;</span>.json&#x27;</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(file_name, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> output_file:<br>   json.dump(result_list, output_file, indent=<span class="hljs-number">4</span>)<br><br><br></code></pre></td></tr></table></figure>
-
+<h2 id="2023-09-30更新-v0-95"><a href="#2023-09-30更新-v0-95" class="headerlink" title="2023-09-30更新-v0.95"></a>2023-09-30更新-v0.95</h2><ol>
+<li>优化指纹 &#x3D;&gt; 去重 Goby 硬件及非 WEB 指纹</li>
+<li>指纹规则部分 &#x3D;&gt; 上次重构时修改了对指纹的一些处理，导致很多指纹规则其实并没有进行匹配，这次修复</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>level</th>
+<th>数量</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>3499</td>
+<td>Goby软件指纹 + chunsou的icon_hash 部分</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10379</td>
+<td>Goby软件指纹 + chunsou所有规则</td>
+</tr>
+</tbody></table>
 <h2 id="待优化"><a href="#待优化" class="headerlink" title="待优化"></a>待优化</h2><p>指纹匹配有点慢，可能是使用后缀表达式的问题，下次的 1.0 版本要看使用 cel 表达式和后缀表达式的效率问题，可能会更换指纹匹配方式。</p>
 
                 
@@ -376,8 +396,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>gofinger指纹识别工具-v0.9</div>
-      <div>https://fuyoumingyan.github.io/2023/09/24/安全开发/gofinger指纹识别工具-v0-9/</div>
+      <div>gofinger指纹识别工具-v0.95</div>
+      <div>https://fuyoumingyan.github.io/2023/09/30/安全开发/gofinger指纹识别工具-v0-9/</div>
     </div>
     <div class="license-meta">
       
@@ -389,7 +409,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月24日</div>
+          <div>2023年9月30日</div>
         </div>
       
       
