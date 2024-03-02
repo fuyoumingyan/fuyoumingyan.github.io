@@ -16,24 +16,24 @@
   <meta name="author" content="fuming">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Symfony RCE一个 Nday 但是由于多个应用都用的了这个框架进行开发，且可以通过默认密钥及 phpinfo 获取到密钥，如果其开启了 _fragment 端点，就会导致代码执行。公网上有一些密钥泄露，而且不同版本实现 RCE 的方法不同，所以写了个 POC 进行整理。 搜索语法： 1(body:&quot;Symfony\Component\HttpKernel\Exception&amp;qu">
+    <meta name="description" content="goauto 信息收集自动化构想在写完 auto 后其实就发现了一些问题，auto 主要是执行各种工具制定好工具的保存路径，然后去处理结果，做了一个工具链的东西。 实际使用起来很麻烦，需要安装工具，安装依赖，而且一些工具的一些功能也略有重复，很多都是完全没有必要的。 子域名模块，之前使用了 oneforall、subfinder 做被动收集，但看了下数据源，oneforall 比 subfinde">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Symfony RCE 漏洞">
-<meta property="og:url" content="https://fuyoumingyan.github.io/2024/02/15/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Symfony-RCE-%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:title" content="goauto 信息收集自动化构想">
+<meta property="og:url" content="https://fuyoumingyan.github.io/2024/01/25/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/goauto%20%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E6%83%B3/index.html">
 <meta property="og:site_name" content="fuyoumingyan&#39;s blog">
-<meta property="og:description" content="Symfony RCE一个 Nday 但是由于多个应用都用的了这个框架进行开发，且可以通过默认密钥及 phpinfo 获取到密钥，如果其开启了 _fragment 端点，就会导致代码执行。公网上有一些密钥泄露，而且不同版本实现 RCE 的方法不同，所以写了个 POC 进行整理。 搜索语法： 1(body:&quot;Symfony\Component\HttpKernel\Exception&amp;qu">
+<meta property="og:description" content="goauto 信息收集自动化构想在写完 auto 后其实就发现了一些问题，auto 主要是执行各种工具制定好工具的保存路径，然后去处理结果，做了一个工具链的东西。 实际使用起来很麻烦，需要安装工具，安装依赖，而且一些工具的一些功能也略有重复，很多都是完全没有必要的。 子域名模块，之前使用了 oneforall、subfinder 做被动收集，但看了下数据源，oneforall 比 subfinde">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240201161157807.png">
-<meta property="article:published_time" content="2024-02-15T04:47:44.000Z">
-<meta property="article:modified_time" content="2024-03-02T03:05:55.588Z">
+<meta property="og:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/goauto.png">
+<meta property="article:published_time" content="2024-01-25T07:57:00.000Z">
+<meta property="article:modified_time" content="2024-03-02T15:20:23.941Z">
 <meta property="article:author" content="fuming">
-<meta property="article:tag" content="漏洞复现">
+<meta property="article:tag" content="源码学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240201161157807.png">
+<meta name="twitter:image" content="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/goauto.png">
   
   
   
-  <title>Symfony RCE 漏洞 - fuyoumingyan&#39;s blog</title>
+  <title>goauto 信息收集自动化构想 - fuyoumingyan&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Symfony RCE 漏洞"></span>
+            <span id="subtitle" data-typed-text="goauto 信息收集自动化构想"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-02-15 12:47" pubdate>
-          2024年2月15日 下午
+        <time datetime="2024-01-25 15:57" pubdate>
+          2024年1月25日 下午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          790 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          14 分钟
+          5 分钟
         
       </span>
     
@@ -271,28 +271,26 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Symfony RCE 漏洞</h1>
+            <h1 style="display: none">goauto 信息收集自动化构想</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Symfony-RCE"><a href="#Symfony-RCE" class="headerlink" title="Symfony RCE"></a>Symfony RCE</h1><p>一个 Nday 但是由于多个应用都用的了这个框架进行开发，且可以通过默认密钥及 phpinfo 获取到密钥，如果其开启了 _fragment 端点，就会导致代码执行。公网上有一些密钥泄露，而且不同版本实现 RCE 的方法不同，所以写了个 POC 进行整理。</p>
-<p>搜索语法：</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">(<span class="hljs-keyword">body</span>:<span class="hljs-string">&quot;Symfony\Component\HttpKernel\Exception&quot;</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">body</span>:<span class="hljs-string">&quot;symfony.com&quot;</span>) <span class="hljs-keyword">or</span> app:<span class="hljs-string">&quot;Symfony&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://github.com/symfony/symfony/blob/5.1/src/Symfony/Component/HttpKernel/EventListener/FragmentListener.php">symfony&#x2F;src&#x2F;Symfony&#x2F;Component&#x2F;HttpKernel&#x2F;EventListener&#x2F;FragmentListener.php at 5.1 · symfony&#x2F;symfony (github.com)</a></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FragmentListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EventSubscriberInterface</span></span><br><span class="hljs-class"></span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$signer</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-variable">$fragmentPath</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> string $fragmentPath The path that triggers this listener</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params">UriSigner <span class="hljs-variable">$signer</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$fragmentPath</span> = <span class="hljs-string">&#x27;/_fragment&#x27;</span></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-variable language_">$this</span>-&gt;signer = <span class="hljs-variable">$signer</span>;<br>        <span class="hljs-variable language_">$this</span>-&gt;fragmentPath = <span class="hljs-variable">$fragmentPath</span>;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Fixes request attributes when the path is &#x27;/_fragment&#x27;.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> AccessDeniedHttpException if the request does not come from a trusted IP</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onKernelRequest</span>(<span class="hljs-params">RequestEvent <span class="hljs-variable">$event</span></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-variable">$request</span> = <span class="hljs-variable">$event</span>-&gt;<span class="hljs-title function_ invoke__">getRequest</span>();<br>		<span class="hljs-comment">// 获取符合这个监听器的请求</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">$this</span>-&gt;fragmentPath !== <span class="hljs-title function_ invoke__">rawurldecode</span>(<span class="hljs-variable">$request</span>-&gt;<span class="hljs-title function_ invoke__">getPathInfo</span>())) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>		<br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$request</span>-&gt;attributes-&gt;<span class="hljs-title function_ invoke__">has</span>(<span class="hljs-string">&#x27;_controller&#x27;</span>)) &#123;<br>            <span class="hljs-comment">// Is a sub-request: no need to parse _path but it should still be removed from query parameters as below.</span><br>            <span class="hljs-variable">$request</span>-&gt;query-&gt;<span class="hljs-title function_ invoke__">remove</span>(<span class="hljs-string">&#x27;_path&#x27;</span>);<br><br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>		<span class="hljs-comment">// 加密 hash 校验</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$event</span>-&gt;<span class="hljs-title function_ invoke__">isMasterRequest</span>()) &#123;<br>            <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">validateRequest</span>(<span class="hljs-variable">$request</span>);<br>        &#125;<br>		<span class="hljs-comment">// 解析参数后添加到属性中</span><br>        <span class="hljs-title function_ invoke__">parse_str</span>(<span class="hljs-variable">$request</span>-&gt;query-&gt;<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;_path&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-variable">$attributes</span>);<br>        <span class="hljs-variable">$request</span>-&gt;attributes-&gt;<span class="hljs-title function_ invoke__">add</span>(<span class="hljs-variable">$attributes</span>);<br>        <span class="hljs-variable">$request</span>-&gt;attributes-&gt;<span class="hljs-title function_ invoke__">set</span>(<span class="hljs-string">&#x27;_route_params&#x27;</span>, <span class="hljs-title function_ invoke__">array_replace</span>(<span class="hljs-variable">$request</span>-&gt;attributes-&gt;<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;_route_params&#x27;</span>, []), <span class="hljs-variable">$attributes</span>));<br>        <span class="hljs-variable">$request</span>-&gt;query-&gt;<span class="hljs-title function_ invoke__">remove</span>(<span class="hljs-string">&#x27;_path&#x27;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateRequest</span>(<span class="hljs-params">Request <span class="hljs-variable">$request</span></span>)</span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-comment">// is the Request safe?</span><br>        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$request</span>-&gt;<span class="hljs-title function_ invoke__">isMethodSafe</span>()) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AccessDeniedHttpException</span>();<br>        &#125;<br><br>        <span class="hljs-comment">// is the Request signed?</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">$this</span>-&gt;signer-&gt;<span class="hljs-title function_ invoke__">checkRequest</span>(<span class="hljs-variable">$request</span>)) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AccessDeniedHttpException</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSubscribedEvents</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">return</span> [<br>            <span class="hljs-title class_">KernelEvents</span>::<span class="hljs-variable constant_">REQUEST</span> =&gt; [[<span class="hljs-string">&#x27;onKernelRequest&#x27;</span>, <span class="hljs-number">48</span>]],<br>        ];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>实现了一个监听器，当请求路径符合 fragmentPath 的时候，就执行这个监听器。</p>
-<p>代码执行的原因就是把请求的属性添加到了自己的属性中，</p>
-<img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/image-20240201161157807.png" srcset="/img/loading.gif" lazyload alt="image-20240201161157807" style="zoom:67%;" />
-
-<p>设置了 _controller 就表示要调用的方法 然后后面传参数就能调用了，这是 Symfony 自己实现的。</p>
-<p>写 POC 遇到的文件：</p>
-<ol>
-<li>python 对于 if not () and not () 这个地方如果第一个判断为 True ，那后面的就不执行了</li>
-<li>使用 burp 代理 10s 就报超时错误</li>
-</ol>
+                <h1 id="goauto-信息收集自动化构想"><a href="#goauto-信息收集自动化构想" class="headerlink" title="goauto 信息收集自动化构想"></a>goauto 信息收集自动化构想</h1><p>在写完 auto 后其实就发现了一些问题，auto 主要是执行各种工具制定好工具的保存路径，然后去处理结果，做了一个工具链的东西。</p>
+<p>实际使用起来很麻烦，需要安装工具，安装依赖，而且一些工具的一些功能也略有重复，很多都是完全没有必要的。</p>
+<p>子域名模块，之前使用了 oneforall、subfinder 做被动收集，但看了下数据源，oneforall 比 subfinder 的被动数据源少，其多的就是 robots、sitemap、baidu、bing 等，所以其实是没有必要去都再跑一遍的。枚举模块先是使用 ksubdomain 的 enum 模块进行枚举，又是使用 verify 进行验证，人工使用很方便，但是处理起来其实挺麻烦的，要先合并 3 个工具的结果，再保存，再去验活。</p>
+<p>端口扫描模块，之前用过了 masscan、rustscan 进行了全端口开放扫描，但是 masscan 的 json 结果有时候莫名其妙的解析失败，rustscan 但进行端口扫描的结果又不好提取，想要的是再扫开放后，先判断是否存在防火墙，再进行指纹识别。而且 nmap 也比较慢，很多的识别出来服务其实用不到。</p>
+<p>之后是 httpx 进行 url 验活，对网站进行去重，然后 tidefinger 指纹识别。这里并没有必要请求 2 次，一次其实就可以做到了。</p>
+<p>….</p>
+<p>有很多的问题，所以打算重写一版 goauto ，不去依赖工具执行，而是把各个模块都封装为 go 包，在 goauto 中统一调用，更加自由，结果也更加符合我的想法。</p>
+<p>这一版的 goauto 只做信息收集，WEB 版本的，目前的信息收集流程的构思如下：</p>
+<p><img src="https://gallery-1310215391.cos.ap-beijing.myqcloud.com/img/goauto.png" srcset="/img/loading.gif" lazyload alt="goauto"></p>
+<p>目前进度：</p>
+<ul>
+<li>CDN识别：修改 cdncheck 增加国内厂商</li>
+<li>端口扫描：goportscan 端口扫描工具 &#x3D;&gt; fingerprintx 待优化</li>
+<li>验活|去重|指纹识别：gofinger 指纹识别工具 &#x3D;&gt; 待优化，将截图功能独立，收集完善指纹库</li>
+</ul>
 
                 
               </div>
@@ -316,7 +314,7 @@
   
     <span>></span>
     
-  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" class="category-chain-item">漏洞复现</a>
+  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/" class="category-chain-item">安全开发</a>
   
   
 
@@ -333,7 +331,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">#漏洞复现</a>
+        <a href="/tags/%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/">#源码学习</a>
       
     </div>
   
@@ -345,8 +343,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Symfony RCE 漏洞</div>
-      <div>https://fuyoumingyan.github.io/2024/02/15/漏洞复现/Symfony-RCE-漏洞/</div>
+      <div>goauto 信息收集自动化构想</div>
+      <div>https://fuyoumingyan.github.io/2024/01/25/安全开发/goauto 信息收集自动化构想/</div>
     </div>
     <div class="license-meta">
       
@@ -358,7 +356,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年2月15日</div>
+          <div>2024年1月25日</div>
         </div>
       
       
@@ -390,9 +388,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/15/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Casdoor-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E/" title="Casdoor 任意文件读取漏洞">
+                      <a href="/2024/02/20/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/goportscan%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/" title="goportscan 端口扫描工具">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Casdoor 任意文件读取漏洞</span>
+                        <span class="hidden-mobile">goportscan 端口扫描工具</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -400,8 +398,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/20/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/fingerprintx%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" title="fingerprintx 源码学习">
-                        <span class="hidden-mobile">fingerprintx 源码学习</span>
+                      <a href="/2024/01/15/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Apache-Struts2-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" title="Apache Struts2 文件上传漏洞">
+                        <span class="hidden-mobile">Apache Struts2 文件上传漏洞</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
